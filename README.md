@@ -1,1 +1,0 @@
-This is the Crowdsourcing Metadata Games app.
