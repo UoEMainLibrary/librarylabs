@@ -15,12 +15,12 @@
     src: url(../fonts/MAYFAIR_B.ttf) format("truetype");
 }
 div, h3, h1, h2, h4, p, td, tr, i, b, a {
-    font-family: "press";
+    font-family: "arial";
 }
 
 i, b, a, p, td, tr
 {
-    color: #afd24c;
+    color: #000000;
     font-size: 14px;
 }
 p
@@ -30,29 +30,22 @@ p
 
 h3
 {
-    color: #afd24c;
+    color: #000000;
     text-align: center;
     font-size:120%;
 }
 
 h1, h2
 {
-    color: #afd24c;
+    color: #000000;
     text-align: center;
     font-size:140%;
 }
 
 h4
 {
-    color: #afd24c;
+    color: #000000;
     font-size: 14px;
-    text-align: center;
-}
-
-h4
-{
-    color: #afd24c;
-    font-size: 13px;
     text-align: center;
 }
 
@@ -68,7 +61,7 @@ td, th
 
 td
 {
-    text-align: right;
+    text-align: center;
 }
 
 td.menu
@@ -90,7 +83,7 @@ td.typelabel
 {
     font-family: arial;
     /*font-style: italic;*/
-    color: #afd24c;
+    color: #000000;
     font-size: medium;
     text-align: center;
 }
@@ -103,20 +96,20 @@ table
 
 input[type="submit"] {
     box-shadow: 0px 0px 9px rgba(30,30,60, 0.3); -moz-box-shadow: 0px 0px 9px rgba(30,30,60, 0.75); -webkit-box-shadow: 0px 0px 9px rgba(30,30,60, 0.3);
-    font-size: 16px; color: #afd24c; font-weight: bold;  width: 160px; height: 50px; font-family: "press";
+    font-size: 16px; color: #000000; font-weight: bold;  width: 160px; height: 50px; font-family: "arial";
     background: url(./images/Save.jpg) no-repeat 0px 0px;
 }
 
 input[type="radio"] {
-width:40px;
+    width:40px;
 }
 
 body {
-    background-color : #333928;
+    background-color : #FAF7CA;
 }
 .central
 {
-    background-color : #333928;
+    background-color : #FAF7CA;
     margin: auto;
     text-align: center;
 }
@@ -152,7 +145,7 @@ input
 
 hr
 {
-    color:  #afd24c;
+    color:  #000000;
 }
 
 td.instructions
@@ -199,4 +192,8 @@ td.radiotd
 {
     font-size: 30px;
     color: #975a34;
+}
+textarea
+{
+    width : 200px;
 }
