@@ -67,7 +67,24 @@ if (isset ($_POST['save']))
 <head>
     <meta name="generator" content="HTML Tidy for Linux/x86 (vers 11 February 2007), see www.w3.org" />
     <title>Crowd Sourcing Game</title>
-    <link rel="stylesheet" type ="text/css" href="css/crowd.css">
+    <?php
+    if ($_REQUEST['theme'] =='art')
+    {
+        echo '<link rel="stylesheet" type ="text/css" href="css/art.css">';
+        $banner = "images/artbanner.jpg";
+    }
+    elseif ($_REQUEST['theme'] =='photo')
+    {
+        echo '<link rel="stylesheet" type ="text/css" href="css/photo.css">';
+        $banner = "images/photobanner.jpg";
+    }
+    else
+    {
+        echo '<link rel="stylesheet" type ="text/css" href="css/crowd.css">';
+        $banner = "images/crowdbanner.gif";
+    }
+
+    ?>
     <meta name="author" content="Library Online Editor" />
     <meta name="description" content=
     "Edinburgh University DIU Crowd Sourcing" />
@@ -80,7 +97,7 @@ if (isset ($_POST['save']))
 <div class = "central">
 <div class = "heading">
     <a href="gameMenu.php" title="DIU Games Home Link">
-        <img src="images/crowdbanner.gif" alt="The University of Edinburgh Image Collections" width="800" height="80" border="0" />
+        <img src="<?php echo $banner; ?>" alt="The University of Edinburgh Image Collections" width="800" height="80" border="0" />
     </a>
     <hr/>
         <h2>HELP US DESCRIBE OUR IMAGES!</h2>
@@ -190,63 +207,63 @@ if (isset ($_POST['save']))
             }
 
 
-            /*if (isset ($_REQUEST['image_id']))
+            if ($_REQUEST['theme'] == 'art' and $_REQUEST['theme'] == 10)
             {
-                $image_id= $_GET['image_id'];
-                $sql = "
-						select
-						i.image_id,
-						i.collection,
-						i.shelfmark,
-						i.title,
-						i.author,
-						i.page_no,
-						i.jpeg_path
-						from
-						orders.IMAGE i
-						where image_id = $image_id;
-						";
-
-                $result=mysql_query($sql) or die( "A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-                $count = mysql_numrows($result);
+                echo '<table style = "text-align: center;">
+                                    <tr>
+                                        <td>GAME OVER!</td>
+                                    </tr>
+                                    <tr>
+                                      <td class="menutext" colspan="2">Thanks for doing all that voting. Keep an eye on your scores- there could be a prize for you!</td>
+                                    <tr> <td colspan="2"><input type="submit" name = "save" style = "width:500px;" value="Go to voting"/></td></tr>
+                      </table>';
             }
             else
-            {*/
+            {
                 echo '<hr />';
 
-               /* echo '
-					<div class = "heading">
-					<form action = "gameCrowdSourcingApproval.php" method = "post">
-						<h3>Choose an image with approved, crowdsourced data
-
-							<input type = "submit" value = "Go" name = "button">
-
-						</h3>
-			        </form>
-
-					</div>';
-
-                if (isset ($_POST['button']) || isset ($_POST['moderated']))
-                {*/
-
-                    $rand_sql = "
-							select
-							i.image_id,
-							i.collection,
-							i.shelfmark,
-							i.title,
-							i.author,
-							i.page_no,
-							i.jpeg_path
-							from
-							orders.IMAGE i
-							join (select x.image_id from orders.IMAGE x, orders.CROWD y where x.image_id = y.image_id and y.status = 'M' and y.uun <> '".$_SESSION['uun']."' and x.image_id not in (select v.image_id from orders.VOTES v where v.voter = '".$_SESSION['uun']."') order by rand() limit 1)
-							as a on i.image_id = a.image_id
-							;
-							";
+                    if ($_REQUEST['theme'] == 'art')
+                    {
+                        $rand_sql = "
+                                select
+                                i.image_id,
+                                i.collection,
+                                i.shelfmark,
+                                i.title,
+                                i.author,
+                                i.page_no,
+                                i.jpeg_path
+                                from
+                                orders.IMAGE i
+                                join (select x.image_id from orders.IMAGE x, orders.CROWD y where x.image_id = y.image_id and x.collection = 20 and y.status = 'M' and y.uun <> '".$_SESSION['uun']."' and x.image_id not in (select v.image_id from orders.VOTES v where v.voter = '".$_SESSION['uun']."') order by rand() limit 1)
+                                as a on i.image_id = a.image_id
+                                ;
+                                ";
+                    }
+                    else
+                    {
+                        $rand_sql = "
+                                select
+                                i.image_id,
+                                i.collection,
+                                i.shelfmark,
+                                i.title,
+                                i.author,
+                                i.page_no,
+                                i.jpeg_path
+                                from
+                                orders.IMAGE i
+                                join (select x.image_id from orders.IMAGE x, orders.CROWD y where x.image_id = y.image_id and y.status = 'M' and y.uun <> '".$_SESSION['uun']."' and x.image_id not in (select v.image_id from orders.VOTES v where v.voter = '".$_SESSION['uun']."') order by rand() limit 1)
+                                as a on i.image_id = a.image_id
+                                ;
+                                ";
+                    }
 
                     $result=mysql_query($rand_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
                     $count = mysql_numrows($result);
+                    $images = $_REQUEST['images'];
+                    $images++;
+
 
                     if ($count == 0)
                     {
@@ -268,7 +285,7 @@ if (isset ($_POST['save']))
                         $page_no = mysql_result($result, $i, 'page_no');
                         $jpeg_path = mysql_result($result, $i, 'jpeg_path');
                         $publication_status = mysql_result($result, $i, 'publication_status');
-                        $size = getimagesize($jpeg_path);
+                        $size = getimagesize('../'.$jpeg_path);
                         $fullwidth = $size[0];
                         $fullheight = $size[1];
 
@@ -332,7 +349,7 @@ if (isset ($_POST['save']))
                                 <h3>Pending Information: Image '.$image_id.'</h3>
                             </div>
 
-                        <form action = "gameCrowdSourcingApproval.php" method = "post">
+                        <form action = "gameCrowdSourcingApproval.php?theme=' . $_REQUEST['theme'] . '&images=' . $images . '" method = "post">
                         <div class="box">
                         <p class = "menutext">Select the relevant radio button.</p>
                         <table class ="radio">
@@ -391,11 +408,11 @@ if (isset ($_POST['save']))
 
                 echo '
                 </table>
-               </div><br><input type="submit" name = "save" style = "width:500px;" value="Submit votes and get new image" />
+               </div><br><input type="submit" name = "save" style = "width:520px;" value="Submit votes and get new image" />
     </form>';
 
              }
-        //}
+        }
 
 
 

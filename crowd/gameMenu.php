@@ -1,9 +1,28 @@
+
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 
 <head>
     <meta name="generator" content="HTML Tidy for Linux/x86 (vers 11 February 2007), see www.w3.org" />
     <title>Crowd Sourcing Game</title>
-    <link rel="stylesheet" type ="text/css" href="css/crowd.css">
+
+    <?php
+      if ($_REQUEST['theme'] =='art')
+      {
+          echo '<link rel="stylesheet" type ="text/css" href="css/art.css">';
+          $banner = "images/artbanner.jpg";
+      }
+      elseif ($_REQUEST['theme'] =='photo')
+      {
+          echo '<link rel="stylesheet" type ="text/css" href="css/photo.css">';
+          $banner = "images/photobanner.jpg";
+      }
+      else
+      {
+          echo '<link rel="stylesheet" type ="text/css" href="css/crowd.css">';
+          $banner = "images/crowdbanner.gif";
+      }
+
+    ?>
     <meta name="author" content="Library Online Editor" />
     <meta name="description" content=
             "Edinburgh University DIU Crowd Sourcing" />
@@ -16,7 +35,7 @@
 <div class = "central">
     <div class = "heading">
         <a href="gameMenu.php" title="DIU Games Home Link">
-            <img src="images/crowdbanner.gif" alt="The University of Edinburgh Image Collections" width="800" height="80" border="0" />
+            <img src="<?php echo $banner; ?>" alt="The University of Edinburgh Image Collections" width="800" height="80" border="0" />
         </a>
         <hr/>
         <h2>HELP US DESCRIBE OUR IMAGES!</h2>
@@ -33,7 +52,7 @@
 
     if (!$_POST['logging_in'] && !isset($_SESSION['uun']))
     {
-        echo' <form action="gameMenu.php" method="post">
+        echo' <form action="gameMenu.php?theme='.$_REQUEST['theme'].'" method="post">
                 <table>
                     <tr>
                         <th>UUN:</th>
@@ -54,7 +73,7 @@
                 </table>
                 <input type="hidden" name="logging_in" value="logging_in" />
             </form>
-            <p>Not registered? <a href="gameregistration.html"><h4>REGISTER HERE</h4></a></p>
+            <p>Not registered? <a href="gameRegistration.php?theme='.$_REQUEST['theme'].'"><h4>REGISTER HERE</h4></a></p>
 ';
     }
     else {
@@ -68,7 +87,7 @@
             {
                 if (empty ($_SESSION['uun']))
                 {
-                    die('<div class = "die">Please enter your name!<br><a href="game.html">Back</a></div>');
+                    die('<div class = "die">Please enter your name!<br><a href="gameMenu.php?theme='.$_REQUEST['theme'].'">Back</a></div>');
                 }
                 else
                 {
@@ -88,7 +107,7 @@
             {
                 if (empty ($_SESSION['uun']))
                 {
-                    die('<div class = "die">Please enter a password<br><a href="game.html">Back</a></div>');
+                    die('<div class = "die">Please enter a password<br><a href="gameMenu.php?theme='.$_REQUEST['theme'].'">Back</a></div>');
                 }
                 else
                 {
@@ -110,7 +129,7 @@
 
             if ($row == null)
             {
-                die('<div class = "die">Invalid username<br><a href="game.html">Back</a></div>');
+                die('<div class = "die">Invalid username<br><a href="gameMenu.php?theme='.$_REQUEST['theme'].'">Back</a></div>');
             }
             else
             {
@@ -134,13 +153,57 @@
                 else
                 {
 
-                    die('<div class = "die">invalid password<br><a href="game.html">Back</div>');
+                    die('<div class = "die">invalid password<br><a href="gameMenu.php?theme='.$_REQUEST['theme'].'">Back</div>');
                 }
             }
         }
 
-    ?>
-    <form action="gameCrowdSourcing.php" method="post">
+    if ($_REQUEST['theme'] == 'art')
+    {
+        echo'<form action="gameCrowdSourcing.php?theme='.$_REQUEST['theme'].'&images=0" method="post">
+        <p>You will now be taken in to our tagging zone. You will tag 10 images, then vote on metadata for 10 previously tagged images. If you are ready, press the button!</p>
+                  <table>
+                   <tr>
+              <td class = "menu" colspan="2">
+                 <input type="submit" value="GO!" style="width:320px;" />
+              </td>
+            </tr>
+         </table>
+
+         <input type="hidden" name="logging_in" value="logging_in" />
+        </form>';
+    }
+    else
+        if ($_REQUEST['theme'] == 'photo')
+        {
+            echo'<form action="gameCrowdSourcing.php?theme='.$_REQUEST['theme'].'&images=0" method="post">
+        <p> Submit research for a random photo, or for a specific item
+        <table>
+                   <tr>
+              <td class = "menu" colspan="2">
+                 <input type="submit" value="Random" style="width:320px;" />
+              </td>
+            </tr>
+
+        <table>
+            <tr>
+                <td class = "menutext"  colspan="2">
+                    If you want to add data to a specific record that you know the ID for, enter it here.
+                </td>
+            </tr>
+           <tr>
+              <td class = "menu" colspan="2"><input type ="text" name = "image_id">
+                 <input type="submit" value="Tag Specific Image" style="width:320px;" />
+              </td>
+            </tr>
+         </table>
+
+         <input type="hidden" name="logging_in" value="logging_in" />
+        </form>';
+        }
+    else
+    {
+        echo '<form action="gameCrowdSourcing.php?theme='.$_REQUEST['theme'].'" method="post">
         <table>
             <tr>
                 <td class = "menutext" colspan="2">
@@ -156,7 +219,7 @@
         <input type="hidden" name="logging_in" value="logging_in" />
     </form>
 
-    <form action="gameCrowdSourcingApproval.php" method="post">
+    <form action="gameCrowdSourcingApproval.php?theme='.$_REQUEST['theme'].'" method="post">
         <table>
             <tr>
                 <td class = "menutext"  colspan="2">
@@ -172,7 +235,7 @@
         <input type="hidden" name="logging_in" value="logging_in" />
     </form>
 
-    <form action="gameCrowdSourcingHighScores.php" method="post">
+    <form action="gameCrowdSourcingHighScores.php?theme='.$_REQUEST['theme'].'" method="post">
         <table>
             <tr>
                 <td class = "menutext"  colspan="2">
@@ -188,7 +251,7 @@
         <input type="hidden" name="logging_in" value="logging_in" />
     </form>
 
-    <form action="gameCrowdSourcing.php" method="post">
+    <form action="gameCrowdSourcing.php?theme='.$_REQUEST['theme'].'" method="post">
         <table>
             <tr>
                 <td class = "menutext"  colspan="2">
@@ -203,8 +266,27 @@
          </table>
          <input type="hidden" name="logging_in" value="logging_in" />
 
-     </form>
-<?php
+     </form>';
+
+     if ($status == 'C')
+     {
+
+     echo'
+         <form action="assessData.php?theme='.$_REQUEST['theme'].'" method="post">
+        <table>
+           <tr>
+              <td class = "menu" colspan="2">
+                 <input type="submit" value="Moderate Metadata" style="width:320px;" />
+              </td>
+            </tr>
+         </table>
+         <input type="hidden" name="logging_in" value="logging_in" />
+
+     </form>';
+     }
+
+
+    }
     }
 
   ?>

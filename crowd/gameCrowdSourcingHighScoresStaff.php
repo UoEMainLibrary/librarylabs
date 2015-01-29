@@ -22,7 +22,7 @@ $sec = "5";
 <div class = "central">
     <div class = "heading">
         <a href="gameMenu.php" title="DIU Games Home Link">
-            <img src="images/crowdbanner.gif" alt="The University of Edinburgh Image Collections" width="800" height="80" border="0" />
+            <img src="<?php echo $banner; ?>" alt="The University of Edinburgh Image Collections" width="800" height="80" border="0" />
         </a>
                 <hr/>
                 <h2>HELP US DESCRIBE OUR IMAGES!</h2>
@@ -81,28 +81,27 @@ $sec = "5";
                         $uun = mysql_result($result, $i, 'uun');
                         $pos = $i + 1;
 
-                        $mpointssql = "select count(*) as mtotal from CROWD where uun = '".$uun."' and status = 'M';";
-                        // and date_created > NOW() - INTERVAL 120 MINUTE ;";
+                        $mpointssql = "select count(*) as mtotal from CROWD where uun = '".$uun."' and status = 'M' and date_created > NOW() - INTERVAL 120 MINUTE ;";
                         $mpointsresult=mysql_query($mpointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $mpointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
                         $mpoints = mysql_result($mpointsresult, 0, 'mtotal');
 
-                        $vpointssql = "select count(*) as vtotal from VOTES where voter = '".$uun."';";
+                        $vpointssql = "select count(*) as vtotal from VOTES where voter = '".$uun."' and date_created > NOW() - INTERVAL 120 MINUTE ;";
                         $vpointsresult=mysql_query($vpointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $vpointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
                         $vpoints = mysql_result($vpointsresult, 0, 'vtotal');
 
-                        $apointssql = "select count(*) as atotal from CROWD where uun = '".$uun."' and status = 'A' ;";
+                        $apointssql = "select count(*) as atotal from CROWD where uun = '".$uun."' and status = 'A'  and date_created > NOW() - INTERVAL 120 MINUTE ;";
                         $apointsresult=mysql_query($apointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $apointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
                         $apoints = mysql_result($apointsresult, 0, 'atotal');
 
-                        $ppointssql = "select count(*) as ptotal from CROWD where uun = '".$uun."' and status = 'P' ;";
+                        $ppointssql = "select count(*) as ptotal from CROWD where uun = '".$uun."' and status = 'P'  and date_created > NOW() - INTERVAL 120 MINUTE ;";
                         $ppointsresult=mysql_query($ppointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $ppointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
                         $ppoints = mysql_result($ppointsresult, 0, 'ptotal');
 
-                        $upointssql = "select sum(quality) as utotal from VOTES where submitter = '".$uun."' ;";
+                        $upointssql = "select sum(quality) as utotal from VOTES where submitter = '".$uun."'  and date_created > NOW() - INTERVAL 120 MINUTE ;";
                         $upointsresult=mysql_query($upointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $upointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
                         $upoints = mysql_result($upointsresult, 0, 'utotal');
