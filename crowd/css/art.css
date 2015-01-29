@@ -49,10 +49,17 @@ h4
     text-align: center;
 }
 
+<<<<<<< HEAD
+h5
+{
+    color: #afd24c;
+    font-size: 12px;
+=======
 h4
 {
     color: #afd24c;
     font-size: 13px;
+>>>>>>> upstream/master
     text-align: center;
 }
 
