@@ -49,19 +49,13 @@ h4
     text-align: center;
 }
 
-<<<<<<< HEAD
-h5
-{
-    color: #afd24c;
-    font-size: 12px;
-=======
 h4
 {
     color: #afd24c;
     font-size: 13px;
->>>>>>> upstream/master
     text-align: center;
 }
+
 
 th
 {
@@ -115,7 +109,7 @@ input[type="submit"] {
 }
 
 input[type="radio"] {
-width:40px;
+    width:40px;
 }
 
 body {
@@ -146,6 +140,11 @@ input
 .heading h4
 {
     font-size: 16px;
+}
+
+.heading h5
+{
+    font-size: 14px;
 }
 
 .box {
