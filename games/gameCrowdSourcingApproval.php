@@ -68,18 +68,17 @@ if (isset ($_POST['save']))
     <meta name="generator" content="HTML Tidy for Linux/x86 (vers 11 February 2007), see www.w3.org" />
     <title>Crowd Sourcing Game</title>
     <?php
-    if ($_REQUEST['theme'] =='art')
-    {
+    if ($_REQUEST['theme'] == 'art') {
         echo '<link rel="stylesheet" type ="text/css" href="css/art.css">';
         $banner = "images/artbanner.jpg";
-    }
-    elseif ($_REQUEST['theme'] =='photo')
-    {
+    } elseif ($_REQUEST['theme'] == 'photo') {
         echo '<link rel="stylesheet" type ="text/css" href="css/photo.css">';
         $banner = "images/photobanner.jpg";
-    }
-    else
+    } elseif ($_REQUEST['theme'] =='artAccessible')
     {
+        echo '<link rel="stylesheet" type ="text/css" href="css/artAccessible.css">';
+        $banner = "images/artbanner.jpg";
+    }else {
         echo '<link rel="stylesheet" type ="text/css" href="css/crowd.css">';
         $banner = "images/crowdbanner.gif";
     }
@@ -222,7 +221,7 @@ if (isset ($_POST['save']))
             {
                 echo '<hr />';
 
-                    if ($_REQUEST['theme'] == 'art')
+            if ($_REQUEST['theme'] == 'art' || $_REQUEST['theme'] == 'artAccessible')
                     {
                         $rand_sql = "
                                 select
@@ -424,7 +423,7 @@ if (isset ($_POST['save']))
 
 
     <hr/>
-    <p><a href="gameMenu.php">Back To Menu</a></p>
+    <p><?php session_write_close(); ?><a href="index.php">Back To Menu</a></p>
 </div>
 		</div> <!-- div central -->
 	</body>

@@ -69,7 +69,24 @@ if (isset ($_POST['save']))
 <head>
     <meta name="generator" content="HTML Tidy for Linux/x86 (vers 11 February 2007), see www.w3.org" />
     <title>DIU Photography Ordering System</title>
-    <link rel="stylesheet" type ="text/css" href="../diustyles.css">
+    <?php
+    if ($_REQUEST['theme'] == 'art') {
+        echo '<link rel="stylesheet" type ="text/css" href="css/art.css">';
+        $banner = "images/artbanner.jpg";
+    } elseif ($_REQUEST['theme'] == 'photo') {
+        echo '<link rel="stylesheet" type ="text/css" href="css/photo.css">';
+        $banner = "images/photobanner.jpg";
+    } elseif ($_REQUEST['theme'] =='artAccessible')
+    {
+        echo '<link rel="stylesheet" type ="text/css" href="css/artAccessible.css">';
+        $banner = "images/artbanner.jpg";
+    }else {
+        echo '<link rel="stylesheet" type ="text/css" href="css/crowd.css">';
+        $banner = "images/crowdbanner.gif";
+    }
+
+
+    ?>
     <meta name="author" content="Library Online Editor" />
     <meta name="description" content=
     "Edinburgh University Library Online: Book purchase request forms for staff: Medicine and Veterinary" />
@@ -82,7 +99,7 @@ if (isset ($_POST['save']))
 <div class = "central">
 <div class = "heading">
     <a href="../index.html" title="Link to The DIU Web Area">
-        <img src="images/header4.jpg" alt="The University of Edinburgh Image Collections" width="754" height="65" border="0" />
+        <img src="<?php echo $banner; ?>" alt="The University of Edinburgh Image Collections" width="754" height="65" border="0" />
     </a>
     <h2>MODERATE IMAGE DATA</h2>
     <hr/>
@@ -141,9 +158,9 @@ if (isset ($_REQUEST['image_id']))
 }
 else
 {
-    //this is temporarily set for art moderation only.
-    $image_id= $_GET['image_id'];
-    $sql = "
+    if ($_REQUEST['theme'] == 'art' || $_REQUEST['theme'] == 'artAccessible') {
+        //this is temporarily set for art moderation only.
+        $sql = "
           select distinct (r.image_id) as image_id, c.name as collection_name, i.title as title,
                     i.collection as collection,
                     i.author as author,
@@ -161,6 +178,29 @@ else
                     and i.collection = 20
 						order by rand() limit 1
 						";
+    }
+    else
+    {
+        //this is temporarily set for art moderation only.
+        $sql = "
+          select distinct (r.image_id) as image_id, c.name as collection_name, i.title as title,
+                    i.collection as collection,
+                    i.author as author,
+                    i.image_id as image_id, i.shelfmark as shelfmark,
+                    i.page_no as page_no,
+                    i.jpeg_path as jpeg_path,
+                    i.publication_status as publication_status
+                    from orders.IMAGE i,
+                    orders.COLLECTION c,
+                    orders.CROWD r
+                    where
+                    r.status = 'P'
+                    and r.image_id = i.image_id
+                    and i.collection = c.id
+                    and not(i.collection = 20)
+						order by rand() limit 1
+						";
+    }
 
     $result=mysql_query($sql) or die( "A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
     $count = mysql_numrows($result);

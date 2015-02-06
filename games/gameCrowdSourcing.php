@@ -96,10 +96,15 @@ if (isset ($_POST['save'])) {
     } elseif ($_REQUEST['theme'] == 'photo') {
         echo '<link rel="stylesheet" type ="text/css" href="css/photo.css">';
         $banner = "images/photobanner.jpg";
-    } else {
+    } elseif ($_REQUEST['theme'] =='artAccessible')
+    {
+        echo '<link rel="stylesheet" type ="text/css" href="css/artAccessible.css">';
+        $banner = "images/artbanner.jpg";
+    }else {
         echo '<link rel="stylesheet" type ="text/css" href="css/crowd.css">';
         $banner = "images/crowdbanner.gif";
     }
+
 
     ?>
     <meta name="author" content="Library Online Editor"/>
@@ -223,7 +228,7 @@ else
     } else {
         echo '<hr />';
 
-        if ($_REQUEST['theme'] == 'art') {
+        if ($_REQUEST['theme'] == 'art' || $_REQUEST['theme'] == 'artAccessible') {
             if ($_REQUEST['images'] == 0) {
                 $rand_sql = "
                                     select
@@ -455,7 +460,7 @@ else
 
 
     <hr/>
-    <p><a href="game.html">Back To Menu</a></p>
+    <p><a href="game.html">Back To Menu</a><?php session_write_close(); ?></p>
 </div>
 </div>
 <!-- div central -->
