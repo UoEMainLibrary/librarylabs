@@ -1,0 +1,63 @@
+.header-row{
+    background-color: #005784;
+}
+.header-image {
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
+
+.link-box {
+    width: 100%;
+    height: 352px;
+    padding: 10px;
+    background-color: #005784;
+    text-align: center;
+    padding-top: 26px;
+}
+
+#footer {
+    background-color: #f5f5f5;
+    text-align: center;
+    height: 100px;
+    margin-top: 20px;
+    padding-top: 10px;
+}
+
+#footer ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+}
+
+#footer ul li {
+    display: inline;
+    margin-right: 7px;
+}
+
+#footer ul li.last {
+    margin-right: 0;
+}
+
+.footer-links {
+    width: 85%;
+}
+
+.footer-logo {
+    width: 10%;
+    float: right;
+    margin: 10px;
+    margin-top: -15px;
+}
+
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+    #footer {
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
