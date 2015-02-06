@@ -4,18 +4,17 @@
     <meta name="generator" content="HTML Tidy for Linux/x86 (vers 11 February 2007), see www.w3.org" />
     <title>Crowd Sourcing Game</title>
     <?php
-    if ($_REQUEST['theme'] =='art')
-    {
+    if ($_REQUEST['theme'] == 'art') {
         echo '<link rel="stylesheet" type ="text/css" href="css/art.css">';
         $banner = "images/artbanner.jpg";
-    }
-    elseif ($_REQUEST['theme'] =='photo')
-    {
+    } elseif ($_REQUEST['theme'] == 'photo') {
         echo '<link rel="stylesheet" type ="text/css" href="css/photo.css">';
         $banner = "images/photobanner.jpg";
-    }
-    else
+    } elseif ($_REQUEST['theme'] =='artAccessible')
     {
+        echo '<link rel="stylesheet" type ="text/css" href="css/artAccessible.css">';
+        $banner = "images/artbanner.jpg";
+    }else {
         echo '<link rel="stylesheet" type ="text/css" href="css/crowd.css">';
         $banner = "images/crowdbanner.gif";
     }
@@ -80,23 +79,23 @@
 
 					if($pwd != $re_password)
 					{
-					die('<div class = "die"><p>Your passwords do not match- try again</p><a href="../gameregistration.php">Return</a></div>');
+					die('<div class = "die"><p>Your passwords do not match- try again</p><a href="../gameRegistration.php?theme='.$_REQUEST['theme'].'">Return</a></div>');
 					}
 
 					if($surname =="")
 					{
-					die('<div class = "die"><p>You did not enter a surname</p><a href="../gameregistration.php">Return</a></div>');
+					die('<div class = "die"><p>You did not enter a surname</p><a href="../gameRegistration.php?theme='.$_REQUEST['theme'].'">Return</a></div>');
 					}
 
 					if($email_check == false)
 					{
-					die('<div class = "die"><p>Invalid email</p><a href="../gameregistration.php">Return</a></div>');
+					die('<div class = "die"><p>Invalid email</p><a href="../gameRegistration.php?theme='.$_REQUEST['theme'].'">Return</a></div>');
 					}
 					
 					
 					if($user_type == '')
 					{
-					die('<div class = "die"><p>You need to enter a user type.</p><a href="../gameregistration.php">Return</a></div>');
+					die('<div class = "die"><p>You need to enter a user type.</p><a href="../gameRegistration.php?theme='.$_REQUEST['theme'].'">Return</a></div>');
 					}
 
 					$sql_check_duplicate = "SELECT * from orders.USER where uun = '$uun'";
@@ -105,7 +104,7 @@
 
 					if ($num > 0)
 					{
-					  die('<div class = "die"><p>UUN already in use - pick another.</p><a href="../gameregistration.php">Return</a></div>');
+					  die('<div class = "die"><p>UUN already in use - pick another.</p><a href="../gameRegistration.php?theme='.$_REQUEST['theme'].'">Return</a></div>');
 					}
 
 
@@ -146,7 +145,7 @@
                     $_SESSION['uun'] = null;
 
 				?>
-    <form action="gameMenu.php" method="post">
+    <form action="gameMenu.php?theme=<?php echo $_REQUEST['theme']; ?>" method="post">
         <table>
             <tr>
                 <th>UUN:</th>

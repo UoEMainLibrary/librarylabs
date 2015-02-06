@@ -6,21 +6,20 @@
     <title>Crowd Sourcing Game</title>
 
     <?php
-      if ($_REQUEST['theme'] =='art')
-      {
-          echo '<link rel="stylesheet" type ="text/css" href="css/art.css">';
-          $banner = "images/artbanner.jpg";
-      }
-      elseif ($_REQUEST['theme'] =='photo')
-      {
-          echo '<link rel="stylesheet" type ="text/css" href="css/photo.css">';
-          $banner = "images/photobanner.jpg";
-      }
-      else
-      {
-          echo '<link rel="stylesheet" type ="text/css" href="css/crowd.css">';
-          $banner = "images/crowdbanner.gif";
-      }
+    if ($_REQUEST['theme'] == 'art') {
+        echo '<link rel="stylesheet" type ="text/css" href="css/art.css">';
+        $banner = "images/artbanner.jpg";
+    } elseif ($_REQUEST['theme'] == 'photo') {
+        echo '<link rel="stylesheet" type ="text/css" href="css/photo.css">';
+        $banner = "images/photobanner.jpg";
+    } elseif ($_REQUEST['theme'] =='artAccessible')
+    {
+        echo '<link rel="stylesheet" type ="text/css" href="css/artAccessible.css">';
+        $banner = "images/artbanner.jpg";
+    }else {
+        echo '<link rel="stylesheet" type ="text/css" href="css/crowd.css">';
+        $banner = "images/crowdbanner.gif";
+    }
 
     ?>
     <meta name="author" content="Library Online Editor" />
@@ -49,6 +48,10 @@
     $link = mysql_connect($dbserver, $username, $password);
     @mysql_select_db($database) or die( "Unable to select database".$database);
 
+    if ($_SESSION['uun'] == ''|| $_SESSION['uun'] == null )
+    {
+        unset($_SESSION['uun']);
+    }
 
     if (!$_POST['logging_in'] && !isset($_SESSION['uun']))
     {
@@ -147,6 +150,7 @@
                     $surname = $_SESSION['surname'] = $row["surname"];
                     $email = $_SESSION['email'] = $row["email"];
                     $status = $_SESSION['status'] = $row["status"];
+                    echo 'STATUS'.$status;
                     $points = $_SESSION['points'] = $row["points"];
 
                 }
@@ -158,10 +162,13 @@
             }
         }
 
-    if ($_REQUEST['theme'] == 'art')
+    if ($_REQUEST['theme'] == 'art' || $_REQUEST['theme'] == 'artAccessible')
     {
         echo'<form action="gameCrowdSourcing.php?theme='.$_REQUEST['theme'].'&images=0" method="post">
-        <p>You will now be taken in to our tagging zone. You will tag 10 images, then vote on metadata for 10 previously tagged images. If you are ready, press the button!</p>
+        <p>Hello '.$first_name.'. Nice to see you!</p>
+        <p>You will now be taken in to our tagging zone.</p>
+        <p>You will tag 10 images, then vote on metadata for 10 previously tagged images.</p>
+         <p>If you are ready, press the button!</p>
                   <table>
                    <tr>
               <td class = "menu" colspan="2">
@@ -172,6 +179,24 @@
 
          <input type="hidden" name="logging_in" value="logging_in" />
         </form>';
+        echo 'STILLSTATUS'.$status;
+        if ($status == 'C')
+        {
+
+            echo'
+            <p>As you are an admin, you can moderate tags. Press the button to do this.</p>
+            <form action="assessData.php?theme='.$_REQUEST['theme'].'" method="post">
+            <table>
+               <tr>
+                  <td class = "menu" colspan="2">
+                     <input type="submit" value="Moderate Metadata" style="width:320px;" />
+                  </td>
+                </tr>
+             </table>
+             <input type="hidden" name="logging_in" value="logging_in" />
+
+         </form>';
+        }
     }
     else
         if ($_REQUEST['theme'] == 'photo')
@@ -290,6 +315,25 @@
     }
 
   ?>
+</div>
+<div class="footer">
+
+    <div class = "footer">
+        <p>
+            <?php
+            if ($_REQUEST['theme'] == 'art')
+            {
+                echo'<a href = "gameMenu.php?theme=artAccessible">Toggle accessible view</a></p>';
+            }
+            if ($_REQUEST['theme'] == 'artAccessible')
+            {
+                echo'<a href = "gameMenu.php?theme=art">Toggle accessible view</a></p>';
+            }
+            ?>
+
+        <hr/>
+        <p><?php session_write_close(); ?><a href="index.php">Back To Menu</a></p>
+    </div>
 </div>
 </body>
 

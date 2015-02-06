@@ -5,21 +5,20 @@
     <title>Crowd Sourcing Game</title>
 
     <?php
-      if ($_REQUEST['theme'] =='art')
-      {
-          echo '<link rel="stylesheet" type ="text/css" href="css/art.css">';
-          $banner = "images/artbanner.jpg";
-      }
-      elseif ($_REQUEST['theme'] =='photo')
-      {
-          echo '<link rel="stylesheet" type ="text/css" href="css/photo.css">';
-          $banner = "images/photobanner.jpg";
-      }
-      else
-      {
-          echo '<link rel="stylesheet" type ="text/css" href="css/crowd.css">';
-          $banner = "images/crowdbanner.gif";
-      }
+    if ($_REQUEST['theme'] == 'art') {
+        echo '<link rel="stylesheet" type ="text/css" href="css/art.css">';
+        $banner = "images/artbanner.jpg";
+    } elseif ($_REQUEST['theme'] == 'photo') {
+        echo '<link rel="stylesheet" type ="text/css" href="css/photo.css">';
+        $banner = "images/photobanner.jpg";
+    } elseif ($_REQUEST['theme'] =='artAccessible')
+    {
+        echo '<link rel="stylesheet" type ="text/css" href="css/artAccessible.css">';
+        $banner = "images/artbanner.jpg";
+    }else {
+        echo '<link rel="stylesheet" type ="text/css" href="css/crowd.css">';
+        $banner = "images/crowdbanner.gif";
+    }
 
     ?>
     <meta name="author" content="Library Online Editor" />
@@ -81,7 +80,7 @@
             </div>
             <div class = "footer"></div>
 				<HR/>
-				<p>
+				<p><?php session_write_close(); ?>
 					<a href="game.html">Home</a>
                 <p>
             </div>

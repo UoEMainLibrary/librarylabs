@@ -23,6 +23,14 @@
         <hr/>
     </div>
     <div class = "box"></div>
+    <?php
+        session_start();
+        session_unset();
+        session_destroy();
+        session_write_close();
+        setcookie(session_name(),'',0,'/');
+        session_regenerate_id(true);
+    ?>
         <ul>
             <li><a href = "gameMenu.php?theme=art"> Innovative Learning Week: Tag Art Images</a></li>
             <li><a href = "gameMenu.php">Classic Retro Image Tagging</a></li>
