@@ -37,14 +37,14 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#">About</a></li>
+                        <li class="active"><a href="./">Home</a></li>
+                        <li><a href="./about">About</a></li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Metadata Games <span class="caret"></span></a>
+                            <a href="./games" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Metadata Games <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Dive into Art</a></li>
-                                <li><a href="#">Class metadata games</a></li>
-                                <li><a href="#">Research Tagging</a></li>
+                                <li><a href="./games/gameMenu.php?theme=art">Dive into Art</a></li>
+                                <li><a href="./games/gameMenu.php">Class metadata games</a></li>
+                                <li><a href="./games/gameMenu.php?theme=photo">Research Tagging</a></li>
                             </ul>
                         </li>
                     </ul>
