@@ -75,7 +75,7 @@ if($row == null)
                 break;
         }
 
-        echo "Affiliation " . $affiliation . " gives type " . $type . "<br />";
+        //echo "Affiliation " . $affiliation . " gives type " . $type . "<br />";
 
         $sql = "INSERT INTO orders.USER (email, uun, surname, first_name, status, type) VALUES ('".$email."', '".$uun."', '".$surname."', '".$first_name."', 'P', '".$type."');";
         $result = mysql_query($sql) or die( "A MySQL error has occurred.<br />Your Query: " . $sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
