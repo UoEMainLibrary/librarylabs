@@ -201,25 +201,30 @@ else // the user does exist
 
     <footer id="footer">
         <div class="container">
+            <div class="uoe-logo">
+                <a target="_blank" href="http://www.ed.ac.uk/">
+                    <img title="The University of Edinburgh" src="./../css/images/UoELogo.png">
+                </a>
+            </div>
             <div class="footer-links">
                 <ul>
                     <li>
-                        <a href="http://www.ed.ac.uk.ezproxy.is.ed.ac.uk/about/website/website&#45;terms&#45;conditions" style="width: 90px;">Terms &amp; conditions </a>
+                        <a href="http://www.ed.ac.uk.ezproxy.is.ed.ac.uk/about/website/website&#45;terms&#45;conditions">Terms &amp; conditions </a>
                     </li>
 
                     <li>
-                        <a href="http://www.ed.ac.uk.ezproxy.is.ed.ac.uk/about/website/privacy" style="width: 90px;">Privacy &amp; cookies </a></li>
+                        <a href="http://www.ed.ac.uk.ezproxy.is.ed.ac.uk/about/website/privacy">Privacy &amp; cookies </a></li>
 
                     <li>
-                        <a href="http://www.ed.ac.uk.ezproxy.is.ed.ac.uk/about/website/accessibility" style="width: 90px;">Website accessibility </a>
+                        <a href="http://www.ed.ac.uk.ezproxy.is.ed.ac.uk/about/website/accessibility">Website accessibility </a>
                     </li>
 
                     <li>
-                        <a href="http://www.ed.ac.uk.ezproxy.is.ed.ac.uk/about/website/freedom&#45;information"  style="width: 90px;">Freedom of Information Publication Scheme </a>
+                        <a href="http://www.ed.ac.uk.ezproxy.is.ed.ac.uk/about/website/freedom&#45;information">Freedom of Information Publication Scheme </a>
                     </li>
                 </ul>
             </div>
-            <div class="footer-logo">
+            <div class="luc-logo">
                 <a target="_blank" href="http://libraryblogs.is.ed.ac.uk/">
                     <img title="Library and University Collections Blog" src="./../css/images/L&UCLogo.png">
                 </a>
