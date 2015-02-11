@@ -200,3 +200,48 @@ td.radiotd
     font-size: 30px;
     color: #975a34;
 }
+
+#footer {
+    text-align: center;
+    height: 100px;
+    margin-top: 20px;
+    padding-top: 10px;
+}
+
+#footer ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+}
+
+#footer ul li {
+    display: inline;
+    margin-right: 7px;
+}
+
+#footer ul li.last {
+    margin-right: 0;
+}
+
+.uoe-logo {
+    width: 10%;
+    float: left;
+}
+
+.footer-links {
+    width: 75%;
+    float: left;
+    margin-left: 20px;
+}
+
+#footer ul.links-top {
+    margin-bottom: 20px;
+}
+
+.luc-logo {
+    width: 10%;
+    float: right;
+    margin-right: 15px;
+    margin-top: 8px;
+}

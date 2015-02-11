@@ -42,7 +42,7 @@
                         <li class="dropdown">
                             <a href="./../games" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Metadata Games <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="./../games/gameMenu.php?theme=art">Dive into Art</a></li>
+                                <li><a href="./../games/gameMenu.php?theme=art">Tag It! Find It!</a></li>
                                 <li><a href="./../games/gameMenu.php">Class metadata games</a></li>
                                 <li><a href="./../games/gameMenu.php?theme=photo">Research Tagging</a></li>
                             </ul>
