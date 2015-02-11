@@ -81,8 +81,7 @@ td.typelabel
 
 .menutext
 {
-    font-family: arial;
-    /*font-style: italic;*/
+    font-family: Arial, Helvetica, sans-serif;
     color: #000000;
     font-size: medium;
     text-align: center;
@@ -95,8 +94,7 @@ table
 }
 
 input[type="submit"] {
-    box-shadow: 0px 0px 9px rgba(30,30,60, 0.3); -moz-box-shadow: 0px 0px 9px rgba(30,30,60, 0.75); -webkit-box-shadow: 0px 0px 9px rgba(30,30,60, 0.3);
-    font-size: 16px; color: #000000; font-weight: bold;  width: 160px; height: 50px; font-family: "arial";
+    font-size: 16px; color: #000000; font-weight: bold;  width: 160px; height: 50px; font-family: Arial, Helvetica, sans-serif;;
     background: url(./images/Save.jpg) no-repeat 0px 0px;
 }
 
@@ -105,11 +103,11 @@ input[type="radio"] {
 }
 
 body {
-    background-color : #FAF7CA;
+    background-color : #F0EAD9;
 }
 .central
 {
-    background-color : #FAF7CA;
+    background-color : #F0EAD9;
     margin: auto;
     text-align: center;
 }
@@ -196,4 +194,10 @@ td.radiotd
 textarea
 {
     width : 200px;
+}
+
+
+hr
+{
+    display: none;
 }
