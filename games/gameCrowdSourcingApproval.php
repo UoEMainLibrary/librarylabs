@@ -388,13 +388,7 @@ if (isset ($_POST['save']))
 
 			?>
 </div>
-<div class = "footer">
-    <p>
-
-
-    <hr/>
-    <p><?php session_write_close(); ?><a href="./gameMenu.php">Back To Menu</a></p>
-</div>
+<?php include 'footer.php';?>
 		</div> <!-- div central -->
 	</body>
 </html>

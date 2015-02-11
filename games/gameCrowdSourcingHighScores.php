@@ -150,11 +150,7 @@ $sec = "5";
             </div>';
 
 					?>
-            <div class = "footer-fail">
-            <br>
-                <hr/>
-                <p><a href="./gameMenu.php">Back To Menu</a></p>
-            </div>
+            <?php include 'footer.php';?>
             <!--<embed src ="pacman_beginning.mp3"></embed>-->
 		</div>
 	</body>

@@ -166,12 +166,7 @@
         </table>
         <input type="hidden" name="logging_in" value="logging_in" />
     </form>
-            <div class = "footer">
-                <hr/>
-                <p>
-                    <a href="game.html">Home</a>
-                <p>
-            </div>
+        <?php include 'footer.php';?>
         </div>
     </body>
 </html>
