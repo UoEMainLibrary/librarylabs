@@ -98,7 +98,7 @@ if (isset ($_POST['save']))
 <body>
 <div class = "central">
 <div class = "heading">
-    <a href="../index.html" title="Link to The DIU Web Area">
+    <a href="./gameMenu.php" title="Games Menu">
         <img src="<?php echo $banner; ?>" alt="The University of Edinburgh Image Collections" width="754" height="65" border="0" />
     </a>
     <h2>MODERATE IMAGE DATA</h2>
