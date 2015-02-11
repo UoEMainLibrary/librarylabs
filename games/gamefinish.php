@@ -31,7 +31,7 @@
 <body>
 <div class = "central">
     <div class = "heading">
-        <a href="gameMenu.php" title="DIU Games Home Link">
+        <a href="gameMenu.php" title="Metadata Games">
             <img src="<?php echo $banner; ?>" alt="The University of Edinburgh Image Collections" width="800" height="80" border="0" />
         </a>
         <hr />
