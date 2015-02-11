@@ -9,4 +9,6 @@
 	$lunausername = '';
 	$lunapassword = '';
 	$lunadbserver = '';
+    $publickey = '';
+    $privatekey = '';
 ?>

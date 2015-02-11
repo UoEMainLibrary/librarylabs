@@ -43,7 +43,7 @@
                             <a href="./games" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Metadata Games <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="./games/gameMenu.php?theme=art">Dive into Art</a></li>
-                                <li><a href="./games/gameMenu.php">Class metadata games</a></li>
+                                <li><a href="./games/gameMenu.php?theme=classic">Class metadata games</a></li>
                                 <li><a href="./games/gameMenu.php?theme=photo">Research Tagging</a></li>
                             </ul>
                         </li>
@@ -60,21 +60,21 @@
 
     <div class="row">
         <div class="col-lg-4">
-            <div class="link-box box-left">
+            <div class="link-box box-left home-box">
                 <a href="http://libraryblogs.is.ed.ac.uk/librarylabs">
                     <img title="Library Labs Blog" src="./css/images/BlogTile.png">
                 </a>
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="link-box box-middle">
+            <div class="link-box box-middle home-box">
                 <a href="./games">
                     <img title="Metadata Games" src="./css/images/MetadataGamesTile.png">
                 </a>
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="link-box box-right">
+            <div class="link-box box-right home-box">
                 <a href="./about">
                     <img title="About Library Labs" src="./css/images/AboutTile.png">
                 </a>
