@@ -81,7 +81,7 @@
 
         </form>';
 
-        if ($status == 'C')
+        if ($_SESSION['status'] == 'C')
         {
 
             echo'
