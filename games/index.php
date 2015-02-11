@@ -1,11 +1,5 @@
 <?php
         session_start();
-        session_unset();
-        session_destroy();
-        session_write_close();
-        setcookie(session_name(),'',0,'/');
-        session_regenerate_id(true);
-
 ?>
 
 <?php
@@ -14,7 +8,7 @@ include 'config/vars.php';
 $link = mysql_connect($dbserver, $username, $password);
 @mysql_select_db($database) or die( "Unable to select database".$database);
 
-$uun = $_SERVER["REMOTE_USER"];
+$uun = $_SESSION['uun'] = $_SERVER["REMOTE_USER"];
 
 $sql = "SELECT * FROM orders.USER WHERE uun ='".$uun."';";
 
@@ -96,6 +90,7 @@ if($row == null)
 } // end if the user doesn't exist
 else // the user does exist
 {
+
     if($row["first_name"] != "")
     {
         $first_name = $_SESSION['first_name'] = $row["first_name"];
@@ -174,6 +169,7 @@ else // the user does exist
 
     </header>
 
+    <?php //echo "We have uun: " . $_SESSION['uun'] . " with first name: " . $_SESSION['first_name'] . " and surname: " . $_SESSION['surname'] . " and email address: " . $_SESSION['email'] . "<br /> They have status: " . $_SESSION['status'] . " and type: " . $_SESSION['type']; ?>
 
     <div class="row">
         <div class="col-lg-4">
@@ -185,7 +181,7 @@ else // the user does exist
         </div>
         <div class="col-lg-4">
             <div class="link-box box-middle">
-                <a href="./gameMenu.php">
+                <a href="./gameMenu.php?theme=classic">
                     <img title="Tag Images Online" src="./../css/images/TagImagesTile.png">
                 </a>
             </div>

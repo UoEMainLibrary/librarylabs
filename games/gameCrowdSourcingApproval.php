@@ -1,12 +1,11 @@
 <?php
 
+session_start();
+include 'config/vars.php';
+$error = '';
+
 if (isset ($_POST['save']))
 {
-    session_start();
-
-    //STEP 1 Connect To Database
-    include 'config/vars.php';
-    $error = '';
     $link = mysql_connect($dbserver, $username, $password);
     @mysql_select_db($database) or die( "Unable to select database");
 
@@ -51,10 +50,9 @@ if (isset ($_POST['save']))
                  $status = 'M';
             }
 
-
             //update the user to value of 'C' (complete) based on the chosen uun
             $sql = "UPDATE orders.CROWD set status = '".$status."'  where id= ".$crowd_id.";";
-            $result=mysql_query($sql) or die( "A MySQL error has occurred.<br />Your Query: " . $sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+            $result = mysql_query($sql) or die( "A MySQL error has occurred.<br />Your Query: " . $sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
         }
     }
@@ -66,24 +64,8 @@ if (isset ($_POST['save']))
 
 <head>
     <meta name="generator" content="HTML Tidy for Linux/x86 (vers 11 February 2007), see www.w3.org" />
-    <title>Crowd Sourcing Game</title>
-    <?php
-    if ($_REQUEST['theme'] == 'art') {
-        echo '<link rel="stylesheet" type ="text/css" href="css/art.css">';
-        $banner = "images/artbanner.jpg";
-    } elseif ($_REQUEST['theme'] == 'photo') {
-        echo '<link rel="stylesheet" type ="text/css" href="css/photo.css">';
-        $banner = "images/photobanner.jpg";
-    } elseif ($_REQUEST['theme'] =='artAccessible')
-    {
-        echo '<link rel="stylesheet" type ="text/css" href="css/artAccessible.css">';
-        $banner = "images/artbanner.jpg";
-    }else {
-        echo '<link rel="stylesheet" type ="text/css" href="css/crowd.css">';
-        $banner = "images/crowdbanner.gif";
-    }
-
-    ?>
+    <title>Metadata Games</title>
+    <?php echo $_SESSION['stylesheet']; ?>
     <meta name="author" content="Library Online Editor" />
     <meta name="description" content=
     "Edinburgh University DIU Crowd Sourcing" />
@@ -95,20 +77,14 @@ if (isset ($_POST['save']))
 <body>
 <div class = "central">
 <div class = "heading">
-    <a href="gameMenu.php" title="DIU Games Home Link">
-        <img src="<?php echo $banner; ?>" alt="The University of Edinburgh Image Collections" width="800" height="80" border="0" />
+    <a href="gameMenu.php" title="Metadata Games">
+        <img src="<?php echo $_SESSION['banner']; ?>" alt="The University of Edinburgh Image Collections" width="800" height="80" border="0" />
     </a>
     <hr/>
         <h2>HELP US DESCRIBE OUR IMAGES!</h2>
     <hr/>
 </div>
 			<?php
-            session_start();
-
-            #DIU Numbers
-            #Scott Renton, 02/08/2010
-            include 'config/vars.php';
-            $error = '';
 
             $link = mysql_connect($dbserver, $username, $password);
             @mysql_select_db($database) or die( "Unable to select database".$database);
@@ -205,15 +181,14 @@ if (isset ($_POST['save']))
                 echo '<span class="bronzestars">*</span>';
             }
 
-
-            if ($_REQUEST['theme'] == 'art' and $_REQUEST['theme'] == 10)
+            if ($_SESSION['theme'] == 'art' and $_SESSION['images'] == 10)
             {
                 echo '<table style = "text-align: center;">
                                     <tr>
                                         <td>GAME OVER!</td>
                                     </tr>
                                     <tr>
-                                      <td class="menutext" colspan="2">Thanks for doing all that voting. Keep an eye on your scores- there could be a prize for you!</td>
+                                      <td class="menutext" colspan="2">Thanks for doing all that voting. Keep an eye on your scores - there could be a prize for you!</td>
                                     <tr> <td colspan="2"><input type="submit" name = "save" style = "width:500px;" value="Go to voting"/></td></tr>
                       </table>';
             }
@@ -221,7 +196,7 @@ if (isset ($_POST['save']))
             {
                 echo '<hr />';
 
-            if ($_REQUEST['theme'] == 'art' || $_REQUEST['theme'] == 'artAccessible')
+            if ($_SESSION['theme'] == 'art' || $_SESSION['theme'] == 'artAccessible')
                     {
                         $rand_sql = "
                                 select
@@ -360,7 +335,7 @@ if (isset ($_POST['save']))
                          <td class = "radiotd">?</td>
                          <td class = "radiotd">Bad</td>
                          </tr>
-                            <tr>
+                         <tr>
                          <td class="label">----------</td>
                          <td class="typelabel">----</td>
                          <td class="label">-----</td>
@@ -369,11 +344,9 @@ if (isset ($_POST['save']))
                          <td class = "radiotd">---</td>
                          </tr>';
 
-
                 $data_sql = "select c.id as crowd_id, u.first_name, u.surname, value_text, c.status, c.type, c.uun from orders.CROWD c, orders.USER u where c.uun = u.uun and c.status = 'M' and image_id = ".$image_id.";";
                 $data_result = mysql_query($data_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $data_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
                 $data_count = mysql_numrows($data_result);
-
 
                 $k = 0;
                 $crowds = array();
@@ -387,9 +360,9 @@ if (isset ($_POST['save']))
                     $value_text = mysql_result($data_result, $k, 'value_text');
                     $type = mysql_result($data_result, $k, 'type');
                     $uun = mysql_result($data_result, $k, 'uun');
-    //<input type="hidden" name = "crowd_id" value = '.$crowd_id[$k].'/>
+                    //<input type="hidden" name = "crowd_id" value = '.$crowd_id[$k].'/>
 
-                   // echo '<tr><td>From '.$first_name .' '.$surname.'</td><td> Value for '.$type.': </td><td><input type = "text" name = "value['.$k.']" value = "'.$value_text.'"</td><td><input type="checkbox" name="moderated['.$k.']" value = "'.$crowd_id.'|'.$uun.'"/></td></tr>';
+                    // echo '<tr><td>From '.$first_name .' '.$surname.'</td><td> Value for '.$type.': </td><td><input type = "text" name = "value['.$k.']" value = "'.$value_text.'"</td><td><input type="checkbox" name="moderated['.$k.']" value = "'.$crowd_id.'|'.$uun.'"/></td></tr>';
 
                     echo '<tr>
                     <td class="label">'.$first_name .' '.$surname.'</td>
@@ -407,14 +380,11 @@ if (isset ($_POST['save']))
 
                 echo '
                 </table>
-               </div><br><input type="submit" name = "save" style = "width:520px;" value="Submit votes and get new image" />
-    </form>';
+                </div><br><input type="submit" name = "save" style = "width:520px;" value="Submit votes and get new image" />
+                </form>';
 
              }
         }
-
-
-
 
 			?>
 </div>
@@ -423,7 +393,7 @@ if (isset ($_POST['save']))
 
 
     <hr/>
-    <p><?php session_write_close(); ?><a href="index.php">Back To Menu</a></p>
+    <p><?php session_write_close(); ?><a href="./gameMenu.php">Back To Menu</a></p>
 </div>
 		</div> <!-- div central -->
 	</body>

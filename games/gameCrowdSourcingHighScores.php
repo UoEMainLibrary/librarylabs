@@ -1,4 +1,6 @@
 <?php
+session_start();
+include 'config/vars.php';
 $page = $_SERVER['PHP_SELF'];
 $sec = "5";
 ?>
@@ -7,25 +9,8 @@ $sec = "5";
 
 <head>
     <meta name="generator" content="HTML Tidy for Linux/x86 (vers 11 February 2007), see www.w3.org" />
-    <title>Crowd Sourcing Game</title>
-    <?php
-    if ($_REQUEST['theme'] =='art')
-    {
-        echo '<link rel="stylesheet" type ="text/css" href="css/art.css">';
-        $banner = "images/artbanner.jpg";
-    }
-    elseif ($_REQUEST['theme'] =='photo')
-    {
-        echo '<link rel="stylesheet" type ="text/css" href="css/photo.css">';
-        $banner = "images/photobanner.jpg";
-    }
-    else
-    {
-        echo '<link rel="stylesheet" type ="text/css" href="css/crowd.css">';
-        $banner = "images/crowdbanner.gif";
-    }
-
-    ?>
+    <title>Metadata Games</title>
+    <?php echo $_SESSION['stylesheet']; ?>
     <meta http-equiv="refresh" content="<?php echo $sec?>;URL='<?php echo $page?>'">
     <meta name="author" content="Library Online Editor" />
     <meta name="description" content=
@@ -38,16 +23,15 @@ $sec = "5";
 <body>
 <div class = "central">
     <div class = "heading">
-        <a href="gameMenu.php" title="DIU Games Home Link">
-            <img src="<?php echo $banner; ?>" alt="The University of Edinburgh Image Collections" width="800" height="80" border="0" />
+        <a href="gameMenu.php" title="Metadata Games">
+            <img src="<?php echo $_SESSION['banner']; ?>" alt="The University of Edinburgh Image Collections" width="800" height="80" border="0" />
         </a>
                 <hr/>
                 <h2>HELP US DESCRIBE OUR IMAGES!</h2>
                 <hr/>
             </div>
 			<?php
-				include 'config/vars.php';
-												
+
 				//variables passed in from order form				
 				mysql_connect($dbserver, $username, $password);
 				@mysql_select_db($database) or die( "Unable to select database");
@@ -169,7 +153,7 @@ $sec = "5";
             <div class = "footer-fail">
             <br>
                 <hr/>
-                <p><a href="game.html">Back To Menu</a></p>
+                <p><a href="./gameMenu.php">Back To Menu</a></p>
             </div>
             <!--<embed src ="pacman_beginning.mp3"></embed>-->
 		</div>

@@ -1,9 +1,11 @@
 <?php
+
+include 'config/vars.php';
+session_start();
+$uun = $_SESSION['uun'];
+
 if (isset ($_POST['save'])) {
     $_POST['button'] = false;
-    include 'config/vars.php';
-    session_start();
-    $uun = $_SESSION['uun'];
 
     //variables passed in from order form
     mysql_connect($dbserver, $username, $password);
@@ -88,28 +90,10 @@ if (isset ($_POST['save'])) {
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
     <meta name="generator" content="HTML Tidy for Linux/x86 (vers 11 February 2007), see www.w3.org"/>
-    <title>Crowd Sourcing Game</title>
-    <?php
-    if ($_REQUEST['theme'] == 'art') {
-        echo '<link rel="stylesheet" type ="text/css" href="css/art.css">';
-        $banner = "images/artbanner.jpg";
-    } elseif ($_REQUEST['theme'] == 'photo') {
-        echo '<link rel="stylesheet" type ="text/css" href="css/photo.css">';
-        $banner = "images/photobanner.jpg";
-    } elseif ($_REQUEST['theme'] =='artAccessible')
-    {
-        echo '<link rel="stylesheet" type ="text/css" href="css/artAccessible.css">';
-        $banner = "images/artbanner.jpg";
-    }else {
-        echo '<link rel="stylesheet" type ="text/css" href="css/crowd.css">';
-        $banner = "images/crowdbanner.gif";
-    }
-
-
-    ?>
+    <title>Metadata Games</title>
+    <?php echo $_SESSION['stylesheet']; ?>
     <meta name="author" content="Library Online Editor"/>
-    <meta name="description" content=
-    "Edinburgh University DIU Crowd Sourcing"/>
+    <meta name="description" content="Edinburgh University DIU Crowd Sourcing"/>
     <meta name="distribution" content="global"/>
     <meta name="resource-type" content="document"/>
     <meta http-equiv="Content-Type" content="text/html; charset=us-ascii"/>
@@ -118,9 +102,9 @@ if (isset ($_POST['save'])) {
 <body>
 <div class="central">
 <div class="heading">
-    <a href="gameMenu.php" title="DIU Games Home Link">
-        <img src="<?php echo $banner; ?>" alt="The University of Edinburgh Image Collections" width="800" height="80"
-             border="0"/>
+    <a href="gameMenu.php" title="Metadata Games Menu">
+        <img src="<?php echo $_SESSION['banner']; ?>" alt="The University of Edinburgh Image Collections"
+             width="800" height="80" border="0"/>
     </a>
     <hr/>
     <h2>HELP US DESCRIBE OUR IMAGES!</h2>
@@ -129,16 +113,10 @@ if (isset ($_POST['save'])) {
 <!--heading-->
 
 <?php
-session_start();
-
-#DIU Numbers
-#Scott Renton, 02/08/2010
-include 'config/vars.php';
 $error = '';
 
 $link = mysql_connect($dbserver, $username, $password);
 @mysql_select_db($database) or die("Unable to select database" . $database);
-
 
 $mpointssql = "select count(*) as mtotal from CROWD where uun = '" . $_SESSION['uun'] . "' and status = 'M';";
 $mpointsresult = mysql_query($mpointssql) or die("A MySQL error has occurred.<br />Your Query: " . $mpointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
@@ -187,7 +165,7 @@ if ($_SESSION['points'] >= 200) {
 }
 
 
-if ($_REQUEST['theme'] == 'art' and $_REQUEST['images'] == 10)
+if ($_SESSION['theme'] == 'art' and $_REQUEST['images'] == 10)
 {
     echo '<div class="sourcebox">
               <form action = "gameCrowdSourcingApproval.php?theme=' . $_REQUEST['theme'] . '&images=0" method = "post">
@@ -228,7 +206,7 @@ else
     } else {
         echo '<hr />';
 
-        if ($_REQUEST['theme'] == 'art' || $_REQUEST['theme'] == 'artAccessible') {
+        if ($_SESSION['theme'] == 'art' || $_SESSION['theme'] == 'artAccessible') {
             if ($_REQUEST['images'] == 0) {
                 $rand_sql = "
                                     select
@@ -262,7 +240,7 @@ else
                                     ;
                                     ";
             }
-        } else if ($_REQUEST['theme'] == 'photo') {
+        } else if ($_SESSION['theme'] == 'photo') {
             {
                 $rand_sql = "
                                     select
@@ -350,7 +328,7 @@ else
         $divstyle = "height: " . $short_side . " px; width: 350px; vertical-align: middle;";
     }
 
-    if ($_REQUEST['theme'] != 'photo') {
+    if ($_SESSION['theme'] != 'photo') {
         echo '
                             <div class = "sourcebox">
                                 <div class = "plusheading">
@@ -375,12 +353,9 @@ else
     } else {
         $urlrecordid = $image_id;
     }
-    $urlsql = "select
-                                    recordid, objectid, imageid, institutionid, collectionid
-                                   from
-                                        OBJECTIMAGE
-                                   where
-                                    recordid = '" . $urlrecordid . "';";
+    $urlsql = "select recordid, objectid, imageid, institutionid, collectionid
+               from OBJECTIMAGE
+               where recordid = '" . $urlrecordid . "';";
 
     $urlresult = mysql_query($urlsql) or die("A MySQL error has occurred.<br />Your Query: " . $urlsql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
     $count = mysql_numrows($urlresult);
@@ -396,9 +371,9 @@ else
                     </div>
                         ';
 
-    if ($_REQUEST['theme'] == 'photo') {
+    if ($_SESSION['theme'] == 'photo') {
         echo '<div class="sourcebox">
-                        <form action = "gameCrowdSourcing.php?theme=' . $_REQUEST['theme'] . '&images=' . $images . '" method = "post">
+                        <form action = "gameCrowdSourcing.php&images=' . $images . '" method = "post">
                                 <table style = "text-align: center;">
                                     <h4>What can you tell us about this image?</h4>
                                     <tr>
@@ -435,7 +410,7 @@ else
                         </div>';
     } else {
         echo '<div class="sourcebox">
-                        <form action = "gameCrowdSourcing.php?theme=' . $_REQUEST['theme'] . '&images=' . $images . '" method = "post">
+                        <form action = "gameCrowdSourcing.php&images=' . $images . '" method = "post">
                                 <table style = "text-align: center;">
                                     <tr>
                                         <td class="menutext" colspan="2">Enter tags here- e.g. flag; tiger; hat</td>
@@ -460,7 +435,7 @@ else
 
 
     <hr/>
-    <p><a href="game.html">Back To Menu</a><?php session_write_close(); ?></p>
+    <p><a href="./gameMenu.php">Back To Menu</a><?php session_write_close(); ?></p>
 </div>
 </div>
 <!-- div central -->
