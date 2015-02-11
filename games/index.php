@@ -155,7 +155,7 @@ else // the user does exist
                             <a href="./" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Metadata Games <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="./gameMenu.php?theme=art">Dive into Art</a></li>
-                                <li><a href="./gameMenu.php">Class metadata games</a></li>
+                                <li><a href="./gameMenu.php?theme=classic">Class metadata games</a></li>
                                 <li><a href="./gameMenu.php?theme=photo">Research Tagging</a></li>
                             </ul>
                         </li>
@@ -173,21 +173,21 @@ else // the user does exist
 
     <div class="row">
         <div class="col-lg-4">
-            <div class="link-box box-left">
+            <div class="link-box box-left home-box">
                 <a href="./gameMenu.php?theme=art">
                     <img title="Dive into Art" src="./../css/images/DiveIntoTile.png">
                 </a>
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="link-box box-middle">
+            <div class="link-box box-middle home-box">
                 <a href="./gameMenu.php?theme=classic">
                     <img title="Tag Images Online" src="./../css/images/TagImagesTile.png">
                 </a>
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="link-box box-right">
+            <div class="link-box box-right home-box">
                 <a href="./gameMenu.php?theme=photo">
                     <img title="Research Zone" src="./../css/images/ResearchTile.png">
                 </a>

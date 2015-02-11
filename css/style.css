@@ -12,9 +12,16 @@
     width: 100%;
     height: 352px;
     padding: 10px;
-    background-color: #005784;
     text-align: center;
     padding-top: 26px;
+}
+
+.home-box {
+    background-color: #00a7cb;
+}
+
+.games-box {
+    background-color: #005784;;
 }
 
 #footer {
