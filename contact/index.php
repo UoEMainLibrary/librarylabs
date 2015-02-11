@@ -126,7 +126,7 @@
                         // if all the fields have been entered correctly and there are no recaptcha errors build an email message
                         if (($resp->is_valid) && (!isset($hasError))) {
                             $emailTo = 'lddt@mlist.is.ed.ac.uk'; // here you must enter the email address you want the email sent to
-                            $subject = 'A new message from: ' . $formAuthor . ' | ' . $formSubject; // This is how the subject of the email will look like
+                            $subject = 'Library Labs Feedback from: ' . $formAuthor . ' | ' . $formSubject; // This is how the subject of the email will look like
                             $body = "Email: $formEmail \n\nContent: $formContent  \n\n$formAuthor"; // This is the body of the email
                             $headers = 'From: <'.$formEmail.'>' . "\r\n" . 'Reply-To: ' . $formEmail . "\r\n" . 'Return-Path: ' . $formEmail; // Email headers
 
