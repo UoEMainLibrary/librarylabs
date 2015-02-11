@@ -476,7 +476,7 @@ $i = 0;
         </table>
     </form>
     <hr/>
-    <p><a href="game.html">Back To Menu</a></p>
+    <p><a href="gameMenu.php">Back To Menu</a></p>
 </div>
 </div>
 </body>
