@@ -173,21 +173,21 @@ else // the user does exist
 
     <div class="row">
         <div class="col-lg-4">
-            <div class="link-box box-left home-box">
+            <div class="link-box box-left games-box">
                 <a href="./gameMenu.php?theme=art">
                     <img title="Dive into Art" src="./../css/images/DiveIntoTile.png">
                 </a>
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="link-box box-middle home-box">
+            <div class="link-box box-middle games-box">
                 <a href="./gameMenu.php?theme=classic">
                     <img title="Tag Images Online" src="./../css/images/TagImagesTile.png">
                 </a>
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="link-box box-right home-box">
+            <div class="link-box box-right games-box">
                 <a href="./gameMenu.php?theme=photo">
                     <img title="Research Zone" src="./../css/images/ResearchTile.png">
                 </a>

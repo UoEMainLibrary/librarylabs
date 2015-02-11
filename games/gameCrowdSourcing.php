@@ -168,7 +168,7 @@ if ($_SESSION['points'] >= 200) {
 if ($_SESSION['theme'] == 'art' and $_REQUEST['images'] == 10)
 {
     echo '<div class="sourcebox">
-              <form action = "gameCrowdSourcingApproval.php?theme=' . $_REQUEST['theme'] . '&images=0" method = "post">
+              <form action = "gameCrowdSourcingApproval.php?images=0" method = "post">
                      <table style = "text-align: center;">
                                     <tr>
                                         <td class="menutext" colspan="2">Thanks for doing all that tagging. The time has come to vote on other people\'s tags!</td>
@@ -373,7 +373,7 @@ else
 
     if ($_SESSION['theme'] == 'photo') {
         echo '<div class="sourcebox">
-                        <form action = "gameCrowdSourcing.php&images=' . $images . '" method = "post">
+                        <form action = "gameCrowdSourcing.php?images=' . $images . '" method = "post">
                                 <table style = "text-align: center;">
                                     <h4>What can you tell us about this image?</h4>
                                     <tr>
@@ -410,7 +410,7 @@ else
                         </div>';
     } else {
         echo '<div class="sourcebox">
-                        <form action = "gameCrowdSourcing.php&images=' . $images . '" method = "post">
+                        <form action = "gameCrowdSourcing.php?images=' . $images . '" method = "post">
                                 <table style = "text-align: center;">
                                     <tr>
                                         <td class="menutext" colspan="2">Enter tags here- e.g. flag; tiger; hat</td>

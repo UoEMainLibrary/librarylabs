@@ -43,7 +43,7 @@
                             <a href="./../games" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Metadata Games <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="./../games/gameMenu.php?theme=art">Dive into Art</a></li>
-                                <li><a href="./../games/gameMenu.php">Class metadata games</a></li>
+                                <li><a href="./../games/gameMenu.php?theme=classic">Class metadata games</a></li>
                                 <li><a href="./../games/gameMenu.php?theme=photo">Research Tagging</a></li>
                             </ul>
                         </li>
@@ -59,7 +59,39 @@
 
 
     <div class="row">
+        <div class="col-lg-12">
+            <div class="container">
+                <p>Library Labs is a virtual laboratory for staff within the University of Edinburgh's Library and University Collections division to experiment with new ideas, technologies and collaborations, which can be used with our collections and services.</p>
 
+                <h3>Contributors</h3>
+                <ul class="contributors">
+                    <li>
+                        <h4>Claire Knowles</h4> <a href="mailto:claire.knowles@ed.ac.uk" class="contributor-email">claire.knowles@ed.ac.uk</a> <a href="https://twitter.com/cgknowles" target="_blank" class="contributor-twitter">@cgknowles</a>
+                        <p>Claire is the development manager, who is still keen to get involved with the nitty-gritty of coding. She has an unhealthy obsession with linking systems and getting our collections online.</p>
+                    </li>
+                    <li>
+                        <h4>Gavin Willshaw</h4> <a href="mailto:gavin.willshaw@ed.ac.uk" class="contributor-email">gavin.willshaw@ed.ac.uk</a> <a href="https://twitter.com/gwillshaw" target="_blank" class="contributor-twitter">@gwillshaw</a>
+                        <p>Gavin is our digital curator, involved in digitisation, description and access projects. He is always keen to play with new technology and engage with our users.</p>
+                    </li>
+                    <li>
+                        <h4>Ianthe Sutherland</h4> <a href="mailto:ianthe.sutherland@ed.ac.uk" class="contributor-email">ianthe.sutherland@ed.ac.uk</a> <a href="https://twitter.com/ianthe88" target="_blank" class="contributor-twitter">@ianthe88</a>
+                        <p>Ianthe is a web design whizz, who makes our sites look great as well as coding lots of the functionality.</p>
+                    </li>
+                    <li>
+                        <h4>Norman Rodger</h4> <a href="mailto:norman.rodger@ed.ac.uk" class="contributor-email">norman.rodger@ed.ac.uk</a> <a href="https://twitter.com/norman_rodger" target="_blank" class="contributor-twitter">@norman_rodger</a>
+                        <p>Norman leads the Projects and Innovations team, helping to bring new technologies to the Library. He is a key member of Europeana Cloud and Musical Instruments Museums Online international projects.</p>
+                    </li>
+                    <li>
+                        <h4>Robin Taylor</h4> <a href="mailto:robin.taylor@ed.ac.uk" class="contributor-email">robin.taylor@ed.ac.uk</a> <a href="https://twitter.com/robinhtaylor" target="_blank" class="contributor-twitter">@robinhtaylor</a>
+                        <p>Robin is a DSpace committer, he keeps us all on track with his ability to read through manuals and get to the bottom of any server issue.</p>
+                    </li>
+                    <li>
+                        <h4>Scott Renton</h4> <a href="mailto:scott.renton@ed.ac.uk" class="contributor-email">scott.renton@ed.ac.uk</a>
+                        <p>Scott is a metadata guru: he keeps us on track with our content, as well as being the brains behind our metadata games.</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <footer id="footer">
