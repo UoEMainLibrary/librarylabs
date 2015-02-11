@@ -209,25 +209,7 @@
 
   ?>
 </div>
-<div class="footer">
-
-    <div class = "footer">
-        <p>
-            <?php
-            if ($_SESSION['theme'] == 'art')
-            {
-                echo'<a href = "gameMenu.php?theme=artAccessible">Toggle accessible view</a></p>';
-            }
-            if ($_SESSION['theme'] == 'artAccessible')
-            {
-                echo'<a href = "gameMenu.php?theme=art">Toggle accessible view</a></p>';
-            }
-            ?>
-
-        <hr/>
-        <p><?php session_write_close(); ?><a href="index.php">Back To Menu</a></p>
-    </div>
-</div>
+<?php include 'footer.php';?>
 </body>
 
 </html>

@@ -430,13 +430,7 @@ else
     }
 }
 ?>
-<div class="footer">
-    <p>
-
-
-    <hr/>
-    <p><a href="./gameMenu.php">Back To Menu</a><?php session_write_close(); ?></p>
-</div>
+<?php include 'footer.php';?>
 </div>
 <!-- div central -->
 </body>

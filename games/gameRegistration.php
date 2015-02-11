@@ -78,12 +78,7 @@
                 </table>
 				</form>
             </div>
-            <div class = "footer"></div>
-				<HR/>
-				<p><?php session_write_close(); ?>
-					<a href="game.html">Home</a>
-                <p>
-            </div>
+            <?php include 'footer.php';?>
         </div>
     </body>
 </html>

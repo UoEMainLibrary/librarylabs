@@ -104,18 +104,18 @@
             <div class="footer-links">
                 <ul>
                     <li>
-                        <a href="http://www.ed.ac.uk.ezproxy.is.ed.ac.uk/about/website/website&#45;terms&#45;conditions">Terms &amp; conditions </a>
+                        <a href="http://www.ed.ac.uk/about/website/website&#45;terms&#45;conditions">Terms &amp; conditions </a>
                     </li>
 
                     <li>
-                        <a href="http://www.ed.ac.uk.ezproxy.is.ed.ac.uk/about/website/privacy">Privacy &amp; cookies </a></li>
+                        <a href="http://www.ed.ac.uk/about/website/privacy">Privacy &amp; cookies </a></li>
 
                     <li>
-                        <a href="http://www.ed.ac.uk.ezproxy.is.ed.ac.uk/about/website/accessibility">Website accessibility </a>
+                        <a href="http://www.ed.ac.uk/about/website/accessibility">Website accessibility </a>
                     </li>
 
                     <li>
-                        <a href="http://www.ed.ac.uk.ezproxy.is.ed.ac.uk/about/website/freedom&#45;information">Freedom of Information Publication Scheme </a>
+                        <a href="http://www.ed.ac.uk/about/website/freedom&#45;information">Freedom of Information Publication Scheme </a>
                     </li>
                 </ul>
             </div>
