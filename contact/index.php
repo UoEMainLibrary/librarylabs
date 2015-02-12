@@ -11,7 +11,7 @@
     <!-- Bootstrap -->
     <link href="./../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./../css/style.css">
-    <title>Contact Libray Labs</title>
+    <title>Contact Library Labs</title>
 </head>
 <body>
 
