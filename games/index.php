@@ -175,7 +175,7 @@ else // the user does exist
         <div class="col-lg-4">
             <div class="link-box box-left games-box">
                 <a href="./gameMenu.php?theme=art">
-                    <img title="Dive into Art" src="./../css/images/TagItTile.png">
+                    <img title="Tag It! Find It!" src="./../css/images/TagItTile.png">
                 </a>
             </div>
         </div>
