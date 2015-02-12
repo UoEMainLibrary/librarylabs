@@ -10,7 +10,7 @@
         <div class="footer-links">
             <ul class="links-top">
                 <li>
-                    <a href="./gameMenu.php">Game Menu</a></a>
+                    <a href="http://librarylabs.ed.ac.uk/games">Game Menu</a></a>
                 </li>
                 <li>
                     <a href="http://librarylabs.ed.ac.uk">Library Labs Home</a>
@@ -39,13 +39,13 @@
                 if($_SESSION['theme'] == 'photo')
                 {
                 ?>
-                    <img title="Library and University Collections Blog" src="./../css/images/L&UCLogoFooter.png">
+                    <img title="Library and University Collections Blog" src="./../css/images/L&UCLogoFooter.png" border="0">
                 <?php
                 }
                 else
                 {
                 ?>
-                    <img title="Library and University Collections Blog" src="./../css/images/L&UCLogoFooter2.png">
+                    <img title="Library and University Collections Blog" src="./../css/images/L&UCLogoFooter2.png" border="0">
                 <?php
                 }
                 ?>
