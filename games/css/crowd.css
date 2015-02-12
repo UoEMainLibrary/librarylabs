@@ -1,143 +1,132 @@
 @font-face {
     font-family: "press";
-    src: url(../fonts/PressStart2P.ttf) format("truetype");
+    src: url("../fonts/PressStart2P.ttf") format("truetype");
 }
+
 @font-face {
     font-family: "zarb";
-    src: url(../fonts/zarbville_nbp.ttf) format("truetype");
+    src: url("../fonts/zarbville_nbp.ttf") format("truetype");
 }
+
 @font-face {
     font-family: "atari";
-    src: url(./fonts/atari%20full.ttf) format("truetype");
+    src: url("./fonts/atari%20full.ttf") format("truetype");
 }
+
 @font-face {
     font-family: "mayfair";
-    src: url(../fonts/MAYFAIR_B.ttf) format("truetype");
+    src: url("../fonts/MAYFAIR_B.ttf") format("truetype");
 }
+
 div, h3, h1, h2, h4, p, td, tr, i, b, a {
-    font-family: "press";
+    font-family: Courier, sans-serif;;
 }
 
-i, b, a, p, td, tr
-{
-    color: #afd24c;
+i, b, a, p, td, tr {
+    color: #1aa5c7;
     font-size: 14px;
 }
-p
-{
+
+p {
     text-align: center;
 }
 
-h3
-{
-    color: #afd24c;
+h3 {
+    color: #1aa5c7;
+    font-size: 120%;
     text-align: center;
-    font-size:120%;
 }
 
-h1, h2
-{
-    color: #afd24c;
+h1, h2 {
+    color: #1aa5c7;
+    font-size: 140%;
     text-align: center;
-    font-size:140%;
 }
 
-h4
-{
-    color: #afd24c;
+h4 {
+    color: #1aa5c7;
     font-size: 14px;
     text-align: center;
 }
 
-h5
-{
-    color: #afd24c;
+h5 {
+    color: #1aa5c7;
     font-size: 13px;
     text-align: center;
 }
 
-th
-{
+th {
     text-align: right;
 }
 
-td, th
-{
+td, th {
     padding: 5px;
 }
 
-td
-{
+td {
     text-align: right;
 }
 
-td.menu
-{
+td.menu {
     text-align: center;
 }
 
-td.label
-{
-    width:400px;
+td.label {
+    width: 400px;
 }
 
-td.typelabel
-{
-    width:100px;
+td.typelabel {
+    width: 100px;
 }
 
-.menutext
-{
-    font-family: arial;
-    /*font-style: italic;*/
-    color: #afd24c;
+.menutext {
+    color: #1aa5c7;
+    font-family: Courier, sans-serif;;
     font-size: medium;
     text-align: center;
 }
 
-
-table
-{
+table {
     margin: auto;
 }
 
 input[type="submit"] {
-    box-shadow: 0px 0px 9px rgba(30,30,60, 0.3); -moz-box-shadow: 0px 0px 9px rgba(30,30,60, 0.75); -webkit-box-shadow: 0px 0px 9px rgba(30,30,60, 0.3);
-    font-size: 16px; color: #afd24c; font-weight: bold;  width: 200px; height: 50px; font-family: "press";
-    background: url(./images/Save.jpg) no-repeat 0px 0px;
+    background: url("./images/Save.jpg") no-repeat scroll 0px 0px transparent;
+    color: #1aa5c7;
+    font-family: Courier, sans-serif;;
+    font-size: 20px;
+    font-weight: bold;
+    height: 50px;
+    width: 200px;
 }
 
 input[type="radio"] {
-width:40px;
+    width: 40px;
 }
 
 body {
-    background-color : #333928;
+    background-color: #333333;
 }
-.central
-{
-    background-color : #333928;
+
+.central {
+    background-color: #333333;
     margin: auto;
     text-align: center;
 }
 
-.image
-{
+.image {
     margin: auto;
 }
 
-input
-{
+input {
     width: 300px;
 }
 
-.plusheading h3
-{
+.plusheading h3 {
     font-size: 15px;
 }
 
-.heading h4
-{
+.heading h4 {
     font-size: 16px;
 }
 
@@ -145,73 +134,64 @@ input
     padding-top: 5px;
 }
 
-.box h4
-{
+.box h4 {
     font-size: 14px;
 }
 
-hr
-{
-    color:  #afd24c;
+hr {
+    color: #fc2d48;
 }
 
-td.instructions
-{
+td.instructions {
     font-size: 12px;
 }
-.radiobox
-{
-    width : 800px;
-    padding-top: 5px;
+
+.radiobox {
     margin: auto;
+    padding-top: 5px;
+    width: 800px;
 }
 
-table.radio
-{
-    width : 800px;
+table.radio {
     text-align: center;
+    width: 800px;
 }
-td.radiotd
-{
+
+td.radiotd {
     max-width: 40px;
     text-align: center;
 }
 
-.blink
-{
+.blink {
     text-decoration: blink;
 }
 
-.goldstars
-{
-    font-size: 30px;
+.goldstars {
     color: #cb8a00;
+    font-size: 30px;
 }
 
-.silverstars
-{
-    font-size: 30px;
+.silverstars {
     color: #a8a8a8;
-
+    font-size: 30px;
 }
 
-.bronzestars
-{
-    font-size: 30px;
+.bronzestars {
     color: #975a34;
+    font-size: 30px;
 }
 
 #footer {
-    text-align: center;
     height: 100px;
     margin-top: 20px;
     padding-top: 10px;
+    text-align: center;
 }
 
 #footer ul {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
     vertical-align: top;
 }
 
@@ -221,18 +201,18 @@ td.radiotd
 }
 
 #footer ul li.last {
-    margin-right: 0;
+    margin-right: 0px;
 }
 
 .uoe-logo {
-    width: 10%;
     float: left;
+    width: 10%;
 }
 
 .footer-links {
-    width: 75%;
     float: left;
     margin-left: 20px;
+    width: 75%;
 }
 
 #footer ul.links-top {
@@ -240,8 +220,8 @@ td.radiotd
 }
 
 .luc-logo {
-    width: 10%;
     float: right;
     margin-right: 15px;
     margin-top: 8px;
+    width: 10%;
 }
