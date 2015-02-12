@@ -107,7 +107,7 @@ if (isset ($_POST['save'])) {
              width="800" height="80" border="0"/>
     </a>
     <hr/>
-    <h2>HELP US DESCRIBE OUR IMAGES!</h2>
+    <h2>HELP US DESCRIBE OUR IMAGES</h2>
     <hr/>
 </div>
 <!--heading-->
@@ -171,7 +171,7 @@ if ($_SESSION['theme'] == 'art' and $_REQUEST['images'] == 10)
               <form action = "gameCrowdSourcingApproval.php?images=0" method = "post">
                      <table style = "text-align: center;">
                                     <tr>
-                                        <td class="menutext" colspan="2">Thanks for doing all that tagging. The time has come to vote on other people\'s tags!</td>
+                                        <td class="menutext" colspan="2">Thanks for doing all that tagging. The time has come to vote on other people\'s tags</td>
                                     </tr>
                                     <tr> <td colspan="2"><input type="submit" name = "save" style = "width:500px;" value="Go to voting"/></td></tr>
                       </table>
