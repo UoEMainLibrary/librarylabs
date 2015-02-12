@@ -27,7 +27,7 @@ $sec = "5";
             <img src="<?php echo $_SESSION['banner']; ?>" alt="The University of Edinburgh Image Collections" width="800" height="80" border="0" />
         </a>
                 <hr/>
-                <h2>HELP US DESCRIBE OUR IMAGES!</h2>
+                <h2>HELP US DESCRIBE OUR IMAGES</h2>
                 <hr/>
             </div>
 			<?php

@@ -29,7 +29,7 @@ if (isset ($_POST['save']))
 
             $vote_insert_sql = "insert into orders.VOTES (crowd_id, submitter, voter, image_id, quality) values (".$crowd_id.", '".$uun."', '".$_SESSION['uun']."','".$image_id."',".$action.");";
             $vote_insert_result=mysql_query($vote_insert_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $vote_insert_result . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-            echo 'SQL'.$vote_insert_sql;
+            //echo 'SQL'.$vote_insert_sql;
 
             $vote_sql = "select sum(quality) as votes from orders.VOTES where id = ".$crowd_id.";";
             $vote_result=mysql_query($vote_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $vote_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
@@ -81,7 +81,7 @@ if (isset ($_POST['save']))
         <img src="<?php echo $_SESSION['banner']; ?>" alt="The University of Edinburgh Image Collections" width="800" height="80" border="0" />
     </a>
     <hr/>
-        <h2>HELP US DESCRIBE OUR IMAGES!</h2>
+        <h2>HELP US DESCRIBE OUR IMAGES</h2>
     <hr/>
 </div>
 			<?php
@@ -181,7 +181,7 @@ if (isset ($_POST['save']))
                 echo '<span class="bronzestars">*</span>';
             }
 
-            if ($_SESSION['theme'] == 'art' and $_SESSION['images'] == 10)
+            if ($_SESSION['theme'] == 'art' and $_REQUEST['images'] == 10)
             {
                 echo '<table style = "text-align: center;">
                                     <tr>
