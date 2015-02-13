@@ -21,15 +21,16 @@
     }
 
     ?>
-    <meta name="author" content="Library Online Editor" />
+    <meta name="author" content="Library Digital Development" />
     <meta name="description" content=
-    "Edinburgh University DIU Crowd Sourcing" />
+    "Edinburgh University Library Crowd Sourcing" />
     <meta name="distribution" content="global" />
     <meta name="resource-type" content="document" />
     <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
 </head>
 
 <body>
+<?php include_once("analyticstracking.php") ?>
 <div class = "central">
     <div class = "heading">
         <a href="gameMenu.php" title="DIU Games Home Link">

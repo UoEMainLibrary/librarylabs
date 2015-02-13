@@ -11,10 +11,10 @@
     <!-- Bootstrap -->
     <link href="./../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./../css/style.css">
-    <title>Contact Libray Labs</title>
+    <title>Contact Library Labs</title>
 </head>
 <body>
-
+<?php include_once("./../analyticstracking.php") ?>
 <div class="container">
     <header>
         <div class="container-fluid">
@@ -49,7 +49,7 @@
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="./../contact">Contact</span></a></li>
+                        <li class="active"><a href="./../contact/index.php">Contact</span></a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div><!--/.container-fluid -->
@@ -62,7 +62,6 @@
         <div class="col-lg-12">
             <div class="container">
                 <h3>Contact Library Labs</h3>
-                <p>If you would like to provide feedback about Library Labs or have any questions, then please contact us using the form below:</p>
 
                 <?php
                 // Script for the form has been downloaded from http://chrisplaneta.com/freebies/php_contact_form_script_with_recaptcha/
@@ -70,8 +69,11 @@
                 $captchaErrorMsg = false;
 
                 //If the form is submitted:
-                if(isset($_POST['submitted'])) {
+                if(isset($_POST['submitted'])) {?>
 
+                    <p>If you would like to provide feedback about Library Labs or have any questions, then please contact us using the form below:</p>
+
+                <?php
                     //load recaptcha file
                     require_once('./../assets/captcha/recaptchalib.php');
                     include './../games/config/vars.php';

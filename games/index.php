@@ -126,7 +126,7 @@ else // the user does exist
     <title>Library Labs Metadata Games</title>
 </head>
 <body>
-
+<?php include_once("./../analyticstracking.php") ?>
 <div class="container">
     <header>
         <div class="container-fluid">
@@ -161,7 +161,7 @@ else // the user does exist
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="./">Contact</span></a></li>
+                        <li><a href="./../contact/index.php">Contact</span></a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div><!--/.container-fluid -->

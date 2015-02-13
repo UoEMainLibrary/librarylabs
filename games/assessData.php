@@ -68,18 +68,17 @@ if (isset ($_POST['save']))
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 
 <head>
-    <meta name="generator" content="HTML Tidy for Linux/x86 (vers 11 February 2007), see www.w3.org" />
     <title>Metadata Games</title>
     <?php echo $_SESSION['stylesheet'];?>
-    <meta name="author" content="Library Online Editor" />
-    <meta name="description" content=
-    "Edinburgh University Library Online: Book purchase request forms for staff: Medicine and Veterinary" />
+    <meta name="author" content="Library Digital Development" />
+    <meta name="description" content= "Edinburgh University Library Metadata Games" />
     <meta name="distribution" content="global" />
     <meta name="resource-type" content="document" />
     <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
 </head>
 
 <body>
+<?php include_once("./../analyticstracking.php") ?>
 <div class = "central">
 <div class = "heading">
     <a href="gameMenu.php" title="Metadata Games Menu">

@@ -11,10 +11,10 @@
     <!-- Bootstrap -->
     <link href="./../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./../css/style.css">
-    <title>About Libray Labs</title>
+    <title>About Library Labs</title>
 </head>
 <body>
-
+<?php include_once("./../analyticstracking.php") ?>
 <div class="container">
     <header>
         <div class="container-fluid">
@@ -49,7 +49,7 @@
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="./../contact">Contact</span></a></li>
+                        <li><a href="./../contact/index.php">Contact</span></a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div><!--/.container-fluid -->

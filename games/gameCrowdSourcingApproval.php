@@ -63,10 +63,9 @@ if (isset ($_POST['save']))
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 
 <head>
-    <meta name="generator" content="HTML Tidy for Linux/x86 (vers 11 February 2007), see www.w3.org" />
     <title>Metadata Games</title>
     <?php echo $_SESSION['stylesheet']; ?>
-    <meta name="author" content="Library Online Editor" />
+    <meta name="author" content="Library Digital Development" />
     <meta name="description" content=
     "Edinburgh University DIU Crowd Sourcing" />
     <meta name="distribution" content="global" />
@@ -75,6 +74,7 @@ if (isset ($_POST['save']))
 </head>
 
 <body>
+<?php include_once("./../analyticstracking.php") ?>
 <div class = "central">
 <div class = "heading">
     <a href="gameMenu.php" title="Metadata Games">
