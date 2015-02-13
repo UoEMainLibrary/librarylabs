@@ -14,7 +14,7 @@
     <title>Welcome to Library Labs</title>
 </head>
 <body>
-
+<?php include_once("./analyticstracking.php") ?>
 <div class="container">
     <header>
         <div class="container-fluid">
