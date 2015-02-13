@@ -8,18 +8,18 @@ $sec = "5";
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 
 <head>
-    <meta name="generator" content="HTML Tidy for Linux/x86 (vers 11 February 2007), see www.w3.org" />
     <?php echo $_SESSION['stylesheet']; ?>
     <meta http-equiv="refresh" content="<?php echo $sec?>;URL='<?php echo $page?>'">
-    <meta name="author" content="Library Online Editor" />
+    <meta name="author" content="Library Digital Development" />
     <meta name="description" content=
-    "Edinburgh University DIU Crowd Sourcing" />
+    "Edinburgh University Library Crowd Sourcing" />
     <meta name="distribution" content="global" />
     <meta name="resource-type" content="document" />
     <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
 </head>
 
 <body>
+<?php include_once("./../analyticstracking.php") ?>
 <div class = "central">
     <div class = "heading">
         <a href="gameMenu.php?theme=photo" title="Research Zone">
