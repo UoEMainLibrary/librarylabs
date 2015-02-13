@@ -161,7 +161,7 @@ else // the user does exist
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="./../contact/index.php">Contact</span></a></li>
+                        <li><a href="./../contact">Contact</span></a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div><!--/.container-fluid -->
