@@ -168,7 +168,7 @@ else
                     and r.image_id = i.image_id
                     and i.collection = c.id
                     and i.collection = 20
-                                                order by rand() limit 1
+                                                order by rand() limit 1;
                                                 ";
     }
     else
@@ -190,7 +190,7 @@ else
                     and r.image_id = i.image_id
                     and i.collection = c.id
                     and not(i.collection = 20)
-                                                order by rand() limit 1
+                                                order by rand() limit 1;
                                                 ";
     }
 
@@ -320,8 +320,8 @@ $checkfield = 'Work Record Id';
 if (strlen($image_id)< 7 )
 
 {
-    $image_id = str_pad($image_id, 7, "0", STR_PAD_LEFT);
-    $link_id = $image_id."c";
+    $link_id = str_pad($image_id, 7, "0", STR_PAD_LEFT);
+    $link_id = $link_id."c";
     $checkfield = 'Repro Link Id';
 }
 else
@@ -429,9 +429,14 @@ $value_text_array[$l] = $value_text;
     $nbr_line = 0;
     // Loop to prepare the display of 100 product lines
 
+    //echo '<br />Image id: ' . $image_id;
+
     mysql_connect($dbserver, $username, $password);
     @mysql_select_db($database) or die( "Unable to select database");
-    $data_sql = "select c.id as crowd_id, u.first_name, u.surname, value_text, c.status, c.type, c.uun from orders.CROWD c, orders.USER u where c.uun = u.uun and c.status = 'P' and image_id = ".$image_id.";";
+    $data_sql = "select c.id as crowd_id, u.first_name, u.surname, value_text, c.status, c.type, c.uun from orders.CROWD c, orders.USER u where c.uun = u.uun and c.status = 'P' and image_id = '".$image_id."';";
+
+    //echo '<br />SQL: ' . $data_sql;
+
     $data_result = mysql_query($data_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $data_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
     $data_count = mysql_numrows($data_result);
 
