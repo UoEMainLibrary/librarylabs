@@ -10,6 +10,8 @@ $link = mysql_connect($dbserver, $username, $password);
 
 $uun = $_SESSION['uun'] = $_SERVER["REMOTE_USER"];
 
+//echo "<br />UUN IS: " . $_SERVER['REMOTE_USER'];
+
 $sql = "SELECT * FROM orders.USER WHERE uun ='".$uun."';";
 
 $result = mysql_query($sql,$link) or die( "A MySQL error has occurred.<br />Your Query: " . $sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
@@ -46,6 +48,12 @@ if($row == null)
                 $email = $_SESSION['email'] = $info[$i]["mail"][0];
                 $affiliation = $info[$i]["edupersonaffiliation"][0];
             }
+        }
+        else
+        {
+            $first_name = $_SESSION['first_name'] = $uun;
+            $email = $_SESSION['email'] = $uun;
+            $affiliation = "visitorstudent";
         }
 
         //echo "LDAP INFO: " . $first_name . " " . $surname . " with email address " . $email . " and affiliation " . $affiliation . ". <br />";
