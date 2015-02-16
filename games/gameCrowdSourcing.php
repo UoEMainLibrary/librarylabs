@@ -167,7 +167,7 @@ if ($_SESSION['points'] >= 200) {
 }
 echo "</h4>";
 
-if ($_SESSION['theme'] == 'art' and $_SESSION['images'] == 10)
+if ($_SESSION['theme'] == 'art' and $_SESSION['images'] >= 10)
 {
     echo '<div class="sourcebox">
               <form action = "gameCrowdSourcingApproval.php" method = "post">
