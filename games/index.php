@@ -56,16 +56,16 @@ if($row == null)
         {
             case "staff":
             case "visitorstaff":
-                $type = "U";
+                $type = "S";
                 break;
             case "studentug":
             case "studentpg":
             case "alumni":
             case "visitorstudent":
-                $type = "S";
+                $type = "U";
                 break;
             default:
-                $type = "S";
+                $type = "U";
                 break;
         }
 

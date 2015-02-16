@@ -32,12 +32,12 @@ if (isset ($_POST['save'])) {
             $subject_array = explode(";", $subject);
             foreach ($subject_array as $subject_unit) {
                 $subject_unit = ucwords(trim($subject_unit));
-                $insert_sql = "insert into orders.CROWD (image_id, value_text, uun, status ) values ('$image_id', '$subject_unit', '$uun', 'P');";
+                $insert_sql = "insert into orders.CROWD (image_id, value_text, uun, status, game ) values ('$image_id', '$subject_unit', '$uun', 'P', '" . $_SESSION['game'] . "');";
                 $insert_result = mysql_query($insert_sql) or die("A MySQL error has occurred.<br />Your Query: " . $insert_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
             }
         } else {
             //echo '<div class = box><h4>Person : '.$person.'</h4></div>';
-            $insert_sql = "insert into orders.CROWD (image_id, value_text,uun, status ) values ('$image_id', '$subject', '$uun', 'P');";
+            $insert_sql = "insert into orders.CROWD (image_id, value_text,uun, status, game ) values ('$image_id', '$subject', '$uun', 'P', '" . $_SESSION['game'] . "');";
             $insert_result = mysql_query($insert_sql) or die("A MySQL error has occurred.<br />Your Query: " . $insert_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
         }
     }
@@ -45,44 +45,46 @@ if (isset ($_POST['save'])) {
     if ($creator != '') {
 
         $creator = ucwords(trim($creator));
-        $insert_sql = "insert into orders.CROWD (image_id, value_text, type, uun, status ) values ('$image_id', '$creator', 'creator_research', '$uun', 'P');";
+        $insert_sql = "insert into orders.CROWD (image_id, value_text, type, uun, status, game ) values ('$image_id', '$creator', 'creator_research', '$uun', 'P', '" . $_SESSION['game'] . "');";
         $insert_result = mysql_query($insert_sql) or die("A MySQL error has occurred.<br />Your Query: " . $insert_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
     }
 
     if ($date != '') {
 
         $date = ucwords(trim($date));
-        $insert_sql = "insert into orders.CROWD (image_id, value_text, type, uun, status ) values ('$image_id', '$date', 'date_research', '$uun', 'P');";
+        $insert_sql = "insert into orders.CROWD (image_id, value_text, type, uun, status, game ) values ('$image_id', '$date', 'date_research', '$uun', 'P', '" . $_SESSION['game'] . "');";
         $insert_result = mysql_query($insert_sql) or die("A MySQL error has occurred.<br />Your Query: " . $insert_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
     }
 
     if ($location != '') {
 
         $location = ucwords(trim($location));
-        $insert_sql = "insert into orders.CROWD (image_id, value_text, type, uun, status ) values ('$image_id', '$location', 'location_research', '$uun', 'P');";
+        $insert_sql = "insert into orders.CROWD (image_id, value_text, type, uun, status, game ) values ('$image_id', '$location', 'location_research', '$uun', 'P', '" . $_SESSION['game'] . "');";
         $insert_result = mysql_query($insert_sql) or die("A MySQL error has occurred.<br />Your Query: " . $insert_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
     }
 
     if ($production != '') {
 
         $production = ucwords(trim($production));
-        $insert_sql = "insert into orders.CROWD (image_id, value_text, type, uun, status ) values ('$image_id', '$production', 'production_research', '$uun', 'P');";
+        $insert_sql = "insert into orders.CROWD (image_id, value_text, type, uun, status, game ) values ('$image_id', '$production', 'production_research', '$uun', 'P', '" . $_SESSION['game'] . "');";
         $insert_result = mysql_query($insert_sql) or die("A MySQL error has occurred.<br />Your Query: " . $insert_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
     }
 
     if ($transcription != '') {
 
         $transcription = ucwords(trim($transcription));
-        $insert_sql = "insert into orders.CROWD (image_id, value_text, type, uun, status ) values ('$image_id', '$transcription', 'transcription', '$uun', 'P');";
+        $insert_sql = "insert into orders.CROWD (image_id, value_text, type, uun, status, game ) values ('$image_id', '$transcription', 'transcription', '$uun', 'P', '" . $_SESSION['game'] . "');";
         $insert_result = mysql_query($insert_sql) or die("A MySQL error has occurred.<br />Your Query: " . $insert_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
     }
 
     if ($translation != '') {
 
         $translation = ucwords(trim($translation));
-        $insert_sql = "insert into orders.CROWD (image_id, value_text, type, uun, status ) values ('$image_id', '$translation', 'translation_research', '$uun', 'P');";
+        $insert_sql = "insert into orders.CROWD (image_id, value_text, type, uun, status, game ) values ('$image_id', '$translation', 'translation_research', '$uun', 'P', '" . $_SESSION['game'] . "');";
         $insert_result = mysql_query($insert_sql) or die("A MySQL error has occurred.<br />Your Query: " . $insert_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
     }
+
+    $_SESSION['images'] = $_SESSION['images'] + 1;
     $_REQUEST['image_id'] = null;
 }
 ?>
@@ -118,27 +120,27 @@ $error = '';
 $link = mysql_connect($dbserver, $username, $password);
 @mysql_select_db($database) or die("Unable to select database" . $database);
 
-$mpointssql = "select count(*) as mtotal from CROWD where uun = '" . $_SESSION['uun'] . "' and status = 'M';";
+$mpointssql = "select count(*) as mtotal from CROWD where uun = '" . $_SESSION['uun'] . "' and status = 'M' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
 $mpointsresult = mysql_query($mpointssql) or die("A MySQL error has occurred.<br />Your Query: " . $mpointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
 $mpoints = mysql_result($mpointsresult, 0, 'mtotal');
 
-$vpointssql = "select count(*) as vtotal from VOTES where voter = '" . $_SESSION['uun'] . "';";
+$vpointssql = "select count(*) as vtotal from VOTES where voter = '" . $_SESSION['uun'] . "' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
 $vpointsresult = mysql_query($vpointssql) or die("A MySQL error has occurred.<br />Your Query: " . $vpointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
 $vpoints = mysql_result($vpointsresult, 0, 'vtotal');
 
-$apointssql = "select count(*) as atotal from CROWD where uun = '" . $_SESSION['uun'] . "' and status = 'A';";
+$apointssql = "select count(*) as atotal from CROWD where uun = '" . $_SESSION['uun'] . "' and status = 'A' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
 $apointsresult = mysql_query($apointssql) or die("A MySQL error has occurred.<br />Your Query: " . $apointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
 $apoints = mysql_result($apointsresult, 0, 'atotal');
 
-$ppointssql = "select count(*) as ptotal from CROWD where uun = '" . $_SESSION['uun'] . "' and status = 'P';";
+$ppointssql = "select count(*) as ptotal from CROWD where uun = '" . $_SESSION['uun'] . "' and status = 'P' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
 $ppointsresult = mysql_query($ppointssql) or die("A MySQL error has occurred.<br />Your Query: " . $ppointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
 $ppoints = mysql_result($ppointsresult, 0, 'ptotal');
 
-$upointssql = "select sum(quality) as utotal from VOTES where submitter = '" . $_SESSION['uun'] . "';";
+$upointssql = "select sum(quality) as utotal from VOTES where submitter = '" . $_SESSION['uun'] . "' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
 $upointsresult = mysql_query($upointssql) or die("A MySQL error has occurred.<br />Your Query: " . $upointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
 $upoints = mysql_result($upointsresult, 0, 'utotal');
@@ -165,10 +167,10 @@ if ($_SESSION['points'] >= 200) {
 }
 echo "</h4>";
 
-if ($_SESSION['theme'] == 'art' and $_REQUEST['images'] == 10)
+if ($_SESSION['theme'] == 'art' and $_SESSION['images'] == 10)
 {
     echo '<div class="sourcebox">
-              <form action = "gameCrowdSourcingApproval.php?images=0" method = "post">
+              <form action = "gameCrowdSourcingApproval.php" method = "post">
                      <table style = "text-align: center;">
                                     <tr>
                                         <td class="menutext" colspan="2">Thanks for doing all that tagging. The time has come to vote on other people\'s tags</td>
@@ -206,8 +208,15 @@ else
     } else {
         echo '<hr />';
 
-        if ($_SESSION['theme'] == 'art' || $_SESSION['theme'] == 'artAccessible') {
-            if ($_REQUEST['images'] == 0) {
+        if(!isset($_SESSION['images']))
+        {
+            $_SESSION['images'] = 0;
+        }
+
+        if ($_SESSION['theme'] == 'art' || $_SESSION['theme'] == 'artAccessible')
+        {
+            if ($_SESSION['images'] == 0)
+            {
                 $rand_sql = "
                                     select
                                     i.image_id,
@@ -224,7 +233,9 @@ else
                                     ;
                                     ";
 
-            } else {
+            }
+            else
+            {
                 $rand_sql = "
                                     select
                                     i.image_id,
@@ -240,9 +251,11 @@ else
                                     ;
                                     ";
             }
-        } else if ($_SESSION['theme'] == 'photo') {
-            {
-                $rand_sql = "
+        }
+        else if ($_SESSION['theme'] == 'photo')
+        {
+
+            $rand_sql = "
                                     select
                                     i.image_id,
                                     i.collection,
@@ -256,8 +269,10 @@ else
                                     order by rand() limit 1
                                     ;
                                     ";
-            }
-        } else {
+
+        }
+        else
+        {
             $rand_sql = "
                                     select
                                     i.image_id,
@@ -277,8 +292,8 @@ else
 
         $result = mysql_query($rand_sql) or die("A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
         $count = mysql_numrows($result);
-        $images = $_REQUEST['images'];
-        $images++;
+        $images = $_SESSION['images'];
+        $_SESSION['images'] = $images++;
     }
 
     if (isset ($_POST['buttonwithimage'])) {
@@ -331,7 +346,7 @@ else
     echo '
                     <div class="sourcebox">
                         <div class = "heading">
-                            <h5>' . $title . ":" . $author . '</h5>
+                            <h5>' . $title . ": " . $author . '</h5>
                         </div>
 
                         <div class = "image">
@@ -362,7 +377,7 @@ else
 
     if ($_SESSION['theme'] == 'photo') {
         echo '<div class="sourcebox">
-                        <form action = "gameCrowdSourcing.php?images=' . $images . '" method = "post">
+                        <form action = "gameCrowdSourcing.php" method = "post">
                                 <table style = "text-align: center;">
                                     <h4>What can you tell us about this image?</h4>
                                     <tr>
@@ -399,7 +414,7 @@ else
                         </div>';
     } else {
         echo '<div class="sourcebox">
-                        <form action = "gameCrowdSourcing.php?images=' . $images . '" method = "post">
+                        <form action = "gameCrowdSourcing.php" method = "post">
                                 <table style = "text-align: center;">
                                     <tr>
                                         <td class="menutext" colspan="2">Enter tags here- e.g. flag; tiger; hat</td>

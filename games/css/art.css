@@ -104,7 +104,7 @@ table
 
 input[type="submit"] {
     box-shadow: 0px 0px 9px rgba(30,30,60, 0.3); -moz-box-shadow: 0px 0px 9px rgba(30,30,60, 0.75); -webkit-box-shadow: 0px 0px 9px rgba(30,30,60, 0.3);
-    font-size: 16px; color: #afd24c; font-weight: bold;  width: 160px; height: 50px; font-family: "press";
+    font-size: 16px; color: #afd24c; font-weight: bold;  width: 320px; height: 50px; font-family: "press";
     background: url(./images/Save.jpg) no-repeat 0px 0px;
 }
 

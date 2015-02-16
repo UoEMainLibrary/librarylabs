@@ -17,21 +17,25 @@
         if ($_SESSION['theme'] == 'art') {
             $_SESSION['stylesheet'] = '<link rel="stylesheet" type ="text/css" href="css/art.css">';
             $_SESSION['banner'] = "./images/artbanner.jpg";
+            $_SESSION['game'] = 'A';
         }
         else if ($_SESSION['theme'] == 'photo')
         {
             $_SESSION['stylesheet'] = '<link rel="stylesheet" type ="text/css" href="css/photo.css">';
             $_SESSION['banner'] = "./images/photobanner.jpg";
+            $_SESSION['game'] = 'R';
         }
         else if ($_SESSION['theme'] =='artAccessible')
         {
             $_SESSION['stylesheet'] = '<link rel="stylesheet" type ="text/css" href="css/artAccessible.css">';
             $_SESSION['banner'] = "./images/artbanner.jpg";
+            $_SESSION['game'] = 'A';
         }
         else // classic and default
         {
             $_SESSION['stylesheet'] = '<link rel="stylesheet" type ="text/css" href="css/crowd.css">';
             $_SESSION['banner'] = "./images/crowdbanner.gif";
+            $_SESSION['game'] = 'D';
         }
     }
 
@@ -66,31 +70,47 @@
 
     if ($_SESSION['theme'] == 'art' || $_SESSION['theme'] == 'artAccessible')
     {
-        echo'<form action="gameCrowdSourcing.php?images=0" method="post">
+        echo'<form action="gameCrowdSourcing.php" method="post">
         <p>Hello '.$_SESSION['first_name'].'. Nice to see you!</p>
-        <p>You will now be taken in to our tagging zone.</p>
-        <p>You will tag 10 images, then vote on metadata for 10 previously tagged images.</p>
-         <p>If you are ready, press the button!</p>
+        <p class="menutext">You will now be taken into our tagging zone.</p>
+        <p class="menutext">You will tag 10 images, then vote on metadata for 10 previously tagged images.</p>
+        <p class="menutext">If you are ready, press the button!</p>
                   <table>
                    <tr>
               <td class = "menu" colspan="2">
-                 <input type="submit" value="GO!" style="width:320px;" />
+                 <input type="submit" value="GO!"/>
               </td>
             </tr>
          </table>
 
-        </form>';
+        </form>
+
+        <form action="gameCrowdSourcingHighScores.php" method="post">
+        <table>
+            <tr>
+                <td class = "menutext"  colspan="2">
+                    See how you compare to your colleagues and fellow students!
+                </td>
+            </tr>
+            <tr>
+                <td  class = "menu" colspan="2">
+                    <input type="submit" value="High Scores" />
+                </td>
+            </tr>
+        </table>
+
+    </form>';
 
         if ($_SESSION['status'] == 'C')
         {
 
             echo'
-            <p>As you are an admin, you can moderate tags. Press the button to do this.</p>
+            <p class="menutext">As you are an admin, you can moderate tags. Press the button to do this.</p>
             <form action="assessData.php" method="post">
             <table>
                <tr>
                   <td class = "menu" colspan="2">
-                     <input type="submit" value="Moderate Metadata" style="width:320px;" />
+                     <input type="submit" value="Moderate Metadata" />
                   </td>
                 </tr>
              </table>
@@ -154,7 +174,7 @@
                 </td>
             </tr>
         </table>
-        <input type="hidden" name="logging_in" value="logging_in" />
+
     </form>
 
     <form action="gameCrowdSourcingHighScores.php" method="post">
@@ -181,13 +201,13 @@
             </tr>
            <tr>
               <td class="menu" colspan="2"><input type ="text" name = "image_id">
-                 <input type="submit" value="Tag Specific Image" style="width:320px;" />
+                 <input type="submit" value="Tag Specific Image"/>
               </td>
             </tr>
          </table>
      </form>';
 
-     if ($status == 'C')
+     if ($_SESSION['status'] == 'C')
      {
 
      echo'
@@ -195,11 +215,10 @@
         <table>
            <tr>
               <td class = "menu" colspan="2">
-                 <input type="submit" value="Moderate Metadata" style="width:320px;" />
+                 <input type="submit" value="Moderate Metadata"" />
               </td>
             </tr>
          </table>
-         <input type="hidden" name="logging_in" value="logging_in" />
 
      </form>';
      }

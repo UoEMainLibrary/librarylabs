@@ -27,7 +27,7 @@ if (isset ($_POST['save']))
             $get_image_result =mysql_query($get_image_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $get_image_result . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
             $image_id = mysql_result($get_image_result, 0, 'image_id');
 
-            $vote_insert_sql = "insert into orders.VOTES (crowd_id, submitter, voter, image_id, quality) values (".$crowd_id.", '".$uun."', '".$_SESSION['uun']."','".$image_id."',".$action.");";
+            $vote_insert_sql = "insert into orders.VOTES (crowd_id, submitter, voter, image_id, quality, game ) values (".$crowd_id.", '".$uun."', '".$_SESSION['uun']."','".$image_id."',".$action.",'". $_SESSION["game"]. "');";
             $vote_insert_result=mysql_query($vote_insert_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $vote_insert_result . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
             //echo 'SQL'.$vote_insert_sql;
 
@@ -88,68 +88,28 @@ if (isset ($_POST['save']))
 
             $link = mysql_connect($dbserver, $username, $password);
             @mysql_select_db($database) or die( "Unable to select database".$database);
-            /*
-            if (isset ($_POST['moderated']))
-            {
 
-                $check_box = $_POST['moderated'];
-                $value = $_POST['value'];
-                $uun = $_REQUEST['uun'];
-                for($i=0; $i<sizeof($check_box); $i++)
-                {
-                    $line = explode("|",$check_box[$i]);
-                    $action = $line[0];
-                    $crowd_id=$line[1];
-
-                    if ($action == '1' or $action == '-1')
-                    {
-                        $vote_sql = "select * from orders.CROWD where id = ".$crowd_id.";";
-                        $vote_result=mysql_query($vote_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $vote_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-
-                        $votes = mysql_result($vote_result,0, 'votes');
-
-                        $votes = $votes++;
-
-                        if ($votes >= 2)
-                        {
-                            $status = 'A';
-
-                        }
-                        else
-                        {
-                            $status = 'M';
-                        }
-
-                        $sql = "UPDATE orders.CROWD set status = '$status'  where id= ".$crowd_id.";";
-                        $result=mysql_query($sql) or die( "A MySQL error has occurred.<br />Your Query: " . $sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-
-                    }
-                }
-
-            }
-            */
-
-            $mpointssql = "select count(*) as mtotal from CROWD where uun = '".$_SESSION['uun']."' and status = 'M';";
+            $mpointssql = "select count(*) as mtotal from CROWD where uun = '".$_SESSION['uun']."' and status = 'M' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
             $mpointsresult=mysql_query($mpointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $mpointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
             $mpoints = mysql_result($mpointsresult, 0, 'mtotal');
 
-            $vpointssql = "select count(*) as vtotal from VOTES where voter = '".$_SESSION['uun']."';";
+            $vpointssql = "select count(*) as vtotal from VOTES where voter = '".$_SESSION['uun']."' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
             $vpointsresult=mysql_query($vpointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $vpointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
             $vpoints = mysql_result($vpointsresult, 0, 'vtotal');
 
-            $apointssql = "select count(*) as atotal from CROWD where uun = '".$_SESSION['uun']."' and status = 'A';";
+            $apointssql = "select count(*) as atotal from CROWD where uun = '".$_SESSION['uun']."' and status = 'A' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
             $apointsresult=mysql_query($apointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $apointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
             $apoints = mysql_result($apointsresult, 0, 'atotal');
 
-            $ppointssql = "select count(*) as ptotal from CROWD where uun = '".$_SESSION['uun']."' and status = 'P';";
+            $ppointssql = "select count(*) as ptotal from CROWD where uun = '".$_SESSION['uun']."' and status = 'P' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
             $ppointsresult=mysql_query($ppointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $ppointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
             $ppoints = mysql_result($ppointsresult, 0, 'ptotal');
 
-            $upointssql = "select sum(quality) as utotal from VOTES where submitter = '".$_SESSION['uun']."';";
+            $upointssql = "select sum(quality) as utotal from VOTES where submitter = '".$_SESSION['uun']."' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
             $upointsresult=mysql_query($upointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $upointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
             $upoints = mysql_result($upointsresult, 0, 'utotal');
@@ -185,7 +145,7 @@ if (isset ($_POST['save']))
             {
                 echo '<table style = "text-align: center;">
                                     <tr>
-                                        <td>GAME OVER!</td>
+                                        <td><h2>GAME OVER!</h2></td>
                                     </tr>
                                     <tr>
                                       <td class="menutext" colspan="2">Thanks for doing all that voting. Keep an eye on your scores - there could be a prize for you!</td>
