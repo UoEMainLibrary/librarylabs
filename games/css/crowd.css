@@ -64,7 +64,7 @@ td, th {
 }
 
 td {
-    text-align: right;
+    text-align: center;
 }
 
 td.menu {
@@ -72,7 +72,8 @@ td.menu {
 }
 
 td.label {
-    width: 400px;
+    max-width: 400px;
+    text-align: right;
 }
 
 td.typelabel {

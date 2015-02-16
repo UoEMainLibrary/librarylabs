@@ -56,6 +56,8 @@ if (isset ($_POST['save']))
 
         }
     }
+
+    $_SESSION['vimages'] = $_SESSION['vimages'] + 1;
 }
 ?>
 
@@ -126,8 +128,8 @@ if (isset ($_POST['save']))
                 echo 's';
             }
 
+            echo "!&nbsp;";
 
-            echo "!</h4>";
             if ($_SESSION['points'] >= 200)
             {
                 echo '<span class="goldstars">*****</span>';
@@ -141,16 +143,26 @@ if (isset ($_POST['save']))
                 echo '<span class="bronzestars">*</span>';
             }
 
-            if ($_SESSION['theme'] == 'art' and $_REQUEST['images'] == 10)
+            echo "</h4>";
+
+            if(!isset($_SESSION['vimages']))
+            {
+                $_SESSION['vimages'] = 0;
+            }
+
+            if ($_SESSION['theme'] == 'art' and $_SESSION['vimages'] >= 10)
             {
                 echo '<table style = "text-align: center;">
                                     <tr>
-                                        <td><h2>GAME OVER!</h2></td>
+                                        <td class="gameover">
+                                            <h1 class="giant">GAME</h1><br />
+                                            <h1 class="giant">OVER!</h1>
+                                        </td>
                                     </tr>
                                     <tr>
-                                      <td class="menutext" colspan="2">Thanks for doing all that voting. Keep an eye on your scores - there could be a prize for you!</td>
-                                    <tr> <td colspan="2"><input type="submit" name = "save" style = "width:500px;" value="Go to voting"/></td></tr>
-                      </table>';
+                                        <td class="menutext" colspan="2">Thanks for doing all that voting. Keep an eye on your scores - there could be a prize for you!<br />Your score will grow as other people vote on your tags!</td>
+                                    </tr>
+                                    </table>';
             }
             else
             {
@@ -195,9 +207,6 @@ if (isset ($_POST['save']))
 
                     $result=mysql_query($rand_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
                     $count = mysql_numrows($result);
-                    $images = $_REQUEST['images'];
-                    $images++;
-
 
                     if ($count == 0)
                     {
@@ -283,7 +292,7 @@ if (isset ($_POST['save']))
                                 <h3>Pending Information: Image '.$image_id.'</h3>
                             </div>
 
-                        <form action = "gameCrowdSourcingApproval.php?theme=' . $_REQUEST['theme'] . '&images=' . $images . '" method = "post">
+                        <form action = "gameCrowdSourcingApproval.php" method = "post">
                         <div class="box">
                         <p class = "menutext">Select the relevant radio button.</p>
                         <table class ="radio">
@@ -304,7 +313,7 @@ if (isset ($_POST['save']))
                          <td class = "radiotd">---</td>
                          </tr>';
 
-                $data_sql = "select c.id as crowd_id, u.first_name, u.surname, value_text, c.status, c.type, c.uun from orders.CROWD c, orders.USER u where c.uun = u.uun and c.status = 'M' and image_id = ".$image_id.";";
+                $data_sql = "select c.id as crowd_id, u.first_name, u.surname, value_text, c.status, c.type, c.uun from orders.CROWD c, orders.USER u where c.uun = u.uun and c.status = 'M' and image_id = '".$image_id."';";
                 $data_result = mysql_query($data_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $data_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
                 $data_count = mysql_numrows($data_result);
 

@@ -106,6 +106,10 @@ else // the user does exist
     $status = $_SESSION['status'] = $row["status"];
     $type = $_SESSION['type'] = $row["type"];
 
+    // reset counts so people can play again
+    unset($_SESSION["images"]);
+    unset($_SESSION["vimages"]);
+
 }
 
 ?>

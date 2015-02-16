@@ -16,22 +16,22 @@
                     <a href="http://librarylabs.ed.ac.uk" class="footer-link">Library Labs Home</a>
                 </li>
                 <li>
-                    <a href="http://librarylabs.ed.ac.uk/games/copyright.php" class="footer-link">Licensing and Copyright</a>
+                    <a href="http://librarylabs.ed.ac.uk/games/copyright.php" class="footer-link" target="_blank">Licensing and Copyright</a>
                 </li>
             </ul>
             <ul class="links-bottom">
                 <li>
-                    <a href="http://www.ed.ac.uk/about/website/website&#45;terms&#45;conditions" class="footer-link">Terms &amp; conditions</a>
+                    <a href="http://www.ed.ac.uk/about/website/website&#45;terms&#45;conditions" class="footer-link" target="_blank">Terms &amp; conditions</a>
                 </li>
                 <li>
-                    <a href="http://www.ed.ac.uk/about/website/privacy" class="footer-link">Privacy &amp; cookies</a></li>
+                    <a href="http://www.ed.ac.uk/about/website/privacy" class="footer-link" target="_blank">Privacy &amp; cookies</a></li>
 
                 <li>
-                    <a href="http://www.ed.ac.uk/about/website/accessibility" class="footer-link">Website accessibility</a>
+                    <a href="http://www.ed.ac.uk/about/website/accessibility" class="footer-link" target="_blank">Website accessibility</a>
                 </li>
 
                 <li>
-                    <a href="http://www.ed.ac.uk/about/website/freedom&#45;information" class="footer-link" title="Freedom of Information Publication Scheme">Freedom of Information</a>
+                    <a href="http://www.ed.ac.uk/about/website/freedom&#45;information" class="footer-link" title="Freedom of Information Publication Scheme" target="_blank">Freedom of Information</a>
                 </li>
             </ul>
         </div>

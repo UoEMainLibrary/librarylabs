@@ -120,7 +120,7 @@
     }
     else if ($_SESSION['theme'] == 'photo')
     {
-        echo '<form action="gameCrowdSourcing.php?images=0" method="post">
+        echo '<form action="gameCrowdSourcing.php" method="post">
         <p> Submit research for a random photo, or for a specific item
         <table>
             <tr>
@@ -228,6 +228,27 @@
 
   ?>
 </div>
+
+<div>
+
+    <div>
+        <p>
+            <?php
+            if ($_SESSION['theme'] == 'art')
+            {
+                echo'<a href = "gameMenu.php?theme=artAccessible">Toggle accessible view</a></p>';
+            }
+            else if ($_SESSION['theme'] == 'artAccessible')
+            {
+                echo'<a href = "gameMenu.php?theme=art">Toggle accessible view</a></p>';
+            }
+            ?>
+
+        <hr/>
+        <p><?php session_write_close(); ?><a href="index.php">Back To Menu</a></p>
+    </div>
+</div>
+
 <?php include 'footer.php';?>
 </body>
 

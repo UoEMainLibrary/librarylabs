@@ -255,3 +255,12 @@ td.radiotd
 a.footer-link{
     font-size: 12px;
 }
+
+h1.giant {
+    display: inline;
+    font-size: 100px;
+}
+
+td.gameover {
+    text-align: center;
+}
