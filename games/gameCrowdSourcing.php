@@ -154,8 +154,8 @@ if ($_SESSION['points'] != 1) {
     echo 's';
 }
 
+echo "!&nbsp;";
 
-echo "!</h4>";
 if ($_SESSION['points'] >= 200) {
     echo '<span class="goldstars">*****</span>';
 } else if ($_SESSION['points'] >= 150) {
@@ -163,7 +163,7 @@ if ($_SESSION['points'] >= 200) {
 } else if ($_SESSION['points'] >= 100) {
     echo '<span class="bronzestars">*</span>';
 }
-
+echo "</h4>";
 
 if ($_SESSION['theme'] == 'art' and $_REQUEST['images'] == 10)
 {
@@ -328,21 +328,10 @@ else
         $divstyle = "height: " . $short_side . " px; width: 350px; vertical-align: middle;";
     }
 
-    if ($_SESSION['theme'] != 'photo') {
-        echo '
-                            <div class = "sourcebox">
-                                <div class = "plusheading">
-                                    <h3>+++++++++++++++++++++++++++++++++++++</h3>
-                                    <h3>+++++++ What Can You Tell Us? +++++++</h3>
-                                    <h3>+++++++++++++++++++++++++++++++++++++</h3>
-                                </div>
-                            </div>';
-    }
     echo '
                     <div class="sourcebox">
                         <div class = "heading">
-                            <h4>' . $title . '</h4>
-                            <h5>' . $author . '</h5>
+                            <h5>' . $title . ":" . $author . '</h5>
                         </div>
 
                         <div class = "image">
