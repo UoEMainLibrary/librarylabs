@@ -71,8 +71,6 @@
                 //If the form is submitted:
                 if(isset($_POST['submitted'])) {?>
 
-                    <p>If you would like to provide feedback about Library Labs or have any questions, then please contact us using the form below:</p>
-
                 <?php
                     //load recaptcha file
                     require_once('./../assets/captcha/recaptchalib.php');
@@ -144,13 +142,17 @@
                             $captchaErrorMsg = true;
                         }
                     }
-                } ?>
+                }
+                else { ?>
+                    <p>If you would like to provide feedback about Library Labs or have any questions, then please contact us using the form below:</p>
+                <?php }?>
 
                 <?php // if the page the variable "email sent" is set to true show confirmation instead of the form ?>
                 <?php if(isset($emailSent) && $emailSent == true) { ?>
                     <p>
-                        Your email was successfully sent. I check my inbox all the time, so I should be in touch soon.
+                        Your email was successfully sent. We regularly check our inbox so we should get back to you shortly.
                     </p>
+                    <br /><br /><br />
                 <?php } else { ?>
                     <?php // if there are errors in the form show a message ?>
                     <?php if(isset($hasError) || isset($blindError)) { ?>
@@ -210,6 +212,7 @@
                                     If you want to submit this form, do not enter anything in this field
                                 </label>
                                 <input type="text" name="checking" id="checking" value="<?php if(isset($_POST['checking']))  echo $_POST['checking'];?>" />
+                                <input type="hidden" name="submitted" value="submitted" />
                             </div>
                         </div>
                         <?php
