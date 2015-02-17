@@ -12,6 +12,7 @@ if (isset ($_POST['save']))
     $check_box = $_POST['moderated'];
     $value = $_POST['value'];
     $uun = $_REQUEST['uun'];
+    $voted = false;
 
     for($i=0; $i<sizeof($check_box); $i++)
     {
@@ -54,10 +55,16 @@ if (isset ($_POST['save']))
             $sql = "UPDATE orders.CROWD set status = '".$status."'  where id= ".$crowd_id.";";
             $result = mysql_query($sql) or die( "A MySQL error has occurred.<br />Your Query: " . $sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
+            $voted = true;
+
         }
+
     }
 
-    $_SESSION['vimages'] = $_SESSION['vimages'] + 1;
+    if($voted == true)
+    {
+        $_SESSION['vimages'] = $_SESSION['vimages'] + 1;
+    }
 }
 ?>
 
