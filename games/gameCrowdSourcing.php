@@ -40,6 +40,9 @@ if (isset ($_POST['save'])) {
             $insert_sql = "insert into orders.CROWD (image_id, value_text,uun, status, game ) values ('$image_id', '$subject', '$uun', 'P', '" . $_SESSION['game'] . "');";
             $insert_result = mysql_query($insert_sql) or die("A MySQL error has occurred.<br />Your Query: " . $insert_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
         }
+
+        $_SESSION['images'] = $_SESSION['images'] + 1;
+
     }
 
     if ($creator != '') {
@@ -84,7 +87,6 @@ if (isset ($_POST['save'])) {
         $insert_result = mysql_query($insert_sql) or die("A MySQL error has occurred.<br />Your Query: " . $insert_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
     }
 
-    $_SESSION['images'] = $_SESSION['images'] + 1;
     $_REQUEST['image_id'] = null;
 }
 ?>
