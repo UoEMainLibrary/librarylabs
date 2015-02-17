@@ -86,7 +86,7 @@
                         <p>Robin is a DSpace committer, he keeps us all on track with his ability to read through manuals and get to the bottom of any server issue.</p>
                     </li>
                     <li>
-                        <h4>Scott Renton</h4> <a href="mailto:scott.renton@ed.ac.uk" class="contributor-email">scott.renton@ed.ac.uk</a>
+                        <h4>Scott Renton</h4> <a href="mailto:scott.renton@ed.ac.uk" class="contributor-email">scott.renton@ed.ac.uk</a> <a href="https://twitter.com/scoatch" target="_blank" class="contributor-twitter">@scoatch</a>
                         <p>Scott is a metadata guru: he keeps us on track with our content, as well as being the brains behind our metadata games.</p>
                     </li>
                 </ul>
