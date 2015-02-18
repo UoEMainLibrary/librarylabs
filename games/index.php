@@ -85,6 +85,11 @@ if($row == null)
         $status = $_SESSION['status'] = 'P';
         $_SESSION['type'] = $type;
 
+        // reset counts so people can play again
+        unset($_SESSION["images"]);
+        unset($_SESSION["vimages"]);
+        unset($_SESSION["points"]);
+
     }
 
     else {
@@ -117,6 +122,7 @@ else // the user does exist
     // reset counts so people can play again
     unset($_SESSION["images"]);
     unset($_SESSION["vimages"]);
+    unset($_SESSION["points"]);
 
 }
 
