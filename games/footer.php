@@ -16,7 +16,10 @@
                     <a href="http://librarylabs.ed.ac.uk" class="footer-link">Library Labs Home</a>
                 </li>
                 <li>
-                    <a href="http://librarylabs.ed.ac.uk/games/copyright.php" class="footer-link" target="_blank">Licensing and Copyright</a>
+                    <a href="https://www.ease.ed.ac.uk/logout/logout.cgi" class="footer-link">Logout</a>
+                </li>
+                <li>
+                    <a href="http://librarylabs.ed.ac.uk/games/copyright.php" class="footer-link" target="_blank">Licensing &amp; Copyright</a>
                 </li>
             </ul>
             <ul class="links-bottom">
