@@ -4,13 +4,13 @@ include 'config/vars.php';
 session_start();
 $uun = $_SESSION['uun'];
 
+// Connect To Database
+$error = '';
+$link = mysql_connect($dbserver, $username, $password);
+@mysql_select_db($database) or die( "Unable to select database");
+
 if (isset ($_POST['save']))
 {    $_POST['button'] = false;
-
-    //STEP 1 Connect To Database
-    $error = '';
-    $link = mysql_connect($dbserver, $username, $password);
-    @mysql_select_db($database) or die( "Unable to select database");
 
     $check_box = $_POST['moderated'];
     $value = $_POST['value'];
@@ -54,8 +54,8 @@ if (isset ($_POST['save']))
                 break;
         }
 
-        $crowd_id=$line[1];
-        $uun= $line[2];
+        $crowd_id = $line[1];
+        $uun = $line[2];
         $value_text =  mysql_real_escape_string($value[$i]);
         //update the user to value of 'C' (complete) based on the chosen uun
         $sql = "UPDATE orders.CROWD set status = '$action', type = '".$subjecttype_text."', value_text ='".$value_text."'  where id= '".$crowd_id."';";
@@ -63,6 +63,9 @@ if (isset ($_POST['save']))
 
     }
 }
+
+
+
 ?>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
@@ -88,10 +91,6 @@ if (isset ($_POST['save']))
     <hr/>
 </div>
 <?php
-
-//variables passed in from order form
-mysql_connect($dbserver, $username, $password);
-@mysql_select_db($database) or die( "Unable to select database");
 
 if($_SESSION['theme'] == 'art' || $_SESSION['theme'] == 'artAccessible') {
     $unmod_sql =          "select count(distinct (r.image_id)) as unmod_total
@@ -275,8 +274,11 @@ echo '<p><a href= "http://images.is.ed.ac.uk/luna/servlet/detail/'.$urlinstid.'~
 
                                                 <table>';
 
-//variables passed in from order form
-mysql_connect($lunadbserver, $lunausername, $lunapassword);
+// close mysql connection
+mysql_close($link);
+
+// connect to luna db
+$link2 = mysql_connect($lunadbserver, $lunausername, $lunapassword);
 
 switch ($collection)
 {
@@ -339,7 +341,7 @@ if (strpos($image_id, '-') > 0)
 
 if ($lunadbase != 'no_db');
 {
-@mysql_select_db($lunadbase) or die( "Unable to select database....Error: (" . mysql_errno() . ") " . mysql_error());
+    @mysql_select_db($lunadbase) or die( "Unable to select database....Error: (" . mysql_errno() . ") " . mysql_error());
 
 $luna_sql =
     "select
@@ -363,7 +365,7 @@ $luna_sql =
                                                         and i2.displayname = '".$checkfield."'
                                                         and v2.valuetext = '".$link_id."'
                                                         );";
-$luna_result=mysql_query($luna_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $luna_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+$luna_result = mysql_query($luna_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $luna_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 $luna_count = mysql_numrows($luna_result);
 
 $j = 0;
@@ -397,8 +399,13 @@ echo'
                                                 <br>
                                                         <h3>Crowdsourced, but not yet in system</h3>
                         </div>';
-mysql_connect($dbserver, $username, $password);
+
+// close mysql connection
+mysql_close($link2);
+
+$link = mysql_connect($dbserver, $username, $password);
 @mysql_select_db($database) or die( "Unable to select database");
+
 $moderated_sql = "select value_text,type from orders.CROWD c where image_id = '".$image_id."' and status in ('A', 'M');";
 $moderated_result = mysql_query($moderated_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $moderated_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 $moderated_count = mysql_numrows($moderated_result);
@@ -410,10 +417,10 @@ $subject_type = mysql_result($moderated_result, $l, 'type');
 $value_text_array[$l] = $value_text;
 
     echo '<table>
-                                <tr>
-                                                                <td>'.$subject_type.':</td><td>'.$value_text.'</td>
-                                                                </tr>
-                                                                </table>';
+            <tr>
+                <td>'.$subject_type.':</td><td>'.$value_text.'</td>
+            </tr>
+          </table>';
     $l++;
 }
 
@@ -431,8 +438,6 @@ $value_text_array[$l] = $value_text;
 
     //echo '<br />Image id: ' . $image_id;
 
-    mysql_connect($dbserver, $username, $password);
-    @mysql_select_db($database) or die( "Unable to select database");
     $data_sql = "select c.id as crowd_id, u.first_name, u.surname, value_text, c.status, c.type, c.uun from orders.CROWD c, orders.USER u where c.uun = u.uun and c.status = 'P' and image_id = '".$image_id."';";
 
     //echo '<br />SQL: ' . $data_sql;
@@ -490,6 +495,10 @@ $value_text_array[$l] = $value_text;
 
 
 }
+
+// close mysql connection
+mysql_close($link);
+
 ?>
 
 <div class = "footer">

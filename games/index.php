@@ -5,6 +5,9 @@
 <?php
 include 'config/vars.php';
 
+// connect to db
+
+$error = '';
 $link = mysql_connect($dbserver, $username, $password);
 @mysql_select_db($database) or die( "Unable to select database".$database);
 
@@ -125,6 +128,9 @@ else // the user does exist
     unset($_SESSION["points"]);
 
 }
+
+// close mysql connection
+mysql_close($link);
 
 ?>
 
@@ -247,6 +253,13 @@ else // the user does exist
     </footer>
 
 </div>
+
+<?php
+
+    // close mysql connection
+    mysql_close($link);
+
+?>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
