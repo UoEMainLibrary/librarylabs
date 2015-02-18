@@ -2,13 +2,16 @@
 
 session_start();
 include 'config/vars.php';
+
+// Connect to db
+
 $error = '';
+$link = mysql_connect($dbserver, $username, $password);
+@mysql_select_db($database) or die( "Unable to select database");
+
 
 if (isset ($_POST['save']))
 {
-    $link = mysql_connect($dbserver, $username, $password);
-    @mysql_select_db($database) or die( "Unable to select database");
-
     $check_box = $_POST['moderated'];
     $value = $_POST['value'];
     $uun = $_REQUEST['uun'];
@@ -48,7 +51,7 @@ if (isset ($_POST['save']))
             }
             else
             {
-                 $status = 'M';
+                $status = 'M';
             }
 
             //update the user to value of 'C' (complete) based on the chosen uun
@@ -90,76 +93,73 @@ if (isset ($_POST['save']))
         <img src="<?php echo $_SESSION['banner']; ?>" alt="The University of Edinburgh Image Collections" width="800" height="80" border="0" />
     </a>
     <hr/>
-        <h2>HELP US DESCRIBE OUR IMAGES</h2>
+    <h2>HELP US DESCRIBE OUR IMAGES</h2>
     <hr/>
 </div>
-			<?php
+<?php
 
-            $link = mysql_connect($dbserver, $username, $password);
-            @mysql_select_db($database) or die( "Unable to select database".$database);
+$mpointssql = "select count(*) as mtotal from CROWD where uun = '".$_SESSION['uun']."' and status = 'M' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
+$mpointsresult=mysql_query($mpointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $mpointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
-            $mpointssql = "select count(*) as mtotal from CROWD where uun = '".$_SESSION['uun']."' and status = 'M' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
-            $mpointsresult=mysql_query($mpointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $mpointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+$mpoints = mysql_result($mpointsresult, 0, 'mtotal');
 
-            $mpoints = mysql_result($mpointsresult, 0, 'mtotal');
+$vpointssql = "select count(*) as vtotal from VOTES where voter = '".$_SESSION['uun']."' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
+$vpointsresult=mysql_query($vpointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $vpointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
-            $vpointssql = "select count(*) as vtotal from VOTES where voter = '".$_SESSION['uun']."' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
-            $vpointsresult=mysql_query($vpointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $vpointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+$vpoints = mysql_result($vpointsresult, 0, 'vtotal');
 
-            $vpoints = mysql_result($vpointsresult, 0, 'vtotal');
+$apointssql = "select count(*) as atotal from CROWD where uun = '".$_SESSION['uun']."' and status = 'A' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
+$apointsresult=mysql_query($apointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $apointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
-            $apointssql = "select count(*) as atotal from CROWD where uun = '".$_SESSION['uun']."' and status = 'A' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
-            $apointsresult=mysql_query($apointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $apointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+$apoints = mysql_result($apointsresult, 0, 'atotal');
 
-            $apoints = mysql_result($apointsresult, 0, 'atotal');
+$ppointssql = "select count(*) as ptotal from CROWD where uun = '".$_SESSION['uun']."' and status = 'P' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
+$ppointsresult=mysql_query($ppointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $ppointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
-            $ppointssql = "select count(*) as ptotal from CROWD where uun = '".$_SESSION['uun']."' and status = 'P' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
-            $ppointsresult=mysql_query($ppointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $ppointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+$ppoints = mysql_result($ppointsresult, 0, 'ptotal');
 
-            $ppoints = mysql_result($ppointsresult, 0, 'ptotal');
+$upointssql = "select sum(quality) as utotal from VOTES where submitter = '".$_SESSION['uun']."' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
+$upointsresult=mysql_query($upointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $upointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
-            $upointssql = "select sum(quality) as utotal from VOTES where submitter = '".$_SESSION['uun']."' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
-            $upointsresult=mysql_query($upointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $upointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+$upoints = mysql_result($upointsresult, 0, 'utotal');
 
-            $upoints = mysql_result($upointsresult, 0, 'utotal');
-
-            $pointstotal = $mpoints + $mpoints + $vpoints + $upoints + $apoints + $ppoints;
+$pointstotal = $mpoints + $mpoints + $vpoints + $upoints + $apoints + $ppoints;
 
 
-            $_SESSION['points'] = $pointstotal;
+$_SESSION['points'] = $pointstotal;
 
-            echo "<h4>Hello " . $_SESSION['first_name'] . ", you currently have <span class='blink'>" . $_SESSION['points'] ."</span> point";
+echo "<h4>Hello " . $_SESSION['first_name'] . ", you currently have <span class='blink'>" . $_SESSION['points'] ."</span> point";
 
-            if ($_SESSION['points'] != 1)
-            {
-                echo 's';
-            }
+if ($_SESSION['points'] != 1)
+{
+    echo 's';
+}
 
-            echo "!&nbsp;";
+echo "!&nbsp;";
 
-            if ($_SESSION['points'] >= 200)
-            {
-                echo '<span class="goldstars">*****</span>';
-            }
-            else if ($_SESSION['points'] >=150)
-            {
-                echo '<span class="silverstars">***</span>';
-            }
-            else if ($_SESSION['points'] >= 100)
-            {
-                echo '<span class="bronzestars">*</span>';
-            }
+if ($_SESSION['points'] >= 200)
+{
+    echo '<span class="goldstars">*****</span>';
+}
+else if ($_SESSION['points'] >=150)
+{
+    echo '<span class="silverstars">***</span>';
+}
+else if ($_SESSION['points'] >= 100)
+{
+    echo '<span class="bronzestars">*</span>';
+}
 
-            echo "</h4>";
+echo "</h4>";
 
-            if(!isset($_SESSION['vimages']))
-            {
-                $_SESSION['vimages'] = 0;
-            }
+if(!isset($_SESSION['vimages']))
+{
+    $_SESSION['vimages'] = 0;
+}
 
-            if ($_SESSION['theme'] == 'art' and $_SESSION['vimages'] >= 10)
-            {
-                echo '<table style = "text-align: center;">
+if ($_SESSION['theme'] == 'art' and $_SESSION['vimages'] >= 10)
+{
+    echo '<table style = "text-align: center;">
                                     <tr>
                                         <td class="gameover">
                                             <h1 class="giant">GAME</h1><br />
@@ -169,15 +169,23 @@ if (isset ($_POST['save']))
                                     <tr>
                                         <td class="menutext" colspan="2">Thanks for doing all that voting. Keep an eye on your scores - there could be a prize for you!<br />Your score will grow as other people vote on your tags!</td>
                                     </tr>
+                                   <tr>
+                                      <td class = "menu">
+                                        <form action="https://www.ease.ed.ac.uk/logout.cgi" method="post" name="logout">
+                                            <input type="submit" value="Logout" name="verify" />
+                                            <input type="hidden" value="https://www.ease.ed.ac.uk/logout.html" name="url">
+                                        </form>
+                                      </td>
+                                    </tr>
                                     </table>';
-            }
-            else
-            {
-                echo '<hr />';
+}
+else
+{
+    echo '<hr />';
 
-            if ($_SESSION['theme'] == 'art' || $_SESSION['theme'] == 'artAccessible')
-                    {
-                        $rand_sql = "
+    if ($_SESSION['theme'] == 'art' || $_SESSION['theme'] == 'artAccessible')
+    {
+        $rand_sql = "
                                 select
                                 i.image_id,
                                 i.collection,
@@ -192,10 +200,10 @@ if (isset ($_POST['save']))
                                 as a on i.image_id = a.image_id
                                 ;
                                 ";
-                    }
-                    else
-                    {
-                        $rand_sql = "
+    }
+    else
+    {
+        $rand_sql = "
                                 select
                                 i.image_id,
                                 i.collection,
@@ -210,52 +218,52 @@ if (isset ($_POST['save']))
                                 as a on i.image_id = a.image_id
                                 ;
                                 ";
-                    }
+    }
 
-                    $result=mysql_query($rand_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-                    $count = mysql_numrows($result);
+    $result=mysql_query($rand_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+    $count = mysql_numrows($result);
 
-                    if ($count == 0)
-                    {
-                        echo '<div class = "sourcebox">
+    if ($count == 0)
+    {
+        echo '<div class = "sourcebox">
                         <p>No items to show!</p>
                         </div>';
-                    }
-                    else
-                    {
+    }
+    else
+    {
 
 
-                        $i = 0;
+        $i = 0;
 
-                        $image_id = mysql_result($result, $i, 'image_id');
-                        $collection = mysql_result($result, $i, 'collection');
-                        $shelfmark = mysql_result($result, $i, 'shelfmark');
-                        $title = mysql_result($result, $i, 'title');
-                        $author = mysql_result($result, $i, 'author');
-                        $page_no = mysql_result($result, $i, 'page_no');
-                        $jpeg_path = mysql_result($result, $i, 'jpeg_path');
-                        $publication_status = mysql_result($result, $i, 'publication_status');
-                        $size = getimagesize('../'.$jpeg_path);
-                        $fullwidth = $size[0];
-                        $fullheight = $size[1];
+        $image_id = mysql_result($result, $i, 'image_id');
+        $collection = mysql_result($result, $i, 'collection');
+        $shelfmark = mysql_result($result, $i, 'shelfmark');
+        $title = mysql_result($result, $i, 'title');
+        $author = mysql_result($result, $i, 'author');
+        $page_no = mysql_result($result, $i, 'page_no');
+        $jpeg_path = mysql_result($result, $i, 'jpeg_path');
+        $publication_status = mysql_result($result, $i, 'publication_status');
+        $size = getimagesize('../'.$jpeg_path);
+        $fullwidth = $size[0];
+        $fullheight = $size[1];
 
-                        if ($fullheight > $fullwidth)
-                        {
-                            $aspect = $fullheight/ $fullwidth;
-                            $short_side = 350 / $aspect;
-                            $dimstyle = "height: 95%";
-                            $divstyle= "height: 490; width: " . $short_side . " px; vertical-align: middle;";
-                        }
-                        else
-                        {
-                            $aspect = $fullwidth / $fullheight;
-                            $short_side = 350 / $aspect;
-                            $dimstyle = "width: 95%";
-                            $divstyle = "height: " . $short_side . " px; width: 550px; vertical-align: middle;";
-                        }
+        if ($fullheight > $fullwidth)
+        {
+            $aspect = $fullheight/ $fullwidth;
+            $short_side = 350 / $aspect;
+            $dimstyle = "height: 95%";
+            $divstyle= "height: 490; width: " . $short_side . " px; vertical-align: middle;";
+        }
+        else
+        {
+            $aspect = $fullwidth / $fullheight;
+            $short_side = 350 / $aspect;
+            $dimstyle = "width: 95%";
+            $divstyle = "height: " . $short_side . " px; width: 550px; vertical-align: middle;";
+        }
 
 
-                        echo '
+        echo '
                     <div class = "sourcebox">
                         <div class = "plusheading">
                             <h3>+++++++++++++++++++++++++++++++++++++</h3>
@@ -273,24 +281,24 @@ if (isset ($_POST['save']))
                         <div class = "image">
                         ';
 
-                        $urlrecordid = ltrim($image_id, '0');
-                        $urlsql = "select
+        $urlrecordid = ltrim($image_id, '0');
+        $urlsql = "select
                                     recordid, objectid, imageid, institutionid, collectionid
                                    from
                                         OBJECTIMAGE
                                    where
                                     recordid = ".$urlrecordid.";";
-                        $urlresult=mysql_query($urlsql) or die( "A MySQL error has occurred.<br />Your Query: " . $urlsql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-                        $count = mysql_numrows($urlresult);
+        $urlresult=mysql_query($urlsql) or die( "A MySQL error has occurred.<br />Your Query: " . $urlsql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+        $count = mysql_numrows($urlresult);
 
-                        $urlobjectid = mysql_result($urlresult, 0, 'objectid');
-                        $urlimageid = mysql_result($urlresult, 0, 'imageid');
-                        $urlinstid = mysql_result($urlresult, 0, 'institutionid');
-                        $urlcollid = mysql_result($urlresult, 0, 'collectionid');
+        $urlobjectid = mysql_result($urlresult, 0, 'objectid');
+        $urlimageid = mysql_result($urlresult, 0, 'imageid');
+        $urlinstid = mysql_result($urlresult, 0, 'institutionid');
+        $urlcollid = mysql_result($urlresult, 0, 'collectionid');
 
 
 
-                        echo '<p><a href= "http://images.is.ed.ac.uk/luna/servlet/detail/'.$urlinstid.'~'.$urlcollid.'~'.$urlcollid.'~'.$urlobjectid.'~'.$urlimageid.'" target = "_blank"><img src = "../'.$jpeg_path.'" style = "'.$divstyle.'"/></a></p>
+        echo '<p><a href= "http://images.is.ed.ac.uk/luna/servlet/detail/'.$urlinstid.'~'.$urlcollid.'~'.$urlcollid.'~'.$urlobjectid.'~'.$urlimageid.'" target = "_blank"><img src = "../'.$jpeg_path.'" style = "'.$divstyle.'"/></a></p>
                         </div>
                     </div>
                         <div class = "info">
@@ -320,27 +328,27 @@ if (isset ($_POST['save']))
                          <td class = "radiotd">---</td>
                          </tr>';
 
-                $data_sql = "select c.id as crowd_id, u.first_name, u.surname, value_text, c.status, c.type, c.uun from orders.CROWD c, orders.USER u where c.uun = u.uun and c.status = 'M' and image_id = '".$image_id."';";
-                $data_result = mysql_query($data_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $data_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-                $data_count = mysql_numrows($data_result);
+        $data_sql = "select c.id as crowd_id, u.first_name, u.surname, value_text, c.status, c.type, c.uun from orders.CROWD c, orders.USER u where c.uun = u.uun and c.status = 'M' and image_id = '".$image_id."';";
+        $data_result = mysql_query($data_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $data_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+        $data_count = mysql_numrows($data_result);
 
-                $k = 0;
-                $crowds = array();
-                while ($k <  $data_count)
-                {
-                    $crowd_id = mysql_result ($data_result, $k, 'crowd_id');
-                    $crowds[$k] = $crowd_id;
+        $k = 0;
+        $crowds = array();
+        while ($k <  $data_count)
+        {
+            $crowd_id = mysql_result ($data_result, $k, 'crowd_id');
+            $crowds[$k] = $crowd_id;
 
-                    $first_name = mysql_result($data_result, $k, 'first_name');
-                    $surname = mysql_result($data_result, $k, 'surname');
-                    $value_text = mysql_result($data_result, $k, 'value_text');
-                    $type = mysql_result($data_result, $k, 'type');
-                    $uun = mysql_result($data_result, $k, 'uun');
-                    //<input type="hidden" name = "crowd_id" value = '.$crowd_id[$k].'/>
+            $first_name = mysql_result($data_result, $k, 'first_name');
+            $surname = mysql_result($data_result, $k, 'surname');
+            $value_text = mysql_result($data_result, $k, 'value_text');
+            $type = mysql_result($data_result, $k, 'type');
+            $uun = mysql_result($data_result, $k, 'uun');
+            //<input type="hidden" name = "crowd_id" value = '.$crowd_id[$k].'/>
 
-                    // echo '<tr><td>From '.$first_name .' '.$surname.'</td><td> Value for '.$type.': </td><td><input type = "text" name = "value['.$k.']" value = "'.$value_text.'"</td><td><input type="checkbox" name="moderated['.$k.']" value = "'.$crowd_id.'|'.$uun.'"/></td></tr>';
+            // echo '<tr><td>From '.$first_name .' '.$surname.'</td><td> Value for '.$type.': </td><td><input type = "text" name = "value['.$k.']" value = "'.$value_text.'"</td><td><input type="checkbox" name="moderated['.$k.']" value = "'.$crowd_id.'|'.$uun.'"/></td></tr>';
 
-                    echo '<tr>
+            echo '<tr>
                     <td class="label">'.$first_name .' '.$surname.'</td>
                     <td class="typelabel">'.$type.'</td>
                     <td class="label">'.strtoupper($value_text).'</td>
@@ -348,23 +356,26 @@ if (isset ($_POST['save']))
                     <td class="radiotd"><input type="radio" name="moderated['.$k.']" value = "O|'.$crowd_id.'|'.$uun.'"/></td>
                     <td class="radiotd"><input type="radio" name="moderated['.$k.']" value = "-1|'.$crowd_id.'|'.$uun.'"/></td>
                     </tr>';
-                    $k++;
+            $k++;
 
-                }
+        }
 
-                //$crowd_serialized = serialize($crowds);
+        //$crowd_serialized = serialize($crowds);
 
-                echo '
+        echo '
                 </table>
                 </div><br><input type="submit" name = "save" style = "width:520px;" value="Submit votes and get new image" />
                 </form>';
 
-             }
-        }
+    }
+}
 
-			?>
+// close mysql connection
+mysql_close($link);
+
+?>
 </div>
 <?php include 'footer.php';?>
-		</div> <!-- div central -->
-	</body>
+</div> <!-- div central -->
+</body>
 </html>
