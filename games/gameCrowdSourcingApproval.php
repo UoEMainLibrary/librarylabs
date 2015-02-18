@@ -8,7 +8,6 @@ $error = '';
 $link = mysql_connect($dbserver, $username, $password);
 @mysql_select_db($database) or die( "Unable to select database");
 
-
 if (isset ($_POST['save']))
 {
     $check_box = $_POST['moderated'];
@@ -167,6 +166,14 @@ if (isset ($_POST['save']))
                                     </tr>
                                     <tr>
                                         <td class="menutext" colspan="2">Thanks for doing all that voting. Keep an eye on your scores - there could be a prize for you!<br />Your score will grow as other people vote on your tags!</td>
+                                    </tr>
+                                    <tr>
+                                      <td class = "menu">
+                                        <form action="https://www.ease.ed.ac.uk/logout.cgi" method="post" name="logout">
+                                            <input type="submit" value="Logout" name="verify" />
+                                            <input type="hidden" value="https://www.ease.ed.ac.uk/logout.html" name="url">
+                                        </form>
+                                      </td>
                                     </tr>
                                     </table>';
             }
