@@ -4,7 +4,6 @@ session_start();
 include 'config/vars.php';
 
 // Connect to db
-
 $error = '';
 $link = mysql_connect($dbserver, $username, $password);
 @mysql_select_db($database) or die( "Unable to select database");

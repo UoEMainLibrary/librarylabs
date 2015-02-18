@@ -491,9 +491,6 @@ $value_text_array[$l] = $value_text;
     echo '
 
             </table></div>';
-
-
-
 }
 
 // close mysql connection
