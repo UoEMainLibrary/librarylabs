@@ -2,6 +2,13 @@
     session_start();
     //var_dump($_SESSION);
     include 'config/vars.php';
+
+
+    // connect to db
+    $error = '';
+    $link = mysql_connect($dbserver, $username, $password);
+    @mysql_select_db($database) or die( "Unable to select database".$database);
+
 ?>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 
@@ -62,11 +69,6 @@
         <hr/>
     </div>
     <?php
-
-    $error = '';
-
-    $link = mysql_connect($dbserver, $username, $password);
-    @mysql_select_db($database) or die( "Unable to select database".$database);
 
     if ($_SESSION['theme'] == 'art' || $_SESSION['theme'] == 'artAccessible')
     {
@@ -248,7 +250,12 @@
         <p><?php session_write_close(); ?><a href="index.php">Back To Menu</a></p>
     </div>
 </div>
+<?php
 
+    // close mysql connection
+    mysql_close($link);
+
+?>
 <?php include 'footer.php';?>
 </body>
 

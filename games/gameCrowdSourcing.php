@@ -4,12 +4,13 @@ include 'config/vars.php';
 session_start();
 $uun = $_SESSION['uun'];
 
+// Connect To Database
+$error = '';
+$link = mysql_connect($dbserver, $username, $password);
+@mysql_select_db($database) or die( "Unable to select database");
+
 if (isset ($_POST['save'])) {
     $_POST['button'] = false;
-
-    //variables passed in from order form
-    mysql_connect($dbserver, $username, $password);
-    @mysql_select_db($database) or die("Unable to select database");
 
     $image_id = $_POST['image_id'];
     $subject = trim(mysql_real_escape_string($_POST['subject']));
@@ -117,10 +118,6 @@ if (isset ($_POST['save'])) {
 <!--heading-->
 
 <?php
-$error = '';
-
-$link = mysql_connect($dbserver, $username, $password);
-@mysql_select_db($database) or die("Unable to select database" . $database);
 
 $mpointssql = "select count(*) as mtotal from CROWD where uun = '" . $_SESSION['uun'] . "' and status = 'M' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
 $mpointsresult = mysql_query($mpointssql) or die("A MySQL error has occurred.<br />Your Query: " . $mpointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
@@ -435,6 +432,11 @@ else
             </div>';
     }
 }
+
+
+// close mysql connection
+mysql_close($link);
+
 ?>
 <?php include 'footer.php';?>
 </div>

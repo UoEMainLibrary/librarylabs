@@ -3,6 +3,10 @@ session_start();
 include 'config/vars.php';
 $page = $_SERVER['PHP_SELF'];
 $sec = "5";
+// connect to db
+$error = '';
+$link = mysql_connect($dbserver, $username, $password);
+@mysql_select_db($database) or die( "Unable to select database");
 ?>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
@@ -31,10 +35,6 @@ $sec = "5";
                 <hr/>
             </div>
 			<?php
-
-				//variables passed in from order form				
-				mysql_connect($dbserver, $username, $password);
-				@mysql_select_db($database) or die( "Unable to select database");
 
 					$sql = "
 						select
@@ -148,7 +148,10 @@ $sec = "5";
             </div>
             </div>';
 
-					?>
+            // close mysql connection
+            mysql_close($link);
+
+            ?>
             <?php include 'footer.php';?>
             <!--<embed src ="pacman_beginning.mp3"></embed>-->
 		</div>
