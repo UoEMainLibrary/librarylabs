@@ -84,26 +84,32 @@ $link = mysql_connect($dbserver, $username, $password);
                         $pos = $i + 1;
 
                         $mpointssql = "select count(*) as mtotal from CROWD where uun = '".$uun."' and status = 'M' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
+                        //$mpointssql = "select count(*) as mtotal from CROWD where uun = '".$uun."' and status = 'M' and game = '" . $_SESSION["game"] . "' and (date(date_created) BETWEEN '2015-02-15 00:00:01' AND '2015-02-20 23:59:59') ;";
                         $mpointsresult=mysql_query($mpointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $mpointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
                         $mpoints = mysql_result($mpointsresult, 0, 'mtotal');
 
                         $vpointssql = "select count(*) as vtotal from VOTES where voter = '".$uun."' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
+                        //$vpointssql = "select count(*) as vtotal from VOTES where voter = '".$uun."' and game = '" . $_SESSION["game"] . "' and (date(date_created) BETWEEN '2015-02-15 00:00:01' AND '2015-02-20 23:59:59') ;";
+
                         $vpointsresult=mysql_query($vpointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $vpointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
                         $vpoints = mysql_result($vpointsresult, 0, 'vtotal');
 
                         $apointssql = "select count(*) as atotal from CROWD where uun = '".$uun."' and status = 'A' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
+                        //$apointssql = "select count(*) as atotal from CROWD where uun = '".$uun."' and status = 'A' and game = '" . $_SESSION["game"] . "' and (date(date_created) BETWEEN '2015-02-15 00:00:01' AND '2015-02-20 23:59:59') ;";
                         $apointsresult=mysql_query($apointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $apointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
                         $apoints = mysql_result($apointsresult, 0, 'atotal');
 
                         $ppointssql = "select count(*) as ptotal from CROWD where uun = '".$uun."' and status = 'P' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
+                        //$ppointssql = "select count(*) as ptotal from CROWD where uun = '".$uun."' and status = 'P' and game = '" . $_SESSION["game"] . "' and (date(date_created) BETWEEN '2015-02-15 00:00:01' AND '2015-02-20 23:59:59') ;";
                         $ppointsresult=mysql_query($ppointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $ppointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
                         $ppoints = mysql_result($ppointsresult, 0, 'ptotal');
 
                         $upointssql = "select sum(quality) as utotal from VOTES where submitter = '".$uun."' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
+                        //$upointssql = "select sum(quality) as utotal from VOTES where submitter = '".$uun."' and game = '" . $_SESSION["game"] . "' and (date(date_created) BETWEEN '2015-02-15 00:00:01' AND '2015-02-20 23:59:59') ;";
                         $upointsresult=mysql_query($upointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $upointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
                         $upoints = mysql_result($upointsresult, 0, 'utotal');
