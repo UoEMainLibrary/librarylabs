@@ -200,7 +200,7 @@ else
                             i.jpeg_path
                             from
                             orders.IMAGE i
-                            where image_id = $image_id;
+                            where image_id = '".$image_id."';
                             ";
 
         $result = mysql_query($sql) or die("A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
