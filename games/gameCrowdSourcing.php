@@ -182,6 +182,7 @@ if ($_SESSION['theme'] == 'art' and $_SESSION['images'] >= 10)
 }
 else
 {
+    $imageprovcount = 1;
     if ($_REQUEST['image_id'] == null) {
         unset($_REQUEST['image_id']);
     }
@@ -203,7 +204,7 @@ else
                             ";
 
         $result = mysql_query($sql) or die("A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-        $count = mysql_numrows($result);
+        $imageprovcount = mysql_numrows($result);
     } else {
         echo '<hr />';
 
@@ -214,6 +215,8 @@ else
 
         if ($_SESSION['theme'] == 'art' || $_SESSION['theme'] == 'artAccessible')
         {
+            //No longer relevant- this was simply for ILW to ensure that the right images were showing up FIRST.
+            /*
             if ($_SESSION['images'] == 0)
             {
                 $rand_sql = "
@@ -234,7 +237,7 @@ else
 
             }
             else
-            {
+            {*/
                 $rand_sql = "
                                     select
                                     i.image_id,
@@ -249,7 +252,7 @@ else
                                     order by rand() limit 1
                                     ;
                                     ";
-            }
+           // }
         }
         else if ($_SESSION['theme'] == 'photo')
         {
@@ -295,6 +298,7 @@ else
         $_SESSION['images'] = $images++;
     }
 
+
     if (isset ($_POST['buttonwithimage'])) {
 
         $withimagesql = "
@@ -316,120 +320,129 @@ else
         $withimagecount = mysql_numrows($result);
     }
 
-    $i = 0;
-    $image_id = mysql_result($result, $i, 'image_id');
-    $collection = mysql_result($result, $i, 'collection');
-    $shelfmark = mysql_result($result, $i, 'shelfmark');
-    $title = mysql_result($result, $i, 'title');
-    $author = mysql_result($result, $i, 'author');
-    $page_no = mysql_result($result, $i, 'page_no');
-    $jpeg_path = mysql_result($result, $i, 'jpeg_path');
-    $publication_status = mysql_result($result, $i, 'publication_status');
-    $size = getimagesize('../' . $jpeg_path);
+    if ($imageprovcount == 1)
+    {
+        $i = 0;
+        $image_id = mysql_result($result, $i, 'image_id');
+        $collection = mysql_result($result, $i, 'collection');
+        $shelfmark = mysql_result($result, $i, 'shelfmark');
+        $title = mysql_result($result, $i, 'title');
+        $author = mysql_result($result, $i, 'author');
+        $page_no = mysql_result($result, $i, 'page_no');
+        $jpeg_path = mysql_result($result, $i, 'jpeg_path');
+        $publication_status = mysql_result($result, $i, 'publication_status');
+        $size = getimagesize('../' . $jpeg_path);
 
-    $fullwidth = $size[0];
-    $fullheight = $size[1];
+        $fullwidth = $size[0];
+        $fullheight = $size[1];
 
-    if ($fullheight > $fullwidth) {
-        $aspect = $fullheight / $fullwidth;
-        $short_side = 350 / $aspect;
-        $dimstyle = "height: 95%";
-        $divstyle = "height: 350; width: " . $short_side . " px; vertical-align: middle;";
-    } else {
-        $aspect = $fullwidth / $fullheight;
-        $short_side = 350 / $aspect;
-        $dimstyle = "width: 95%";
-        $divstyle = "height: " . $short_side . " px; width: 350px; vertical-align: middle;";
-    }
+        if ($fullheight > $fullwidth) {
+            $aspect = $fullheight / $fullwidth;
+            $short_side = 350 / $aspect;
+            $dimstyle = "height: 95%";
+            $divstyle = "height: 350; width: " . $short_side . " px; vertical-align: middle;";
+        } else {
+            $aspect = $fullwidth / $fullheight;
+            $short_side = 350 / $aspect;
+            $dimstyle = "width: 95%";
+            $divstyle = "height: " . $short_side . " px; width: 350px; vertical-align: middle;";
+        }
 
-    echo '
-                    <div class="sourcebox">
-                        <div class = "heading">
-                            <h5>' . $title . ": " . $author . '</h5>
+        echo '
+                        <div class="sourcebox">
+                            <div class = "heading">
+                                <h5>' . $title . ": " . $author . '</h5>
+                            </div>
+
+                            <div class = "image">
+                            ';
+
+        if (strpos($image_id, '-') == false) {
+            $urlrecordid = ltrim($image_id, '0');
+        } else {
+            $urlrecordid = $image_id;
+        }
+        $urlsql = "select recordid, objectid, imageid, institutionid, collectionid
+                   from OBJECTIMAGE
+                   where recordid = '" . $urlrecordid . "';";
+
+        $urlresult = mysql_query($urlsql) or die("A MySQL error has occurred.<br />Your Query: " . $urlsql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+        $count = mysql_numrows($urlresult);
+
+        $urlobjectid = mysql_result($urlresult, 0, 'objectid');
+        $urlimageid = mysql_result($urlresult, 0, 'imageid');
+        $urlinstid = mysql_result($urlresult, 0, 'institutionid');
+        $urlcollid = mysql_result($urlresult, 0, 'collectionid');
+
+
+        echo '<p><a href= "http://images.is.ed.ac.uk/luna/servlet/detail/' . $urlinstid . '~' . $urlcollid . '~' . $urlcollid . '~' . $urlobjectid . '~' . $urlimageid . '" target = "_blank"><img src = "../' . $jpeg_path . '" style = "' . $divstyle . '"/></a></p>
+                            </div>
                         </div>
+                            ';
 
-                        <div class = "image">
-                        ';
+        if ($_SESSION['theme'] == 'photo') {
+            echo '<div class="sourcebox">
+                            <form action = "gameCrowdSourcing.php" method = "post">
+                                    <table style = "text-align: center;">
+                                        <h4>What can you tell us about this image?</h4>
+                                        <tr>
+                                            <td>Creator Information: </td>
+                                            <td>Date Information: </td>
+                                        </tr>
+                                            <td><textarea name = "creator"></textarea></td>
+                                            <td><textarea name = "date"></textarea></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Location Information: </td>
+                                            <td>Production Information: </td>
+                                        </tr>
+                                        <tr>
+                                            <td><textarea name = "location"></textarea></td>
+                                            <td><textarea name = "production"></textarea></td>
+                                        </tr>
 
-    if (strpos($image_id, '-') == false) {
-        $urlrecordid = ltrim($image_id, '0');
-    } else {
-        $urlrecordid = $image_id;
+                                        <tr>
+                                            <td>Translation: </td>
+                                            <td>Transcription: </td>
+                                        </tr>
+                                        <tr>
+                                            <td><textarea name = "translation"></textarea></td>
+                                            <td><textarea name = "transcription"></textarea></td>
+                                        </tr>
+                                        <tr>
+                                            <input type = "hidden" name = "image_id" value = "' . $image_id . '">
+                                        </tr>
+                                        <tr> <td colspan="2"><input type="submit" name = "save" style = "width:500px;" value="Submit info and get new image"/></td></tr>
+                                    </table>
+                            </form>
+
+                            </div>';
+        } else {
+            echo '<div class="sourcebox">
+                            <form action = "gameCrowdSourcing.php" method = "post">
+                                    <table style = "text-align: center;">
+                                        <tr>
+                                            <td class="menutext" colspan="2">Enter tags here- e.g. flag; tiger; hat</td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type = "text" name = "subject" style = "width:500px;"></input></td>
+                                        </tr>
+                                        <tr>
+                                            <input type = "hidden" name = "image_id" value = "' . $image_id . '">
+                                        </tr>
+                                        <tr> <td colspan="2"><input type="submit" name = "save" style = "width:500px;" value="Submit tags and get new image"/></td></tr>
+                                        <tr><td class="menutext" colspan="2">If you enter more than one person, object or place, please separate <br />with a semi-colon. Points only awarded for correctly spelled words.</td></tr>
+                                    </table>
+                    </form>
+                </div>';
+        }
     }
-    $urlsql = "select recordid, objectid, imageid, institutionid, collectionid
-               from OBJECTIMAGE
-               where recordid = '" . $urlrecordid . "';";
-
-    $urlresult = mysql_query($urlsql) or die("A MySQL error has occurred.<br />Your Query: " . $urlsql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-    $count = mysql_numrows($urlresult);
-
-    $urlobjectid = mysql_result($urlresult, 0, 'objectid');
-    $urlimageid = mysql_result($urlresult, 0, 'imageid');
-    $urlinstid = mysql_result($urlresult, 0, 'institutionid');
-    $urlcollid = mysql_result($urlresult, 0, 'collectionid');
-
-
-    echo '<p><a href= "http://images.is.ed.ac.uk/luna/servlet/detail/' . $urlinstid . '~' . $urlcollid . '~' . $urlcollid . '~' . $urlobjectid . '~' . $urlimageid . '" target = "_blank"><img src = "../' . $jpeg_path . '" style = "' . $divstyle . '"/></a></p>
-                        </div>
-                    </div>
-                        ';
-
-    if ($_SESSION['theme'] == 'photo') {
-        echo '<div class="sourcebox">
-                        <form action = "gameCrowdSourcing.php" method = "post">
-                                <table style = "text-align: center;">
-                                    <h4>What can you tell us about this image?</h4>
-                                    <tr>
-                                        <td>Creator Information: </td>
-                                        <td>Date Information: </td>
-                                    </tr>
-                                        <td><textarea name = "creator"></textarea></td>
-                                        <td><textarea name = "date"></textarea></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Location Information: </td>
-                                        <td>Production Information: </td>
-                                    </tr>
-                                    <tr>
-                                        <td><textarea name = "location"></textarea></td>
-                                        <td><textarea name = "production"></textarea></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Translation: </td>
-                                        <td>Transcription: </td>
-                                    </tr>
-                                    <tr>
-                                        <td><textarea name = "translation"></textarea></td>
-                                        <td><textarea name = "transcription"></textarea></td>
-                                    </tr>
-                                    <tr>
-                                        <input type = "hidden" name = "image_id" value = "' . $image_id . '">
-                                    </tr>
-                                    <tr> <td colspan="2"><input type="submit" name = "save" style = "width:500px;" value="Submit info and get new image"/></td></tr>
-                                </table>
-                        </form>
-
-                        </div>';
-    } else {
-        echo '<div class="sourcebox">
-                        <form action = "gameCrowdSourcing.php" method = "post">
-                                <table style = "text-align: center;">
-                                    <tr>
-                                        <td class="menutext" colspan="2">Enter tags here- e.g. flag; tiger; hat</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type = "text" name = "subject" style = "width:500px;"></input></td>
-                                    </tr>
-                                    <tr>
-                                        <input type = "hidden" name = "image_id" value = "' . $image_id . '">
-                                    </tr>
-                                    <tr> <td colspan="2"><input type="submit" name = "save" style = "width:500px;" value="Submit tags and get new image"/></td></tr>
-                                    <tr><td class="menutext" colspan="2">If you enter more than one person, object or place, please separate <br />with a semi-colon. Points only awarded for correctly spelled words.</td></tr>
-                                </table>
-                </form>
-
-            </div>';
+    else
+    {
+        echo '
+        <div class="sourcebox">
+        <p>Sorry, that image is not in the pool. You cannot add metadata to it!</p>
+        </div>';
     }
 }
 
