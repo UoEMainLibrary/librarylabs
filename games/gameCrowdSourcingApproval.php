@@ -198,6 +198,7 @@ if (isset ($_POST['save']))
                                 as a on i.image_id = a.image_id
                                 ;
                                 ";
+
                     }
                     else
                     {
@@ -212,13 +213,14 @@ if (isset ($_POST['save']))
                                 i.jpeg_path
                                 from
                                 orders.IMAGE i
-                                join (select x.image_id from orders.IMAGE x, orders.CROWD y where x.image_id = y.image_id and y.status = 'M' and y.uun <> '".$_SESSION['uun']."' and x.image_id not in (select v.image_id from orders.VOTES v where v.voter = '".$_SESSION['uun']."') order by rand() limit 1)
+                                join (select x.image_id from orders.IMAGE x, orders.CROWD y where x.image_id = y.image_id and y.status = 'M' and y.uun <> '".$_SESSION['uun']."' order by rand() limit 1)
                                 as a on i.image_id = a.image_id
                                 ;
                                 ";
                     }
 
                     $result=mysql_query($rand_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+
                     $count = mysql_numrows($result);
 
                     if ($count == 0)
