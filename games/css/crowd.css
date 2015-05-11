@@ -44,7 +44,7 @@ h1, h2 {
 }
 
 h4 {
-    color: #1aa5c7;
+    color: #ccc;
     font-size: 14px;
     text-align: center;
 }
@@ -81,7 +81,7 @@ td.typelabel {
 }
 
 .menutext {
-    color: #1aa5c7;
+    color: #ccc;
     font-family: Courier, sans-serif;;
     font-size: medium;
     text-align: center;
