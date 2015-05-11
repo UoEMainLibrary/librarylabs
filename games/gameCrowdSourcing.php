@@ -351,7 +351,7 @@ else
         echo '
                         <div class="sourcebox">
                             <div class = "heading">
-                                <h5>' . $title . ": " . $author . '</h5>
+                                <h4>' . $title . ": " . $author . '</h4>
                             </div>
 
                             <div class = "image">
