@@ -4,6 +4,36 @@ include 'config/vars.php';
 session_start();
 $uun = $_SESSION['uun'];
 
+if(!isset($_SESSION['theme']) || isset($_REQUEST['theme']))
+{
+    $_SESSION['theme'] = $_REQUEST['theme'];
+
+    if ($_SESSION['theme'] == 'art') {
+        $_SESSION['stylesheet'] = '<link rel="stylesheet" type ="text/css" href="css/art.css">';
+        $_SESSION['banner'] = "./images/artbanner.jpg";
+        $_SESSION['game'] = 'A';
+    }
+    else if ($_SESSION['theme'] == 'photo')
+    {
+        $_SESSION['stylesheet'] = '<link rel="stylesheet" type ="text/css" href="css/photo.css">';
+        $_SESSION['banner'] = "./images/photobanner.jpg";
+        $_SESSION['game'] = 'R';
+    }
+    else if ($_SESSION['theme'] =='artAccessible')
+    {
+        $_SESSION['stylesheet'] = '<link rel="stylesheet" type ="text/css" href="css/artAccessible.css">';
+        $_SESSION['banner'] = "./images/artbanner.jpg";
+        $_SESSION['game'] = 'A';
+    }
+    else // classic and default
+    {
+        $_SESSION['stylesheet'] = '<link rel="stylesheet" type ="text/css" href="css/crowd.css">';
+        $_SESSION['banner'] = "./images/crowdbanner.gif";
+        $_SESSION['game'] = 'D';
+    }
+}
+
+
 // Connect To Database
 $error = '';
 $link = mysql_connect($dbserver, $username, $password);
