@@ -442,6 +442,7 @@ else
         echo '
         <div class="sourcebox">
         <p>Sorry, that image is not in the pool. You cannot add metadata to it!</p>
+        <p> <a href="gameCrowdSourcing.php">Tag some others?</a></p>
         </div>';
     }
 }
