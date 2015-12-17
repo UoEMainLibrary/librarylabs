@@ -36,10 +36,9 @@ if (isset ($_POST['save']))
             $get_image_result =mysql_query($get_image_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $get_image_result . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
             $image_id = mysql_result($get_image_result, 0, 'image_id');
 
-
             $vote_insert_sql = "insert into orders.VOTES (crowd_id, submitter, voter, image_id, quality, game ) values (".$crowd_id.", '".$uun."', '".$_SESSION['uun']."','".$image_id."',".$action.",'". $_SESSION["game"]. "');";
             $vote_insert_result=mysql_query($vote_insert_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $vote_insert_result . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-
+            //echo 'SQL'.$vote_insert_sql;
 
             $vote_sql = "select sum(quality) as votes from orders.VOTES where crowd_id = ".$crowd_id.";";
             $vote_result=mysql_query($vote_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $vote_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
@@ -89,20 +88,17 @@ if (isset ($_POST['save']))
     <meta name="distribution" content="global" />
     <meta name="resource-type" content="document" />
     <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+    <link href="../assets/font-awesome-4.4.0/css/font-awesome.css" rel="stylesheet">
 </head>
-
 <body>
 <?php include_once("./../analyticstracking.php") ?>
-<div class = "central">
-<div class = "heading">
-    <a href="gameMenu.php" title="Metadata Games">
-        <img src="<?php echo $_SESSION['banner']; ?>" alt="The University of Edinburgh Image Collections" width="800" height="80" border="0" />
-    </a>
-    <hr/>
-        <h2>HELP US DESCRIBE OUR IMAGES</h2>
-    <hr/>
-</div>
-			<?php
+<div class = "centralDolAp">
+    <div class = "heading">
+        <a href="gameMenu.php" title="Metadata Games">
+            <img src="<?php echo $_SESSION['banner']; ?>" alt="The University of Edinburgh Image Collections" width="800" height="80" border="0" />
+        </a>
+    </div>
+	<?php
 
             $mpointssql = "select count(*) as mtotal from CROWD where uun = '".$_SESSION['uun']."' and status = 'M' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
             $mpointsresult=mysql_query($mpointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $mpointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
@@ -134,29 +130,7 @@ if (isset ($_POST['save']))
 
             $_SESSION['points'] = $pointstotal;
 
-            echo "<h4>Hello " . $_SESSION['first_name'] . ", you currently have <span class='blink'>" . $_SESSION['points'] ."</span> point";
 
-            if ($_SESSION['points'] != 1)
-            {
-                echo 's';
-            }
-
-            echo "!&nbsp;";
-
-            if ($_SESSION['points'] >= 200)
-            {
-                echo '<span class="goldstars">*****</span>';
-            }
-            else if ($_SESSION['points'] >=150)
-            {
-                echo '<span class="silverstars">***</span>';
-            }
-            else if ($_SESSION['points'] >= 100)
-            {
-                echo '<span class="bronzestars">*</span>';
-            }
-
-            echo "</h4>";
 
             if(!isset($_SESSION['vimages']))
             {
@@ -165,7 +139,8 @@ if (isset ($_POST['save']))
 
             if (($_SESSION['theme'] == 'art'|| $_SESSION['theme'] == 'roslin') and $_SESSION['vimages'] >= 10)
             {
-                echo '<table style = "text-align: center;">
+                echo '<br/>
+<br/><table style = "text-align: center;">
                                     <tr>
                                         <td class="gameover">
                                             <h1 class="giant">GAME</h1><br />
@@ -187,29 +162,7 @@ if (isset ($_POST['save']))
             }
             else
             {
-                echo '<hr />';
 
-            if ($_SESSION['theme'] == 'art' || $_SESSION['theme'] == 'artAccessible')
-                    {
-                        $rand_sql = "
-                                select
-                                i.image_id,
-                                i.collection,
-                                i.shelfmark,
-                                i.title,
-                                i.author,
-                                i.page_no,
-                                i.jpeg_path
-                                from
-                                orders.IMAGE i
-                                join (select x.image_id from orders.IMAGE x, orders.CROWD y where x.image_id = y.image_id and x.collection = 20 and y.status = 'M' and y.uun <> '".$_SESSION['uun']."' and x.image_id not in (select v.image_id from orders.VOTES v where v.voter = '".$_SESSION['uun']."') order by rand() limit 1)
-                                as a on i.image_id = a.image_id
-                                ;
-                                ";
-
-                    }
-                if ($_SESSION['theme'] == 'roslin')
-                {
                     $rand_sql = "
                                 select
                                 i.image_id,
@@ -221,30 +174,11 @@ if (isset ($_POST['save']))
                                 i.jpeg_path
                                 from
                                 orders.IMAGE i
-                                join (select x.image_id from orders.IMAGE x, orders.CROWD y where x.image_id = y.image_id and x.collection = 17 and y.status = 'M' and y.uun <> '".$_SESSION['uun']."' and x.image_id not in (select v.image_id from orders.VOTES v where v.voter = '".$_SESSION['uun']."') order by rand() limit 1)
+                                join (select x.image_id from orders.IMAGE x, orders.CROWD y where x.image_id = y.image_id and x.collection = 17 and y.status = 'M' and y.uun <> '".$_SESSION['uun']."' and x.image_id not in (select v.image_id from orders.VOTES v where v.voter = '".$_SESSION['uun']."')  order by rand() limit 1)
                                 as a on i.image_id = a.image_id
                                 ;
                                 ";
-                }
 
-                    else
-                    {
-                        $rand_sql = "
-                                select
-                                i.image_id,
-                                i.collection,
-                                i.shelfmark,
-                                i.title,
-                                i.author,
-                                i.page_no,
-                                i.jpeg_path
-                                from
-                                orders.IMAGE i
-                                join (select x.image_id from orders.IMAGE x, orders.CROWD y where x.image_id = y.image_id and y.status = 'M' and y.uun <> '".$_SESSION['uun']."' order by rand() limit 1)
-                                as a on i.image_id = a.image_id
-                                ;
-                                ";
-                    }
 
                     $result=mysql_query($rand_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
@@ -277,34 +211,21 @@ if (isset ($_POST['save']))
                         if ($fullheight > $fullwidth)
                         {
                             $aspect = $fullheight/ $fullwidth;
-                            $short_side = 350 / $aspect;
+                            $short_side = 320 / $aspect;
                             $dimstyle = "height: 95%";
-                            $divstyle= "height: 490; width: " . $short_side . " px; vertical-align: middle;";
+                            $divstyle= "height: 320; width: " . $short_side . " px; vertical-align: middle;";
                         }
                         else
                         {
                             $aspect = $fullwidth / $fullheight;
-                            $short_side = 350 / $aspect;
+                            $short_side = 320 / $aspect;
                             $dimstyle = "width: 95%";
-                            $divstyle = "height: " . $short_side . " px; width: 550px; vertical-align: middle;";
+                            $divstyle = "height: " . $short_side . " px; width: 320px; vertical-align: middle;";
                         }
 
 
-                        echo '
-                    <div class = "sourcebox">
-                        <div class = "plusheading">
-                            <h3>+++++++++++++++++++++++++++++++++++++</h3>
-                            <h3>+++++++ What Do You Think? +++++++</h3>
-                            <h3>+++++++++++++++++++++++++++++++++++++</h3>
-                        </div>
-                        <div class = "box">
-                        </div>
-                    </div>
+                        echo '<br><br>
                     <div class="sourcebox">
-                        <div class = "heading">
-                            <h4>'.$title.'</h4>
-                        </div>
-
                         <div class = "image">
                         ';
 
@@ -323,31 +244,30 @@ if (isset ($_POST['save']))
                         $urlinstid = mysql_result($urlresult, 0, 'institutionid');
                         $urlcollid = mysql_result($urlresult, 0, 'collectionid');
 
-
-
-                        echo '<p><a href= "http://images.is.ed.ac.uk/luna/servlet/detail/'.$urlinstid.'~'.$urlcollid.'~'.$urlcollid.'~'.$urlobjectid.'~'.$urlimageid.'" target = "_blank"><img src = "../'.$jpeg_path.'" style = "'.$divstyle.'"/></a></p>
+                        echo '<p class="imagelink"><a href= "http://images.is.ed.ac.uk/luna/servlet/detail/'.$urlinstid.'~'.$urlcollid.'~'.$urlcollid.'~'.$urlobjectid.'~'.$urlimageid.'" target = "_blank"><img src = "../'.$jpeg_path.'" style = "'.$divstyle.'"/></a></p>
                         </div>
                     </div>
-                        <div class = "info">
+                    <!--<div class = "info">-->
 
-                            <div class = "heading">
-                                <h3>Pending Information: Image '.$image_id.'</h3>
-                            </div>
 
-                        <form action = "gameCrowdSourcingApproval.php" method = "post">
-                        <div class="box">
-                        <p class = "menutext">Select the relevant radio button.</p>
-                        <table class ="radio">
+                       <!-- <div class="box">
+                        <p class = "menutext">Select the relevant radio button.</p><!--
+</div>
+</div>
+--></div><!--
+--><div class ="approve">
+<div class = "heading">
+                            <h3>Pending Information: Image '.$image_id.'</h3>
+                            </div><!--
+--><form action = "gameCrowdSourcingApprovalDolly.php" method = "post"><table class ="radio">
                          <tr>
-                         <td class="label">Cataloguer</td>
                          <td class="typelabel">Type</td>
                          <td class="label">Value</td>
-                         <td class = "radiotd">Good</td>
-                         <td class = "radiotd">?</td>
-                         <td class = "radiotd">Bad</td>
+                         <td class = "radiotd"><i class="fa fa-check"></i></td>
+                         <td class = "radiotd"><i class="fa fa-question"></i></td>
+                         <td class = "radiotd"><i class="fa fa-times"></i></td>
                          </tr>
                          <tr>
-                         <td class="label">----------</td>
                          <td class="typelabel">----</td>
                          <td class="label">-----</td>
                          <td class = "radiotd">---</td>
@@ -366,8 +286,6 @@ if (isset ($_POST['save']))
                     $crowd_id = mysql_result ($data_result, $k, 'crowd_id');
                     $crowds[$k] = $crowd_id;
 
-                    $first_name = mysql_result($data_result, $k, 'first_name');
-                    $surname = mysql_result($data_result, $k, 'surname');
                     $value_text = mysql_result($data_result, $k, 'value_text');
                     $type = mysql_result($data_result, $k, 'type');
                     $uun = mysql_result($data_result, $k, 'uun');
@@ -375,8 +293,7 @@ if (isset ($_POST['save']))
 
                     // echo '<tr><td>From '.$first_name .' '.$surname.'</td><td> Value for '.$type.': </td><td><input type = "text" name = "value['.$k.']" value = "'.$value_text.'"</td><td><input type="checkbox" name="moderated['.$k.']" value = "'.$crowd_id.'|'.$uun.'"/></td></tr>';
 
-                    echo '<tr>
-                    <td class="label">'.$first_name .' '.$surname.'</td>
+                    echo '<tr">
                     <td class="typelabel">'.$type.'</td>
                     <td class="label">'.strtoupper($value_text).'</td>
                     <td class="radiotd"><input type="radio" name="moderated['.$k.']" value = "1|'.$crowd_id.'|'.$uun.'"/></td>
@@ -391,8 +308,34 @@ if (isset ($_POST['save']))
 
                 echo '
                 </table>
-                </div><br><input type="submit" name = "save" style = "width:520px;" value="Submit votes and get new image" />
-                </form>';
+                <br><div class="approve"><input type="submit" name = "save" style = "width:520px;" value="Submit votes and get new image" /></div>
+                </form>
+                        <div class = "heading">
+                            <h4>'.$title.'</h4>
+                        </div>';
+                        echo "<h4>For information, " . $_SESSION['first_name'] . ", you currently have <span class='blink'>" . $_SESSION['points'] ."</span> point";
+
+                        if ($_SESSION['points'] != 1)
+                        {
+                            echo 's';
+                        }
+
+                        echo "!&nbsp;";
+
+                        if ($_SESSION['points'] >= 200)
+                        {
+                            echo '<span class="goldstars">*****</span>';
+                        }
+                        else if ($_SESSION['points'] >=150)
+                        {
+                            echo '<span class="silverstars">***</span>';
+                        }
+                        else if ($_SESSION['points'] >= 100)
+                        {
+                            echo '<span class="bronzestars">*</span>';
+                        }
+
+                        echo "</h4>";
 
              }
         }
@@ -401,8 +344,26 @@ if (isset ($_POST['save']))
     mysql_close($link);
 
 			?>
-</div>
+
 <?php include 'footer.php';?>
-		</div> <!-- div central -->
+    </div>
+		<div class="bottom">
+<br/>
+            <br/>
+            <br/>
+            <br/><br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/><br/>
+            <br/><br/>
+            <br/><br/>
+            <br/><br/>
+            <br/><br/>
+            <br/>
+
+        </div>
+</div>
 	</body>
 </html>

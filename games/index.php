@@ -210,10 +210,17 @@ mysql_close($link);
                 </a>
             </div>
         </div>
-        <div class="col-lg-4">
+       <!-- <div class="col-lg-3">
             <div class="link-box box-right games-box">
                 <a href="./gameMenu.php?theme=photo">
                     <img title="Research Zone" src="./../css/images/ResearchTile.png">
+                </a>
+            </div>
+        </div>-->
+        <div class="col-lg-4">
+            <div class="link-box box-right games-box">
+                <a href="./gameMenu.php?theme=roslin">
+                    <img title="Roslin Game" src="./../css/images/DollyTile.jpg">
                 </a>
             </div>
         </div>

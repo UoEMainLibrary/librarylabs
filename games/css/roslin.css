@@ -1,0 +1,299 @@
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+@font-face {
+    font-family: "biro";
+    src: url("../fonts/Biro_Script_reduced.ttf") format("truetype");
+
+}
+
+div, h3, h1, h2, h4, p, td, tr, i, b, a {
+    font-family: "Courier New", sans-serif;
+}
+
+i, b, a, p, td, tr {
+    color: #1aa5c7;
+    font-size: 14px;
+}
+
+p {
+    text-align: center;
+}
+
+h3 {
+    color: #1aa5c7;
+    font-size: 120%;
+    text-align: center;
+}
+
+h1, h2 {
+    color: #1aa5c7;
+    font-size: 140%;
+    text-align: center;
+}
+
+h4 {
+    color: #ccc;
+    font-size: 14px;
+    text-align: center;
+}
+
+h5 {
+    color: #1aa5c7;
+    font-size: 13px;
+    text-align: center;
+}
+
+th {
+    text-align: right;
+}
+
+td, th {
+    padding: 5px;
+    max-width:750px;
+}
+
+td {
+    text-align: center;
+}
+
+td.menu {
+    text-align: center;
+}
+
+td.label {
+    max-width: 375px;
+    text-align: right;
+}
+
+td.typelabel {
+    width: 100px;
+}
+
+.approve
+ {
+    display : block;
+    background: url("../images/backdata.jpg") repeat-y top left;
+    max-width: 1000px;
+    margin: auto;
+    text-align: center;
+    background-color: #2c2c2a;
+    background-attachment: scroll;
+    padding-top: 0px;
+ }
+
+.bottom
+{
+    background: url("../images/footerbacker.jpg") no-repeat scroll 0px 0px transparent;
+    max-width: 1000px;
+    margin: auto;
+    text-align: center;
+    background-color: #2c2c2a;
+    background-attachment: scroll;
+}
+.menutext {
+    padding-top:0px;
+    padding-bottom:0px;
+    color: #ccc;
+    font-family: "Courier New", sans-serif;
+    text-align: center;
+    font-size: 18px;
+}
+
+table {
+    margin: auto;
+}
+
+input[type="submit"] {
+    background: url("./images/Save.jpg") no-repeat scroll 0px 0px transparent;
+    color: #82795a;
+    font-family: "Courier New", sans-serif;;
+    font-size: 20px;
+    font-weight: bold;
+    height: 50px;
+    width: 230px;
+}
+
+input[type="radio"] {
+    width: 40px;
+}
+.all {
+    height:1200px;
+    max-width: 1000px;
+    margin: auto;
+    text-align: center;
+    background: url("../images/roslin.jpg") no-repeat scroll 0px 0px transparent;
+    background-color: #2c2c2a;
+    background-attachment: scroll;
+}
+.fa
+{
+    color: #1aa5c7;
+}
+.centralDolAp {
+    display: block;
+    max-width: 1000px;
+    margin: auto;
+    text-align: center;
+    background: url("../images/roslin.jpg") no-repeat scroll 0px 0px transparent;
+    background-color: #2c2c2a;
+    background-attachment: scroll;
+    padding-bottom: 0px;
+}
+body{
+    background-color: #2c2c2a;
+}
+
+
+.central {
+
+    margin: auto;
+    text-align: center;
+    width: 800px;
+}
+
+.image {
+    margin: auto;
+}
+
+input {
+    width: 300px;
+}
+
+.plusheading h3 {
+    font-size: 15px;
+}
+
+.heading h4 {
+    padding-top:20px;
+    margin-top:20px;
+    font-size: 16px;
+}
+
+.box {
+    padding-top: 5px;
+}
+
+.box h4 {
+    font-size: 14px;
+}
+
+hr {
+    color: #fc2d48;
+}
+
+td.instructions {
+    font-size: 12px;
+}
+
+.radiobox {
+    margin: auto;
+    padding-top: 5px;
+    width: 800px;
+}
+
+table.radio {
+    text-align: center;
+    width: 800px;
+}
+
+td.radiotd {
+    max-width: 40px;
+    text-align: center;
+}
+
+.blink {
+    text-decoration: blink;
+}
+
+.goldstars {
+    color: #cb8a00;
+    font-size: 30px;
+}
+
+.silverstars {
+    color: #a8a8a8;
+    font-size: 30px;
+}
+
+.bronzestars {
+    color: #975a34;
+    font-size: 30px;
+}
+
+#footer {
+    height: 100px;
+    margin-top: 20px;
+    padding-top: 10px;
+    text-align: center;
+    color: #2c2c2a;
+}
+
+#footer ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    vertical-align: top;
+}
+
+#footer ul li {
+    display: inline;
+    margin-right: 7px;
+}
+
+#footer ul li.last {
+    margin-right: 0px;
+}
+
+.uoe-logo {
+    float: left;
+    width: 10%;
+}
+
+.footer-links {
+    float: left;
+    margin-left: 20px;
+    width: 75%;
+}
+
+#footer ul.links-top {
+    margin-bottom: 20px;
+}
+
+.luc-logo {
+    float: right;
+    margin-right: 15px;
+    margin-top: 8px;
+    width: 10%;
+}
+
+a.footer-link{
+    font-size: 12px;
+}
+
+h1.giant {
+    display: inline;
+    font-size: 100px;
+}
+
+td.gameover {
+    text-align: center;
+}
+
+p.imagelink{
+    padding: 0px;
+}

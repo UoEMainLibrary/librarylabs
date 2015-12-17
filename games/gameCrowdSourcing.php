@@ -68,6 +68,7 @@ if (isset ($_POST['save'])) {
             }
         } else {
             //echo '<div class = box><h4>Person : '.$person.'</h4></div>';
+            $subject = ucwords(trim($subject));
             $insert_sql = "insert into orders.CROWD (image_id, value_text,uun, status, game ) values ('$image_id', '$subject', '$uun', 'P', '" . $_SESSION['game'] . "');";
             $insert_result = mysql_query($insert_sql) or die("A MySQL error has occurred.<br />Your Query: " . $insert_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
         }
@@ -135,6 +136,7 @@ if (isset ($_POST['save'])) {
 
 <body>
 <?php include_once("./../analyticstracking.php") ?>
+<div class="all">
 <div class="central">
 <div class="heading">
     <a href="gameMenu.php" title="Metadata Games Menu">
@@ -196,7 +198,7 @@ if ($_SESSION['points'] >= 200) {
 }
 echo "</h4>";
 
-if ($_SESSION['theme'] == 'art' and $_SESSION['images'] >= 10)
+if (($_SESSION['theme'] == 'art') and $_SESSION['images'] >= 10)
 {
     echo '<div class="sourcebox">
               <form action = "gameCrowdSourcingApproval.php" method = "post">
@@ -236,7 +238,8 @@ else
         $result = mysql_query($sql) or die("A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
         $imageprovcount = mysql_numrows($result);
     } else {
-        echo '<hr />';
+
+        echo '<hr/>';
 
         if(!isset($_SESSION['images']))
         {
@@ -484,6 +487,7 @@ mysql_close($link);
 ?>
 <?php include 'footer.php';?>
 </div>
+    </div>
 <!-- div central -->
 </body>
 </html>

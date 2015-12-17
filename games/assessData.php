@@ -2,18 +2,23 @@
 include 'config/vars.php';
 session_start();
 $uun = $_SESSION['uun'];
+$theme = $_SESSION['theme'];
+
 // Connect To Database
 $error = '';
 $link = mysql_connect($dbserver, $username, $password);
 @mysql_select_db($database) or die( "Unable to select database");
 if (isset ($_POST['save']))
-{    $_POST['button'] = false;
+{
+    $check_box = '';
+    $_POST['button'] = false;
     $check_box = $_POST['moderated'];
     $value = $_POST['value'];
     $uun = $_SESSION['uun'];
     $subjecttype = $_POST['subjecttype'];
     for($i=0; $i<sizeof($check_box); $i++)
     {
+        $action = '';
         $line = explode("|",$check_box[$i]);
         $action = $line[0];
         switch ($action)
@@ -87,7 +92,17 @@ if($_SESSION['theme'] == 'art' || $_SESSION['theme'] == 'artAccessible') {
                     where
                     r.status = 'P'
                     and i.image_id = r.image_id
-                    and i.game = 'A'
+                    and r.game = 'A'
+                    ;";
+}
+else if($_SESSION['theme'] == 'roslin') {
+    $unmod_sql =          "select count(distinct (r.image_id)) as unmod_total
+                    from
+                    orders.CROWD r, orders.IMAGE i
+                    where
+                    r.status = 'P'
+                    and i.image_id = r.image_id
+                    and r.game = 'R'
                     ;";
 }
 else
@@ -106,19 +121,19 @@ $unmod_total = mysql_result($unmod_result, 0, 'unmod_total');
 
 if($unmod_total > 0)
 {
-echo '
-    <div class = "heading">
-        <h3>THERE ARE '.$unmod_total.' IMAGES STILL TO MODERATE</h2>
-        <hr/>
-    </div>';
-if ($_REQUEST['image_id'] == null)
-{
-    unset($_REQUEST['image_id']);
-}
-if (isset ($_REQUEST['image_id']))
-{
-    $image_id= $_GET['image_id'];
-    $sql = "
+    echo '
+        <div class = "heading">
+            <h3>THERE ARE '.$unmod_total.' IMAGES STILL TO MODERATE</h2>
+            <hr/>
+        </div>';
+    if ($_REQUEST['image_id'] == null)
+    {
+        unset($_REQUEST['image_id']);
+    }
+    if (isset ($_REQUEST['image_id']))
+    {
+        $image_id= $_GET['image_id'];
+        $sql = "
                                                     select
                                                     i.image_id,
                                                     i.collection,
@@ -131,12 +146,12 @@ if (isset ($_REQUEST['image_id']))
                                                     orders.IMAGE i
                                                     where image_id = $image_id;
                                                     ";
-    $result=mysql_query($sql) or die( "A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-    $count = mysql_numrows($result);
-}
-else
-{
-    if ($_SESSION['theme'] == 'art' || $_SESSION['theme'] == 'artAccessible') {
+        $result=mysql_query($sql) or die( "A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+        $count = mysql_numrows($result);
+    }
+    else
+    {
+        if ($_SESSION['theme'] == 'art' || $_SESSION['theme'] == 'artAccessible') {
         //this is temporarily set for art moderation only.
         $sql = "
               select distinct (r.image_id) as image_id, c.name as collection_name, i.title as title,
@@ -156,11 +171,11 @@ else
                         and i.collection = 20
                                                     order by rand() limit 1;
                                                     ";
-    }
-    else
-    {
-        //this is temporarily set for art moderation only.
-        $sql = "
+        }
+        else
+         if ($_SESSION['theme'] == 'roslin') {
+            //this is temporarily set for art moderation only.
+            $sql = "
               select distinct (r.image_id) as image_id, c.name as collection_name, i.title as title,
                         i.collection as collection,
                         i.author as author,
@@ -175,76 +190,99 @@ else
                         r.status = 'P'
                         and r.image_id = i.image_id
                         and i.collection = c.id
-                        and not(i.collection = 20)
+                        and i.collection = 17
                                                     order by rand() limit 1;
                                                     ";
+            }
+         else
+        {
+            //this is temporarily set for art moderation only.
+            $sql = "
+                  select distinct (r.image_id) as image_id, c.name as collection_name, i.title as title,
+                            i.collection as collection,
+                            i.author as author,
+                            i.image_id as image_id, i.shelfmark as shelfmark,
+                            i.page_no as page_no,
+                            i.jpeg_path as jpeg_path,
+                            i.publication_status as publication_status
+                            from orders.IMAGE i,
+                            orders.COLLECTION c,
+                            orders.CROWD r
+                            where
+                            r.status = 'P'
+                            and r.image_id = i.image_id
+                            and i.collection = c.id
+                            and not(i.collection in (20, 17))
+                            order by rand() limit 1;
+                                                        ";
+        }
+        $result=mysql_query($sql) or die( "A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+        $count = mysql_numrows($result);
     }
-    $result=mysql_query($sql) or die( "A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-    $count = mysql_numrows($result);
-}
-$i = 0;
-$image_id = mysql_result($result, $i, 'image_id');
-$collection = mysql_result($result, $i, 'collection');
-$shelfmark = mysql_result($result, $i, 'shelfmark');
-$title = mysql_result($result, $i, 'title');
-$author = mysql_result($result, $i, 'author');
-$page_no = mysql_result($result, $i, 'page_no');
-$jpeg_path = mysql_result($result, $i, 'jpeg_path');
-$publication_status = mysql_result($result, $i, 'publication_status');
-$size = getimagesize('../'.$jpeg_path);
-$fullwidth = $size[0];
-$fullheight = $size[1];
-if ($fullheight > $fullwidth)
-{
-    $aspect = $fullheight/ $fullwidth;
-    $short_side = 350 / $aspect;
-    $dimstyle = "height: 95%";
-    $divstyle= "height: 350; width: " . $short_side . " px; vertical-align: middle;";
-}
-else
-{
-    $aspect = $fullwidth / $fullheight;
-    $short_side = 350 / $aspect;
-    $dimstyle = "width: 95%";
-    $divstyle = "height: " . $short_side . " px; width: 350px; vertical-align: middle;";
-}
-echo '
-                            <div class= "sourcebox">
-                                            <div class = "heading">
-                                                    <h2>'.$title.'</h2>
-                                                     <h3>by '.$author.' ('.$image_id.')</h3>
-                                            </div>
-                                            <div class = "box">
-                            <div class = "half">';
-if (strpos($image_id, '-') == false)
-{
-    $urlrecordid = ltrim($image_id, '0');
-}
-else
-{
-    $urlrecordid = $image_id;
-}
-$urlsql = "select
-                                    recordid, objectid, imageid, institutionid, collectionid
-                                   from
-                                        OBJECTIMAGE
-                                   where
-                                    recordid = '".$urlrecordid."';";
-$urlresult=mysql_query($urlsql) or die( "A MySQL error has occurred.<br />Your Query: " . $urlsql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-$count = mysql_numrows($urlresult);
-$urlobjectid = mysql_result($urlresult, 0, 'objectid');
-$urlimageid = mysql_result($urlresult, 0, 'imageid');
-$urlinstid = mysql_result($urlresult, 0, 'institutionid');
-$urlcollid = mysql_result($urlresult, 0, 'collectionid');
-echo '<p><a href= "http://images.is.ed.ac.uk/luna/servlet/detail/'.$urlinstid.'~'.$urlcollid.'~'.$urlcollid.'~'.$urlobjectid.'~'.$urlimageid.'" target = "_blank"><img src = "../'.$jpeg_path.'" style = "'.$divstyle.'"/></a></p>
-                                            </div>
+    $i = 0;
+    $image_id = mysql_result($result, $i, 'image_id');
+    $collection = mysql_result($result, $i, 'collection');
+    $shelfmark = mysql_result($result, $i, 'shelfmark');
+    $title = mysql_result($result, $i, 'title');
+    $author = mysql_result($result, $i, 'author');
+    $page_no = mysql_result($result, $i, 'page_no');
+    $jpeg_path = mysql_result($result, $i, 'jpeg_path');
+    $publication_status = mysql_result($result, $i, 'publication_status');
+    $size = getimagesize('../'.$jpeg_path);
+    $fullwidth = $size[0];
+    $fullheight = $size[1];
+    if ($fullheight > $fullwidth)
+    {
+        $aspect = $fullheight/ $fullwidth;
+        $short_side = 350 / $aspect;
+        $dimstyle = "height: 95%";
+        $divstyle= "height: 350; width: " . $short_side . " px; vertical-align: middle;";
+    }
+    else
+    {
+        $aspect = $fullwidth / $fullheight;
+        $short_side = 350 / $aspect;
+        $dimstyle = "width: 95%";
+        $divstyle = "height: " . $short_side . " px; width: 350px; vertical-align: middle;";
+    }
+    echo '
+                                <div class= "sourcebox">
+                                                <div class = "heading">
+                                                        <h2>'.$title.'</h2>
+                                                         <h3>by '.$author.' ('.$image_id.')</h3>
+                                                </div>
+                                                <div class = "box">
+                                <div class = "half">';
+    if (strpos($image_id, '-') == false)
+    {
+        $urlrecordid = ltrim($image_id, '0');
+    }
+    else
+    {
+        $urlrecordid = $image_id;
+    }
+    $urlsql = "select
+                                        recordid, objectid, imageid, institutionid, collectionid
+                                       from
+                                            OBJECTIMAGE
+                                       where
+                                        recordid = '".$urlrecordid."';";
+    $urlresult=mysql_query($urlsql) or die( "A MySQL error has occurred.<br />Your Query: " . $urlsql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+    $count = mysql_numrows($urlresult);
+    $urlobjectid = mysql_result($urlresult, 0, 'objectid');
+    $urlimageid = mysql_result($urlresult, 0, 'imageid');
+    $urlinstid = mysql_result($urlresult, 0, 'institutionid');
+    $urlcollid = mysql_result($urlresult, 0, 'collectionid');
+    echo '<p><a href= "http://images.is.ed.ac.uk/luna/servlet/detail/'.$urlinstid.'~'.$urlcollid.'~'.$urlcollid.'~'.$urlobjectid.'~'.$urlimageid.'" target = "_blank"><img src = "../'.$jpeg_path.'" style = "'.$divstyle.'"/></a></p>
+                                                </div>
                                     </div>
                                     <div class= "box">
                                     <div class="half">
-                                            <div class = "heading">
+                                          <!--  <div class = "heading">
                                                     <h3>What We Know</h3>
-                                            </div>
+                                            </div>-->
                                                     <table>';
+/*No longer usable- need LUNA API for this
 // close mysql connection
 mysql_close($link);
 // connect to luna db
@@ -347,6 +385,7 @@ if ($lunadbase != 'no_db');
         }
         $j++;
     }
+*/
     echo'
                                                             </table>
                                     <div class = "info">
@@ -428,7 +467,7 @@ if ($lunadbase != 'no_db');
     //$crowd_serialized = serialize($crowds);
     echo '
                 </table></div>';
-}
+
 // close mysql connection
 mysql_close($link);
 ?>
