@@ -1,4 +1,9 @@
-<hr />
+<?php
+if ($_SESSION['theme'] != 'roslin')
+{
+echo'<hr/>';
+}
+?>
 <div class="central">
 <footer id="footer">
     <div class="container">
