@@ -297,3 +297,9 @@ td.gameover {
 p.imagelink{
     padding: 0px;
 }
+
+#openseadragon1{
+    margin-left:250px;
+    width: 300px;
+    height: 300px;
+}

@@ -67,16 +67,16 @@
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="link-box box-middle login-box">
-                <a href="https://www.ease.ed.ac.uk/register/" target="_blank">
-                    <img title="Register with EASE (Edinburgh)" src="../css/images/EaseRegisterTile.png">
+            <div class="link-box box-right login-box">
+                <a href="https://www.ease.ed.ac.uk/friend/" target="_blank">
+                    <img title="Register with EASE (Non-Edinburgh)" src="../css/images/EaseFriendTile.png">
                 </a>
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="link-box box-right login-box">
-                <a href="https://www.ease.ed.ac.uk/friend/" target="_blank">
-                    <img title="Register with EASE (Non-Edinburgh)" src="../css/images/EaseFriendTile.png">
+            <div class="link-box box-middle login-box">
+                <a href="https://www.ease.ed.ac.uk/register/" target="_blank">
+                    <img title="Register with EASE (Edinburgh)" src="../css/images/EaseRegisterTile.png">
                 </a>
             </div>
         </div>

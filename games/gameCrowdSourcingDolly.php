@@ -66,6 +66,13 @@ if (isset ($_POST['save'])) {
     <meta name="resource-type" content="document"/>
     <meta http-equiv="Content-Type" content="text/html; charset=us-ascii"/>
     <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/mejackreed/Leaflet-IIIF/master/leaflet-iiif.js"></script>
 </head>
 
 <body>
@@ -259,9 +266,24 @@ else
         $urlcollid = mysql_result($urlresult, 0, 'collectionid');
 
 
-        echo '<p><a href= "http://images.is.ed.ac.uk/luna/servlet/detail/' . $urlinstid . '~' . $urlcollid . '~' . $urlcollid . '~' . $urlobjectid . '~' . $urlimageid . '" target = "_blank"><img src = "../' . $jpeg_path . '" style = "' . $divstyle . '"/></a></p>
-                            </div>
-                        </div>
+       // echo '<p><a href= "http://images.is.ed.ac.uk/luna/servlet/detail/' . $urlinstid . '~' . $urlcollid . '~' . $urlcollid . '~' . $urlobjectid . '~' . $urlimageid . '" target = "_blank"><img src = "../' . $jpeg_path . '" style = "' . $divstyle . '"/></a></p>
+        echo '<div id="openseadragon1"></div>
+        <script src="../assets/openseadragon/openseadragon.min.js"></script>
+        <script type="text/javascript">
+
+        OpenSeadragon({
+        id:                 "openseadragon1",
+        prefixUrl:          "../assets/openseadragon/images/",
+        preserveViewport:   true,
+        visibilityRatio:    1,
+        minZoomLevel:       1,
+        defaultZoomLevel:   1,
+        sequenceMode:       true,
+        tileSources:        "http://lac-luna-test2.is.ed.ac.uk:8181/luna/servlet/iiif/'.$urlinstid.'~'.$urlcollid.'~'.$urlcollid.'~'.$urlobjectid.'~'.$urlimageid.'/info.json"
+        });
+        </script>
+       </div>
+
                             ';
 
         echo '<div class="sourcebox">
