@@ -8,6 +8,11 @@
     margin-bottom: 3%;
 }
 
+html, body, #map{
+    height: 100%;
+    margin: 0;
+}
+
 .link-box {
     width: 100%;
     height: 352px;
