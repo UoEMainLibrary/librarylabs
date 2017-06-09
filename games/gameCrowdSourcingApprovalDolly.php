@@ -5,8 +5,8 @@ include 'config/vars.php';
 
 // Connect to db
 $error = '';
-$link = mysql_connect($dbserver, $username, $password);
-@mysql_select_db($database) or die( "Unable to select database");
+$link = mysqli_connect($dbserver, $username, $password, $database);
+@mysqli_select_db($database) ;#or die( "Unable to select database");
 
 if (isset ($_POST['save']))
 {
@@ -33,15 +33,15 @@ if (isset ($_POST['save']))
             $votes = '';
 
             $get_image_sql = "select image_id from orders.CROWD where id = ".$crowd_id.";";
-            $get_image_result =mysql_query($get_image_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $get_image_result . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+            $get_image_result =mysqli_query($link,$get_image_sql) ;#or die( "A MySQL error has occurred.<br />Your Query: " . $get_image_result . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
             $image_id = mysql_result($get_image_result, 0, 'image_id');
 
             $vote_insert_sql = "insert into orders.VOTES (crowd_id, submitter, voter, image_id, quality, game ) values (".$crowd_id.", '".$uun."', '".$_SESSION['uun']."','".$image_id."',".$action.",'". $_SESSION["game"]. "');";
-            $vote_insert_result=mysql_query($vote_insert_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $vote_insert_result . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+            $vote_insert_result=mysqli_query($link,$vote_insert_sql) ;#or die( "A MySQL error has occurred.<br />Your Query: " . $vote_insert_result . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
             //echo 'SQL'.$vote_insert_sql;
 
             $vote_sql = "select sum(quality) as votes from orders.VOTES where crowd_id = ".$crowd_id.";";
-            $vote_result=mysql_query($vote_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $vote_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+            $vote_result=mysqli_query($link,$vote_sql) ;#or die( "A MySQL error has occurred.<br />Your Query: " . $vote_sql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
             $votes = mysql_result($vote_result,0, 'votes');
 
             $status = '';
@@ -61,7 +61,7 @@ if (isset ($_POST['save']))
             }
 
             $sql = "UPDATE orders.CROWD set status = '".$status."'  where id= ".$crowd_id.";";
-            $result = mysql_query($sql) or die( "A MySQL error has occurred.<br />Your Query: " . $sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+            $result = mysqli_query($link,$sql) ;#or die( "A MySQL error has occurred.<br />Your Query: " . $sql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
 
             $voted = true;
 
@@ -101,27 +101,27 @@ if (isset ($_POST['save']))
 	<?php
 
             $mpointssql = "select count(*) as mtotal from CROWD where uun = '".$_SESSION['uun']."' and status = 'M' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
-            $mpointsresult=mysql_query($mpointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $mpointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+            $mpointsresult=mysqli_query($link,$mpointssql) ;#or die( "A MySQL error has occurred.<br />Your Query: " . $mpointssql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
 
             $mpoints = mysql_result($mpointsresult, 0, 'mtotal');
 
             $vpointssql = "select count(*) as vtotal from VOTES where voter = '".$_SESSION['uun']."' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
-            $vpointsresult=mysql_query($vpointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $vpointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+            $vpointsresult=mysqli_query($link,$vpointssql) ;#or die( "A MySQL error has occurred.<br />Your Query: " . $vpointssql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
 
             $vpoints = mysql_result($vpointsresult, 0, 'vtotal');
 
             $apointssql = "select count(*) as atotal from CROWD where uun = '".$_SESSION['uun']."' and status = 'A' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
-            $apointsresult=mysql_query($apointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $apointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+            $apointsresult=mysqli_query($link,$apointssql) ;#or die( "A MySQL error has occurred.<br />Your Query: " . $apointssql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
 
             $apoints = mysql_result($apointsresult, 0, 'atotal');
 
             $ppointssql = "select count(*) as ptotal from CROWD where uun = '".$_SESSION['uun']."' and status = 'P' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
-            $ppointsresult=mysql_query($ppointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $ppointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+            $ppointsresult=mysqli_query($link,$ppointssql) ;#or die( "A MySQL error has occurred.<br />Your Query: " . $ppointssql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
 
             $ppoints = mysql_result($ppointsresult, 0, 'ptotal');
 
             $upointssql = "select sum(quality) as utotal from VOTES where submitter = '".$_SESSION['uun']."' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
-            $upointsresult=mysql_query($upointssql) or die( "A MySQL error has occurred.<br />Your Query: " . $upointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+            $upointsresult=mysqli_query($link,$upointssql) ;#or die( "A MySQL error has occurred.<br />Your Query: " . $upointssql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
 
             $upoints = mysql_result($upointsresult, 0, 'utotal');
 
@@ -180,9 +180,9 @@ if (isset ($_POST['save']))
                                 ";
 
 
-                    $result=mysql_query($rand_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+                    $result=mysqli_query($link,$rand_sql) ;#or die( "A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
 
-                    $count = mysql_numrows($result);
+                    $count = mysqli_num_rows($result);
 
                     if ($count == 0)
                     {
@@ -236,8 +236,8 @@ if (isset ($_POST['save']))
                                         OBJECTIMAGE
                                    where
                                     recordid = ".$urlrecordid.";";
-                        $urlresult=mysql_query($urlsql) or die( "A MySQL error has occurred.<br />Your Query: " . $urlsql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-                        $count = mysql_numrows($urlresult);
+                        $urlresult=mysqli_query($link,$urlsql) ;#or die( "A MySQL error has occurred.<br />Your Query: " . $urlsql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
+                        $count = mysqli_num_rows($urlresult);
 
                         $urlobjectid = mysql_result($urlresult, 0, 'objectid');
                         $urlimageid = mysql_result($urlresult, 0, 'imageid');
@@ -276,8 +276,8 @@ if (isset ($_POST['save']))
                          </tr>';
 
                 $data_sql = "select c.id as crowd_id, u.first_name, u.surname, value_text, c.status, c.type, c.uun from orders.CROWD c, orders.USER u where c.uun = u.uun and c.status = 'M' and image_id = '".$image_id."';";
-                $data_result = mysql_query($data_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $data_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-                $data_count = mysql_numrows($data_result);
+                $data_result = mysqli_query($link,$data_sql) ;#or die( "A MySQL error has occurred.<br />Your Query: " . $data_sql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
+                $data_count = mysqli_num_rows($data_result);
 
                 $k = 0;
                 $crowds = array();
@@ -340,8 +340,8 @@ if (isset ($_POST['save']))
              }
         }
 
-    // close mysql connection
-    mysql_close($link);
+    // close mysqli connection
+    mysqli_close($link);
 
 			?>
 

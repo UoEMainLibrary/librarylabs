@@ -6,8 +6,8 @@
 
     // connect to db
     $error = '';
-    $link = mysql_connect($dbserver, $username, $password);
-    @mysql_select_db($database) or die( "Unable to select database".$database);
+    $link = mysqli_connect($dbserver, $username, $password, $database);
+    //@mysqli_select_db($database) ;#or die( "Unable to select database".$database);
 
 ?>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
@@ -216,7 +216,7 @@
          </form>';
         }
     }
-    else // it's normal metadata games / crowd sourcing
+    else // it's normal metadata gameMenu.phpmysqli_select_db / crowd sourcing
     {
     echo '<form action="gameCrowdSourcing.php" method="post">
         <table>
@@ -328,8 +328,8 @@
 
 <?php
 
-    // close mysql connection
-    mysql_close($link);
+    // close mysqli connection
+    mysqli_close($link);
 
 ?>
 <?php include 'footer.php';?>

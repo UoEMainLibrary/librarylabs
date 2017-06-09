@@ -6,8 +6,8 @@ $theme = $_SESSION['theme'];
 
 // Connect To Database
 $error = '';
-$link = mysql_connect($dbserver, $username, $password);
-@mysql_select_db($database) or die( "Unable to select database");
+$link = mysqli_connect($dbserver, $username, $password, $database);
+@mysqli_select_db($database) ;#or die( "Unable to select database");
 if (isset ($_POST['save']))
 {
     $check_box = '';
@@ -54,10 +54,10 @@ if (isset ($_POST['save']))
         }
         $crowd_id = $line[1];
         $uun = $line[2];
-        $value_text =  mysql_real_escape_string($value[$i]);
+        $value_text =  mysqli_real_escape_string($value[$i]);
         //update the user to value of 'C' (complete) based on the chosen uun
         $sql = "UPDATE orders.CROWD set status = '$action', type = '".$subjecttype_text."', value_text ='".$value_text."'  where id= '".$crowd_id."';";
-        $result=mysql_query($sql) or die( "A MySQL error has occurred.<br />Your Query: " . $sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+        $result=mysqli_query($link,$sql) ;#or die( "A MySQL error has occurred.<br />Your Query: " . $sql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
     }
 }
 ?>
@@ -115,8 +115,8 @@ else
                     and i.image_id = r.image_id
                     and r.game = 'D'
                     ;";}
-$unmod_result=mysql_query($unmod_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $unmod_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-$unmod_count = mysql_numrows($unmod_result);
+$unmod_result=mysqli_query($link,$unmod_sql) ;#or die( "A MySQL error has occurred.<br />Your Query: " . $unmod_sql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
+$unmod_count = mysqli_num_rows($unmod_result);
 $unmod_total = mysql_result($unmod_result, 0, 'unmod_total');
 
 if($unmod_total > 0)
@@ -146,8 +146,8 @@ if($unmod_total > 0)
                                                     orders.IMAGE i
                                                     where image_id = $image_id;
                                                     ";
-        $result=mysql_query($sql) or die( "A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-        $count = mysql_numrows($result);
+        $result=mysqli_query($link,$sql) ;#or die( "A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
+        $count = mysqli_num_rows($result);
     }
     else
     {
@@ -216,8 +216,8 @@ if($unmod_total > 0)
                             order by rand() limit 1;
                                                         ";
         }
-        $result=mysql_query($sql) or die( "A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-        $count = mysql_numrows($result);
+        $result=mysqli_query($link,$sql) ;#or die( "A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
+        $count = mysqli_num_rows($result);
     }
     $i = 0;
     $image_id = mysql_result($result, $i, 'image_id');
@@ -267,8 +267,8 @@ if($unmod_total > 0)
                                             OBJECTIMAGE
                                        where
                                         recordid = '".$urlrecordid."';";
-    $urlresult=mysql_query($urlsql) or die( "A MySQL error has occurred.<br />Your Query: " . $urlsql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-    $count = mysql_numrows($urlresult);
+    $urlresult=mysqli_query($link,$urlsql) ;#or die( "A MySQL error has occurred.<br />Your Query: " . $urlsql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
+    $count = mysqli_num_rows($urlresult);
     $urlobjectid = mysql_result($urlresult, 0, 'objectid');
     $urlimageid = mysql_result($urlresult, 0, 'imageid');
     $urlinstid = mysql_result($urlresult, 0, 'institutionid');
@@ -283,10 +283,10 @@ if($unmod_total > 0)
                                             </div>-->
                                                     <table>';
 /*No longer usable- need LUNA API for this
-// close mysql connection
-mysql_close($link);
+// close mysqli connection
+mysqli_close($link);
 // connect to luna db
-$link2 = mysql_connect($lunadbserver, $lunausername, $lunapassword);
+$link2 = mysqli_connect($lunadbserver, $lunausername, $lunapassword);
 switch ($collection)
 {
     case "1":
@@ -342,7 +342,7 @@ if (strpos($image_id, '-') > 0)
 }
 if ($lunadbase != 'no_db');
 {
-    @mysql_select_db($lunadbase) or die( "Unable to select database....Error: (" . mysql_errno() . ") " . mysql_error());
+    @mysqli_select_db($lunadbase) ;#or die( "Unable to select database....Error: (" . mysqli_errno() . ") " . mysqli_error());
     $luna_sql =
         "select
                                                             v.valuetext as valuetext,
@@ -365,8 +365,8 @@ if ($lunadbase != 'no_db');
                                                             and i2.displayname = '".$checkfield."'
                                                             and v2.valuetext = '".$link_id."'
                                                             );";
-    $luna_result = mysql_query($luna_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $luna_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-    $luna_count = mysql_numrows($luna_result);
+    $luna_result = mysqli_query($link,$luna_sql) ;#or die( "A MySQL error has occurred.<br />Your Query: " . $luna_sql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
+    $luna_count = mysqli_num_rows($luna_result);
     $j = 0;
     while ($j < $luna_count)
     {
@@ -394,13 +394,13 @@ if ($lunadbase != 'no_db');
                                                     <br>
                                                             <h3>Crowdsourced, but not yet in system</h3>
                             </div>';
-    // close mysql connection
-    mysql_close($link2);
-    $link = mysql_connect($dbserver, $username, $password);
-    @mysql_select_db($database) or die( "Unable to select database");
+    // close mysqli connection
+    mysqli_close($link2);
+    $link = mysqli_connect($dbserver, $username, $password, $database);
+    @mysqli_select_db($database) ;#or die( "Unable to select database");
     $moderated_sql = "select value_text,type from orders.CROWD c where image_id = '".$image_id."' and status in ('A', 'M');";
-    $moderated_result = mysql_query($moderated_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $moderated_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-    $moderated_count = mysql_numrows($moderated_result);
+    $moderated_result = mysqli_query($link,$moderated_sql) ;#or die( "A MySQL error has occurred.<br />Your Query: " . $moderated_sql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
+    $moderated_count = mysqli_num_rows($moderated_result);
     $l = 0;
     while ($l < $moderated_count)
     {
@@ -426,8 +426,8 @@ if ($lunadbase != 'no_db');
     //echo '<br />Image id: ' . $image_id;
     $data_sql = "select c.id as crowd_id, u.first_name, u.surname, value_text, c.status, c.type, c.uun from orders.CROWD c, orders.USER u where c.uun = u.uun and c.status = 'P' and image_id = '".$image_id."';";
     //echo '<br />SQL: ' . $data_sql;
-    $data_result = mysql_query($data_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $data_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-    $data_count = mysql_numrows($data_result);
+    $data_result = mysqli_query($link,$data_sql) ;#or die( "A MySQL error has occurred.<br />Your Query: " . $data_sql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
+    $data_count = mysqli_num_rows($data_result);
     $k = 0;
     $crowds = array();
     while ($k <  $data_count)
@@ -468,8 +468,8 @@ if ($lunadbase != 'no_db');
     echo '
                 </table></div>';
 
-// close mysql connection
-mysql_close($link);
+// close mysqli connection
+mysqli_close($link);
 ?>
 
 <div class = "footer">

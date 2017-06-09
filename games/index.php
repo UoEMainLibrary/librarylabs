@@ -8,18 +8,19 @@ include 'config/vars.php';
 // connect to db
 
 $error = '';
-$link = mysql_connect($dbserver, $username, $password);
-@mysql_select_db($database) or die( "Unable to select database".$database);
+$link = mysqli_connect($dbserver, $username, $password, $database);
+//@mysqli_select_db($database) ;#or die( "Unable to select database".$database);
+//$_SESSION['uun'] = $_SERVER["REMOTE_USER"];
 
-$uun = $_SESSION['uun'] = $_SERVER["REMOTE_USER"];
+$uun = "test"; 
 
 //echo "<br />UUN IS: " . $_SERVER['REMOTE_USER'];
 
 $sql = "SELECT * FROM orders.USER WHERE uun ='".$uun."';";
 
-$result = mysql_query($sql,$link) or die( "A MySQL error has occurred.<br />Your Query: " . $sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-$row = mysql_fetch_array($result);
-
+$result = mysqli_query($sql,$link);// ;#or die( "A MySQL error has occurred.<br />Your Query: " . $sql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
+$row = mysqli_fetch_array($result);
+$row="";
 if($row == null)
 {
 
@@ -83,7 +84,7 @@ if($row == null)
         //echo "Affiliation " . $affiliation . " gives type " . $type . "<br />";
 
         $sql = "INSERT INTO orders.USER (email, uun, surname, first_name, status, type) VALUES ('".$email."', '".$uun."', '".$surname."', '".$first_name."', 'P', '".$type."');";
-        $result = mysql_query($sql) or die( "A MySQL error has occurred.<br />Your Query: " . $sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+        $result = mysqli_query($sql,$link); //;#or die( "A MySQL error has occurred.<br />Your Query: " . $sql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
 
         $status = $_SESSION['status'] = 'P';
         $_SESSION['type'] = $type;
@@ -129,8 +130,8 @@ else // the user does exist
 
 }
 
-// close mysql connection
-mysql_close($link);
+// close mysqli connection
+mysqli_close($link);
 
 ?>
 
@@ -179,7 +180,7 @@ mysql_close($link);
                             <a href="./" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Metadata Games <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="./gameMenu.php?theme=art">Tag It! Find It!</a></li>
-                                <li><a href="./gameMenu.php?theme=classic">Class metadata games</a></li>
+                                <li><a href="./gameMenu.php?theme=classic">Class metadata index.phpmysqli_select_db</a></li>
                                 <li><a href="./gameMenu.php?theme=photo">Research Tagging</a></li>
                             </ul>
                         </li>
@@ -197,28 +198,28 @@ mysql_close($link);
 
     <div class="row">
         <div class="col-lg-4">
-            <div class="link-box box-left games-box">
+            <div class="link-box box-left index.phpmysqli_select_db-box">
                 <a href="./gameMenu.php?theme=art">
                     <img title="Tag It! Find It!" src="./../css/images/TagItTile.png">
                 </a>
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="link-box box-middle games-box">
+            <div class="link-box box-middle index.phpmysqli_select_db-box">
                 <a href="./gameMenu.php?theme=classic">
                     <img title="Tag Images Online" src="./../css/images/TagImagesTile.png">
                 </a>
             </div>
         </div>
        <!-- <div class="col-lg-3">
-            <div class="link-box box-right games-box">
+            <div class="link-box box-right index.phpmysqli_select_db-box">
                 <a href="./gameMenu.php?theme=photo">
                     <img title="Research Zone" src="./../css/images/ResearchTile.png">
                 </a>
             </div>
         </div>-->
         <div class="col-lg-4">
-            <div class="link-box box-right games-box">
+            <div class="link-box box-right index.phpmysqli_select_db-box">
                 <a href="./gameMenu.php?theme=roslin">
                     <img title="Roslin Game" src="./../css/images/DollyTile.jpg">
                 </a>
@@ -263,8 +264,8 @@ mysql_close($link);
 
 <?php
 
-    // close mysql connection
-    mysql_close($link);
+    // close mysqli connection
+    mysqli_close($link);
 
 ?>
 

@@ -11,20 +11,20 @@ $_SESSION['game'] = 'R';
 
 // Connect To Database
 $error = '';
-$link = mysql_connect($dbserver, $username, $password);
-@mysql_select_db($database) or die( "Unable to select database");
+$link = mysqli_connect($dbserver, $username, $password, $database);
+@mysqli_select_db($database) ;#or die( "Unable to select database");
 
 if (isset ($_POST['save'])) {
     $_POST['button'] = false;
 
     $image_id = $_POST['image_id'];
-    $subject = trim(mysql_real_escape_string($_POST['subject']));
-    $creator = trim(mysql_real_escape_string($_POST['creator']));
-    $date = trim(mysql_real_escape_string($_POST['date']));
-    $location = trim(mysql_real_escape_string($_POST['location']));
-    $transcription = trim(mysql_real_escape_string($_POST['transcription']));
-    $translation = trim(mysql_real_escape_string($_POST['translation']));
-    $production = trim(mysql_real_escape_string($_POST['production']));
+    $subject = trim(mysqli_real_escape_string($_POST['subject']));
+    $creator = trim(mysqli_real_escape_string($_POST['creator']));
+    $date = trim(mysqli_real_escape_string($_POST['date']));
+    $location = trim(mysqli_real_escape_string($_POST['location']));
+    $transcription = trim(mysqli_real_escape_string($_POST['transcription']));
+    $translation = trim(mysqli_real_escape_string($_POST['translation']));
+    $production = trim(mysqli_real_escape_string($_POST['production']));
 
     $subject_len = strlen($subject);
 
@@ -39,13 +39,13 @@ if (isset ($_POST['save'])) {
             foreach ($subject_array as $subject_unit) {
                 $subject_unit = ucwords(trim($subject_unit));
                 $insert_sql = "insert into orders.CROWD (image_id, value_text, uun, status, game ) values ('$image_id', '$subject_unit', '$uun', 'P', '" . $_SESSION['game'] . "');";
-                $insert_result = mysql_query($insert_sql) or die("A MySQL error has occurred.<br />Your Query: " . $insert_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+                $insert_result = mysqli_query($link,$insert_sql) ;#or die("A MySQL error has occurred.<br />Your Query: " . $insert_sql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
             }
         } else {
             $subject = ucwords(trim($subject));
             //echo '<div class = box><h4>Person : '.$person.'</h4></div>';
             $insert_sql = "insert into orders.CROWD (image_id, value_text,uun, status, game ) values ('$image_id', '$subject', '$uun', 'P', '" . $_SESSION['game'] . "');";
-            $insert_result = mysql_query($insert_sql) or die("A MySQL error has occurred.<br />Your Query: " . $insert_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+            $insert_result = mysqli_query($link,$insert_sql) ;#or die("A MySQL error has occurred.<br />Your Query: " . $insert_sql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
         }
 
         $_SESSION['images'] = $_SESSION['images'] + 1;
@@ -91,27 +91,27 @@ if (isset ($_POST['save'])) {
 <?php
 
 $mpointssql = "select count(*) as mtotal from CROWD where uun = '" . $_SESSION['uun'] . "' and status = 'M' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
-$mpointsresult = mysql_query($mpointssql) or die("A MySQL error has occurred.<br />Your Query: " . $mpointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+$mpointsresult = mysqli_query($link,$mpointssql) ;#or die("A MySQL error has occurred.<br />Your Query: " . $mpointssql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
 
 $mpoints = mysql_result($mpointsresult, 0, 'mtotal');
 
 $vpointssql = "select count(*) as vtotal from VOTES where voter = '" . $_SESSION['uun'] . "' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
-$vpointsresult = mysql_query($vpointssql) or die("A MySQL error has occurred.<br />Your Query: " . $vpointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+$vpointsresult = mysqli_query($link,$vpointssql) ;#or die("A MySQL error has occurred.<br />Your Query: " . $vpointssql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
 
 $vpoints = mysql_result($vpointsresult, 0, 'vtotal');
 
 $apointssql = "select count(*) as atotal from CROWD where uun = '" . $_SESSION['uun'] . "' and status = 'A' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
-$apointsresult = mysql_query($apointssql) or die("A MySQL error has occurred.<br />Your Query: " . $apointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+$apointsresult = mysqli_query($link,$apointssql) ;#or die("A MySQL error has occurred.<br />Your Query: " . $apointssql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
 
 $apoints = mysql_result($apointsresult, 0, 'atotal');
 
 $ppointssql = "select count(*) as ptotal from CROWD where uun = '" . $_SESSION['uun'] . "' and status = 'P' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
-$ppointsresult = mysql_query($ppointssql) or die("A MySQL error has occurred.<br />Your Query: " . $ppointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+$ppointsresult = mysqli_query($link,$ppointssql) ;#or die("A MySQL error has occurred.<br />Your Query: " . $ppointssql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
 
 $ppoints = mysql_result($ppointsresult, 0, 'ptotal');
 
 $upointssql = "select sum(quality) as utotal from VOTES where submitter = '" . $_SESSION['uun'] . "' and game = '" . $_SESSION["game"] . "' and date(date_created) = CURDATE() ;";
-$upointsresult = mysql_query($upointssql) or die("A MySQL error has occurred.<br />Your Query: " . $upointssql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
+$upointsresult = mysqli_query($link,$upointssql) ;#or die("A MySQL error has occurred.<br />Your Query: " . $upointssql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
 
 $upoints = mysql_result($upointsresult, 0, 'utotal');
 
@@ -159,8 +159,8 @@ else
                             where image_id = '".$image_id."';
                             ";
 
-        $result = mysql_query($sql) or die("A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-        $imageprovcount = mysql_numrows($result);
+        $result = mysqli_query($link,$sql) ;#or die("A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
+        $imageprovcount = mysqli_num_rows($result);
     } else {
 
 
@@ -183,8 +183,8 @@ else
             order by rand() limit 1
             ;
         ";
-        $result = mysql_query($rand_sql) or die("A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-        $count = mysql_numrows($result);
+        $result = mysqli_query($link,$rand_sql) ;#or die("A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
+        $count = mysqli_num_rows($result);
         $images = $_SESSION['images'];
         $_SESSION['images'] = $images++;
     }
@@ -207,8 +207,8 @@ else
                                 ;
                                 ";
 
-        $result = mysql_query($withimagesql) or die("A MySQL error has occurred.<br />Your Query: " . $withimagesql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-        $withimagecount = mysql_numrows($result);
+        $result = mysqli_query($link,$withimagesql) ;#or die("A MySQL error has occurred.<br />Your Query: " . $withimagesql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
+        $withimagecount = mysqli_num_rows($result);
     }
 
     if ($imageprovcount == 1)
@@ -222,7 +222,7 @@ else
         $page_no = mysql_result($result, $i, 'page_no');
         $jpeg_path = mysql_result($result, $i, 'jpeg_path');
         $publication_status = mysql_result($result, $i, 'publication_status');
-        $size = getimagesize('../' . $jpeg_path);
+        $size = getimagesize('http://librarylabs.ed.ac.uk/' . $jpeg_path);
 
         $fullwidth = $size[0];
         $fullheight = $size[1];
@@ -257,8 +257,8 @@ else
                    from OBJECTIMAGE
                    where recordid = '" . $urlrecordid . "';";
 
-        $urlresult = mysql_query($urlsql) or die("A MySQL error has occurred.<br />Your Query: " . $urlsql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
-        $count = mysql_numrows($urlresult);
+        $urlresult = mysqli_query($link,$urlsql) ;#or die("A MySQL error has occurred.<br />Your Query: " . $urlsql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
+        $count = mysqli_num_rows($urlresult);
 
         $urlobjectid = mysql_result($urlresult, 0, 'objectid');
         $urlimageid = mysql_result($urlresult, 0, 'imageid');
@@ -332,8 +332,8 @@ else
 }
 
 
-// close mysql connection
-mysql_close($link);
+// close mysqli connection
+mysqli_close($link);
 
 ?>
 <?php include 'footer.php';?>
