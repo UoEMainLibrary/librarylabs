@@ -1,0 +1,23 @@
+So in order to update the code, you can use these lovely lines of code in a linux terminal.
+Basically wrangling existing code to the new syntax required by mysqli
+It's not pretty, but it works.
+
+=Modify Files=
+grep -rli 'mysql' * | xargs -i@ sed -i 's/mysql/mysqli/g' @
+grep -rli 'mysqli_connect($dbserver, $username, $password)' * | xargs -i@ sed -i 's/mysqli_connect($dbserver, $username, $password)/mysqli_connect($dbserver, $username, $password, $database)/g' @
+grep -rli 'or die' * | xargs -i@ sed -i 's/or die/; #or die/g' @
+grep -rli 'mysqli_query' * | xargs -i@ sed -i 's/mysqli_query(\(\$[a-z_-]*\))/mysqli_query\($link,\1\)/g' @
+grep -rli 'mysqli_result' * | xargs -i@ sed -i 's/mysqli_result/mysql_result/g' @
+grep -rli 'mysqli_numrows' * | xargs -i@ sed -i 's/mysqli_numrows/mysqli_num_rows/g' @
+
+=Add this code to games/config/vars.php=
+if (!function_exists('mysql_result')) {
+    function mysql_result($result, $number, $field=0) {
+        mysqli_data_seek($result, $number);
+        $row = mysqli_fetch_array($result);
+        return $row[$field];
+    }
+}
+
+=Find instances of images (if you want) fromn localhost (my grep-fu failed me) and replace them with links to librarylabs, so you actually get images!=
+
