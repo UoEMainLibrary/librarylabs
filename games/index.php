@@ -21,11 +21,10 @@ $sql = "SELECT * FROM orders.USER WHERE uun ='".$uun."';";
 $result = mysqli_query($sql,$link);// ;#or die( "A MySQL error has occurred.<br />Your Query: " . $sql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
 $row = mysqli_fetch_array($result);
 $row="";
-if($row == null)
+if($row == null && FALSE) //we want to stop this bit locally because MAMP can sod off
 {
 
     $ds = ldap_connect("ldaps://authorise.is.ed.ac.uk");
-
     if($ds) {
 
         //var_dump($uun);
