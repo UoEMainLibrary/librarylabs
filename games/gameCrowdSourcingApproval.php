@@ -55,6 +55,7 @@ if (isset ($_POST['save']))
 
         if ($action == '1' or $action == '-1')
         {
+
             $get_image_sql = "select image_id from orders.CROWD where id = ".$crowd_id.";";
             $get_image_result =mysqli_query($link, $get_image_sql); #or die( "A MySQL error has occurred.<br />Your Query: " . $get_image_result . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
             while ($row = $get_image_result->fetch_assoc()) {

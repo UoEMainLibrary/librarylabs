@@ -1,0 +1,189 @@
+.header-row{
+    background-color: #005784;
+}
+.header-image {
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
+
+.link-box {
+    width: 100%;
+    height: 352px;
+    padding: 10px;
+    text-align: center;
+    padding-top: 26px;
+}
+
+.home-box {
+    background-color: #00a7cb;
+}
+
+.games-box {
+    background-color: #005784;
+}
+
+#footer {
+    background-color: #f5f5f5;
+    text-align: center;
+    height: 100px;
+    margin-top: 20px;
+    padding-top: 10px;
+}
+
+#footer ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+}
+
+#footer ul li {
+    display: inline;
+    margin-right: 7px;
+}
+
+#footer ul li.last {
+    margin-right: 0;
+}
+
+.uoe-logo {
+    width: 10%;
+    float: left;
+}
+
+.footer-links {
+    width: 75%;
+    float: left;
+    margin-left: 20px;
+}
+
+.luc-logo {
+    width: 10%;
+    float: right;
+    margin-right: 15px;
+    margin-top: 8px;
+}
+
+ul.contributors {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+    width: 95%;
+}
+
+h3 {
+    color: #fe2842;
+}
+
+ul.contributors li h4 {
+    display: inline;
+    font-size: 20px;
+    color: #005784;
+}
+
+ul.contributors li p {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+a.contributor-email {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 10px;
+}
+
+a.contributor-twitter {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000000;
+}
+
+
+/* Form styling */
+
+label {
+    display: block;
+    padding: 1px 7px 0;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+
+input[type="text"], textarea {
+    display: block;
+    background: none;
+    font: inherit;
+    padding: 0 7px;
+    position: relative;
+    z-index: 10;
+    overflow: auto; /* removes scrollbar from textarea in IE - trick from HTML5 boilerplate*/
+}
+
+label, input[type="text"], #singleParagraphInputs div{
+    /* these two values must be the same */
+    line-height: 1.5em;
+    height: 1.5em;
+}
+
+#singleParagraphInputs div, #commentTxt, #recaptcha_widget_div{
+    margin-bottom: 1.5em;
+}
+
+input, textarea, #recaptcha_table{
+    border: 1px solid #ccc;
+}
+
+.formError {
+    border: 1px solid red;
+}
+
+#contactForm, #recaptcha_table{
+    width: 600px;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+#singleParagraphInputs div, #commentTxt {
+    position: relative;
+}
+
+#singleParagraphInputs input {
+    width: 584px; /* 16px less than form width */
+}
+
+#commentTxt textarea {
+    min-height: 9em;
+    min-width: 584px; /* 16px less than form width */
+    /* if you aim ie7 users specify font to use in textarea since it won't inherit it*/
+    /*
+    font: 14px/1.5em sans-seif;
+    */
+}
+
+#screenReader, #checking {
+    float: left;
+    display: none;
+}
+
+#recaptcha_response_field {
+    width: 286px !important; /* just a stylistic detail to make the input field equal width as the box with words to copy */
+}
+
+input[type="submit"]{
+    /* some styles for the button */
+}
+
+
+
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+    #footer {
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
