@@ -183,10 +183,11 @@ td.radiotd {
 }
 
 #footer {
-    height: 100px;
+    height: 120px;
     margin-top: 20px;
     padding-top: 10px;
     text-align: center;
+    overflow: auto;
 }
 
 #footer ul {
@@ -230,3 +231,146 @@ td.radiotd {
 a.footer-link{
     font-size: 12px;
 }
+
+
+
+        * {
+            color: white;
+        }
+        img {
+            margin: 0;
+            margin: auto;
+            float: none;
+            display: block;
+        }
+        #openseadragon1 {
+            margin: 0 auto;
+            margin-left: 8%;
+            margin-right: 8%;
+            width: auto;
+            height: 1000px;
+            display: block;
+        }
+        #toolbarDiv {
+            z-index: 50;
+        }
+
+        .toolbarItem {
+            width: 51px;
+            height: 50px;
+        }
+
+        #zoom-in {
+            background-image: url(./images/buttons/zoomin_rest.png);
+        }
+
+        #zoom-out {
+            background-image: url(./images/buttons/zoomout_rest.png);
+        }
+
+        #home {
+            background-image: url(./images/buttons/home_rest.png);
+        }
+
+        #full-page {
+            background-image: url(./images/buttons/fullpage_rest.png);
+        }
+
+        #next {
+            display: inline-block;
+            position: relative;
+            background-image: url(./images/buttons/next_rest.png);
+        }
+
+        #prev {
+            display: inline-block;
+            position: relative;
+            background-image: url(./images/buttons/previous_rest.png);
+        }
+
+        .displayregion {
+            border: 2px solid #630d0d;
+        }
+        #toolbarDiv {
+            height: 1px;
+        }
+        h4 {
+            margin-top: 5px;
+        }
+        div.information {
+            color: white;
+            margin-bottom: 10px;
+        }
+        div.detaileddescription {
+            margin: 6px 10%;
+        }
+        div.description {
+            color: #3e8f3e;
+        }
+        /* iPhone 6 in portrait  */
+        @media only screen 
+        and (min-device-width : 375px) 
+        and (max-device-width : 667px) 
+        and (orientation : portrait) { 
+            * {
+                background-color: #333333;
+            }
+            div.heading {
+                margin-top: 3rem;
+                margin-bottom: 5rem;
+            }
+            img.img-responsive {
+
+            }
+            div.central {
+                box-sizing: content-box;
+            }
+            h4 {
+                font-weight: bold;
+                font-size: 3rem;
+            }
+            a {
+                font-size: 1.3rem;
+            }
+            input.btn {
+                width: 60rem !important;
+                height: 10rem;
+                font-size: 3rem;
+            }
+            div.information {
+                margin-left: 2rem;
+                margin-right: 2rem;
+                font-size: 3rem;
+            }
+            input.form-control.form-inline {
+                margin-top: 5rem;
+                width: 60rem !important;
+                height: 6rem !important;
+                font-size: 3rem;
+            }
+            td.menutext {
+                margin-left: 2rem;
+                margin-right: 2rem;
+                margin-bottom: 20px;
+                font-size: 2rem;
+            }
+            #arrow {
+                width: 4rem;
+                height: 4rem;
+            }
+            #footer a{
+                font-size: 2rem;
+                padding-bottom: 3rem;
+            }
+            #footer div.uoe-logo img{
+                float: left;
+                width: 8rem;
+            }
+            #footer div.luc-logo img{
+                float: right;
+                width: 8rem;
+            }
+            #footer {
+                overflow: auto;
+            }
+        }
