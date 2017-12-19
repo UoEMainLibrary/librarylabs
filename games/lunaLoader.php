@@ -187,6 +187,64 @@
             }
             $i++;
         }
+
+    $outfile = 'files/shelfreport.csv';
+    $file_handle_out = fopen('files/shelfreport.csv', "w") or die ("can't open loaded papers file");
+    $shelf_list_count_sql = "select distinct shelfmark, count(shelfmark) as imagecount from orders.IMAGE group by shelfmark order by shelfmark ; ";
+    $shelf_list_count_result = mysqli_query($link, $shelf_list_count_sql);
+    $shelf_list_count_count = mysqli_num_rows($shelf_list_count_result);
+    $j = 0;
+    fwrite($file_handle_out, "Shelfmark, No Images, Title, Date, Creator, Catalogue No\n");
+
+    while ($row = $shelf_list_count_result->fetch_assoc()) {
+
+        $shelf_list[$j] = $row['shelfmark'];
+        $shelf_list_image_count[$j] = $row['imagecount'];
+        $specific_image_sql = "select jpeg_path from orders.IMAGE where shelfmark = '".$shelf_list[$j]."' limit 1;";
+        $specific_image_result = mysqli_query($link, $specific_image_sql);
+        $manifest_url = '';
+        while ($imagerow = $specific_image_result->fetch_assoc()) {
+            $image_url = $imagerow['jpeg_path'];
+            $manifest_url = str_replace('detail/', 'iiif/m/', $image_url).'/manifest';
+        }
+        echo $manifest_url;
+        $json = file_get_contents($manifest_url);
+        $jobj = json_decode($json, true);
+        $error = json_last_error();
+        $jsonMD = $jobj['sequences'][0]['canvases'][0]['metadata'];
+        $rights = '';
+        $photographer = '';
+        $photoline = '';
+        foreach ($jsonMD as $jsonMDPair)
+        {
+
+            if ($jsonMDPair['label'] == 'Title')
+            {
+                $title = str_replace("<span>", "", $jsonMDPair['value']);
+                $title = str_replace("</span>", "", $title);
+            }
+            if ($jsonMDPair['label'] == 'Date')
+            {
+                $date = str_replace("<span>", "", $jsonMDPair['value']);
+                $date = str_replace("</span>", "", $date);
+            }
+            if ($jsonMDPair['label'] == 'Creator')
+            {
+                $creator = str_replace("<span>", "", $jsonMDPair['value']);
+                $creator = str_replace("</span>", "", $creator);
+            }
+            if ($jsonMDPair['label'] == 'Catalogue Number')
+            {
+                $catalogue_no = str_replace("<span>", "", $jsonMDPair['value']);
+                $catalogue_no = str_replace("</span>", "", $catalogue_no);
+            }
+
+        }
+
+        fwrite($file_handle_out, '"'.$shelf_list[$j].'",'.$shelf_list_image_count[$j].',"'.$title.'",'.$date.',"'.$creator.'",'.$catalogue_no.','.substr($manifest_url, 47,8)."\n");
+        $j++;
+    }
+    fclose($file_handle_out);
     echo 'I HAVE FINISHED';
     ?>
     </body>

@@ -22,7 +22,7 @@
 
     	div.row.header-row {
     		padding-top: 30%;
-    		background-image: url('./background6.svg');
+    		background-image: url('./images/background0.jpg');
     		position: relative;
     		overflow: hidden;
     		background-size: cover;
@@ -110,25 +110,29 @@
         }
         #blog {
             /*background-color: #ffee32;*/
-            background-image: url('./login/login_background.jpg');
+            background-image: url('./images/background1.jpg');
         }
         #map {
         	height: 530px;
-            background-image: url('./background2.jpg');
+            background-image: url('./images/background2.jpg');
             /*background-color: #ff5e56;*/
         }
         #metadataGames {
-            background-image: url('./background3.png');
+            background-image: url('./images/background3.jpg');
+            /*background-color: #389cf4;*/
+        }
+        #iiif {
+            background-image: url('./images/background4.jpg');
             /*background-color: #389cf4;*/
         }
         #polyanno {
         	/*background-image: url('./polyanno_background.jpg');*/
-        	background-image: url('./about_background.jpg');
+        	background-image: url('./images/about_background.jpg');
             /*background-color: #4ace4c;*/
         }
         #about {
         	/*background-image: url('./about_background.jpg');*/
-        	background-image: url('./polyanno_background.jpg');
+        	background-image: url('./iamges/polyanno_background.jpg');
         }
         h1 {
             font-size: 4em;
@@ -178,7 +182,7 @@
                 margin: auto;
             }
             div.row.header-row {
-                background-image: url('./background7_mobile.svg');
+                background-image: url('./images/background7_mobile.svg');
             }
             .col-lg-4 img {
                 float: none;
@@ -405,6 +409,18 @@ afterReset: function (domEl) {}
                     <h1>Library Maps</h1>
                     <p>Read about the latest Library labs news & experiments</p>
                 </div>                
+                </div>
+        </div>
+        <div class="col-lg-4" id="iiif" onclick="window.location='https://www.librarymaps.is.ed.ac.uk';">
+        <div class="link-box box-right home-box">
+                <a href="iiif/index.html">
+                    <!-- <img title="About Library Labs" src="./css/images/AboutTile.png"> -->
+                    <img id="iiifIcon" title="IIIF Logo" src="./images/iiif_logo.png">
+                </a>
+                <div class="description">
+                    <h1>IIIF</h1>
+                    <p>Image experimentation with IIIF</p>
+                </div>
                 </div>
         </div>
         <div class="col-lg-4" id="polyanno" onclick="window.location='https://test.polyanno.librarylabs.ed.ac.uk';">

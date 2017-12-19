@@ -8,6 +8,9 @@ $_SESSION['stylesheet'] = '<link rel="stylesheet" type ="text/css" href="css/ros
 $_SESSION['banner'] = "./images/rosbanner.jpg";
 $_SESSION['game'] = 'R';
 
+var_dump($_SESSION['theme']);
+
+
 
 // Connect To Database
 $error = '';
@@ -267,10 +270,22 @@ else
 
 
        // echo '<p><a href= "http://images.is.ed.ac.uk/luna/servlet/detail/' . $urlinstid . '~' . $urlcollid . '~' . $urlcollid . '~' . $urlobjectid . '~' . $urlimageid . '" target = "_blank"><img src = "../' . $jpeg_path . '" style = "' . $divstyle . '"/></a></p>
-        echo '<div id="openseadragon1"></div>
+        
+        $tileSource = 'http://images.is.ed.ac.uk/luna/servlet/iiif/'.$urlinstid.'~'.$urlcollid.'~'.$urlcollid.'~'.$urlobjectid.'~'.$urlimageid.'/info.json';
+	echo '</div> ';
+        $json = file_get_contents($tileSource);
+	$jobj = json_decode($json, true);
+        $error = json_last_error();
+        $jsoncontext = $jobj['@context'];
+        $jsonid = $jobj['@id'];
+        $jsonheight = $jobj['height'];
+        $jsonwidth = $jobj['width'];
+        $jsonprotocol = $jobj['protocol'];
+        $jsontiles = $jobj['tiles'];
+        $jsonprofile = $jobj['profile'];?>
+        <div id="openseadragon1" width ="650" height = "650">
         <script src="../assets/openseadragon/openseadragon.min.js"></script>
         <script type="text/javascript">
-
         OpenSeadragon({
         id:                 "openseadragon1",
         prefixUrl:          "../assets/openseadragon/images/",
@@ -279,13 +294,27 @@ else
         minZoomLevel:       1,
         defaultZoomLevel:   1,
         sequenceMode:       true,
-        tileSources:        "http://lac-luna-test2.is.ed.ac.uk:8181/luna/servlet/iiif/'.$urlinstid.'~'.$urlcollid.'~'.$urlcollid.'~'.$urlobjectid.'~'.$urlimageid.'/info.json"
-        });
-        </script>
-       </div>
-
-                            ';
-
+        tileSources:  [{
+                             "@context": "<?php echo $jsoncontext ?>",
+                             "@id": "<?php echo $jsonid ?>",
+                             "height": <?php echo $jsonheight ?>,
+                             "width": <?php echo $jsonwidth ?>,
+                             "profile": ["http://iiif.io/api/image/2/level2.json",
+                              {
+                                    "formats": ["gif", "pdf"]
+                              }
+                               ],
+                             "protocol": "<?php echo $jsonprotocol ?>",
+                             "tiles": [{
+                             "scaleFactors": [1, 2, 8, 16, 32],
+                             "width": 512
+                        }]
+         //minLevel: 2 
+	}]
+          });
+         </script>
+</div>
+<?php
         echo '<div class="sourcebox">
             <form action = "gameCrowdSourcingDolly.php" method = "post">
                 <table style = "text-align: center;">

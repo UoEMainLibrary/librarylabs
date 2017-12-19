@@ -1,0 +1,20 @@
+ {
+ "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "http://universalviewer.io/manifests.json",
+  "@type": "sc:Collection",
+  "collections": [
+    {
+      "@context": "http://iiif.io/api/presentation/2/context.json",
+      "@id": "http://universalviewer.io/manifests.json",
+      "@type": "sc:Collection",
+      "label": "University of Edinburgh",
+      "manifests": [
+        {
+          "@id": "https://librarylabs.ed.ac.uk/manifest/RoomCollection.json",
+          "@type": "sc:Manifest",
+          "label": "Argyle House Rooms"
+        }
+       ]
+        }
+      ]
+    }
