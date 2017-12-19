@@ -17,10 +17,6 @@ if (isset ($_POST['save']))
 
     for($i=0; $i<sizeof($check_box); $i++)
     {
-        $action = '';
-        $crowd_id = '';
-        $uun = '';
-
         $line = explode("|",$check_box[$i]);
 
         $action = $line[0];
@@ -29,9 +25,6 @@ if (isset ($_POST['save']))
 
         if ($action == '1' or $action == '-1')
         {
-            $image_id = '';
-            $votes = '';
-
             $get_image_sql = "select image_id from orders.CROWD where id = ".$crowd_id.";";
             $get_image_result =mysql_query($get_image_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $get_image_result . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
             $image_id = mysql_result($get_image_result, 0, 'image_id');
@@ -40,13 +33,12 @@ if (isset ($_POST['save']))
             $vote_insert_result=mysql_query($vote_insert_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $vote_insert_result . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
             //echo 'SQL'.$vote_insert_sql;
 
-            $vote_sql = "select sum(quality) as votes from orders.VOTES where crowd_id = ".$crowd_id.";";
+            $vote_sql = "select sum(quality) as votes from orders.VOTES where id = ".$crowd_id.";";
             $vote_result=mysql_query($vote_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $vote_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
             $votes = mysql_result($vote_result,0, 'votes');
 
-            $status = '';
 
-            if ($votes >= 1)
+            if ($votes >= 2)
             {
                 $status = 'A';
 
@@ -60,6 +52,7 @@ if (isset ($_POST['save']))
                  $status = 'M';
             }
 
+            //update the user to value of 'C' (complete) based on the chosen uun
             $sql = "UPDATE orders.CROWD set status = '".$status."'  where id= ".$crowd_id.";";
             $result = mysql_query($sql) or die( "A MySQL error has occurred.<br />Your Query: " . $sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
@@ -162,7 +155,8 @@ if (isset ($_POST['save']))
             }
             else
             {
-
+                if ($_SESSION['theme'] == 'roslin')
+                {
                     $rand_sql = "
                                 select
                                 i.image_id,
@@ -174,11 +168,30 @@ if (isset ($_POST['save']))
                                 i.jpeg_path
                                 from
                                 orders.IMAGE i
-                                join (select x.image_id from orders.IMAGE x, orders.CROWD y where x.image_id = y.image_id and x.collection = 17 and y.status = 'M' and y.uun <> '".$_SESSION['uun']."' and x.image_id not in (select v.image_id from orders.VOTES v where v.voter = '".$_SESSION['uun']."')  order by rand() limit 1)
+                                join (select x.image_id from orders.IMAGE x, orders.CROWD y where x.image_id = y.image_id and x.collection = 17 and y.status = 'M'  order by rand() limit 1)
                                 as a on i.image_id = a.image_id
                                 ;
                                 ";
+                }
 
+                    else
+                    {
+                        $rand_sql = "
+                                select
+                                i.image_id,
+                                i.collection,
+                                i.shelfmark,
+                                i.title,
+                                i.author,
+                                i.page_no,
+                                i.jpeg_path
+                                from
+                                orders.IMAGE i
+                                join (select x.image_id from orders.IMAGE x, orders.CROWD y where x.image_id = y.image_id and y.status = 'M' and y.uun <> '".$_SESSION['uun']."' order by rand() limit 1)
+                                as a on i.image_id = a.image_id
+                                ;
+                                ";
+                    }
 
                     $result=mysql_query($rand_sql) or die( "A MySQL error has occurred.<br />Your Query: " . $rand_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
 
@@ -244,7 +257,7 @@ if (isset ($_POST['save']))
                         $urlinstid = mysql_result($urlresult, 0, 'institutionid');
                         $urlcollid = mysql_result($urlresult, 0, 'collectionid');
 
-                        echo '<p class="imagelink"><a href= "http://images.is.ed.ac.uk/luna/servlet/detail/'.$urlinstid.'~'.$urlcollid.'~'.$urlcollid.'~'.$urlobjectid.'~'.$urlimageid.'" target = "_blank"><img src = "../'.$jpeg_path.'" style = "'.$divstyle.'"/></a></p>
+                        echo '<p><a href= "http://images.is.ed.ac.uk/luna/servlet/detail/'.$urlinstid.'~'.$urlcollid.'~'.$urlcollid.'~'.$urlobjectid.'~'.$urlimageid.'" target = "_blank"><img src = "../'.$jpeg_path.'" style = "'.$divstyle.'"/></a></p>
                         </div>
                     </div>
                     <!--<div class = "info">-->

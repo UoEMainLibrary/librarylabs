@@ -39,7 +39,6 @@ if (mysqli_connect_errno())
 
 if (isset ($_POST['save'])) {
     $_POST['button'] = false;
-
     $image_id = $_POST['image_id'];
     $subject = trim(mysqli_real_escape_string($link, $_POST['subject']));
 
@@ -377,7 +376,7 @@ if ((($_SESSION['theme'] == 'art') or ($_SESSION['theme'] == 'roslin')) and $_SE
                                     <tr> <td colspan="2"><input type="submit" name = "save" style = "width:500px;" value="Go to voting"/></td></tr>
                       </table>
                 </form>
-
+             <hr>
           </div>';
 }
 else
@@ -405,7 +404,7 @@ else
 
     } else {
 
-        echo '<hr/>';
+
 
         if(!isset($_SESSION['images']))
         {

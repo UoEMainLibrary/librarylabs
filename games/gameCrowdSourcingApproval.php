@@ -67,13 +67,12 @@ if (isset ($_POST['save']))
             $vote_insert_result=mysqli_query($link, $vote_insert_sql); #or die( "A MySQL error has occurred.<br />Your Query: " . $vote_insert_result . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
             //echo 'SQL'.$vote_insert_sql;
 
-            $vote_sql = "select sum(quality) as votes from orders.VOTES where id = ".$crowd_id.";";
+            $vote_sql = "select sum(quality) as votes from orders.VOTES where crowd_id = ".$crowd_id.";";
             $vote_result=mysqli_query($link, $vote_sql); #or die( "A MySQL error has occurred.<br />Your Query: " . $vote_sql . "<br /> Error: (" . mysql_errno() . ") " . mysql_error());
             while ($row = $vote_result->fetch_assoc()) {
                 $votes = $row['votes'];
             }
             // $votes = mysql_result($vote_result,0, 'votes');
-
 
             if ($votes >= 2)
             {
@@ -711,7 +710,7 @@ echo '<!-- '.$iiifstatic.'-->';
                          <!--<td class="typelabel">Type</td>-->
                          <td class="tdlabel">Value</td>
                          <td class = "radiotd">Good</td>
-                         <td class = "radiotd">?</td>
+                        <!-- <td class = "radiotd">?</td>-->
                          <td class = "radiotd">Bad</td>
                          </tr>
                          <tr>
@@ -719,7 +718,7 @@ echo '<!-- '.$iiifstatic.'-->';
                          <!--<td class="typelabel">----</td>-->
                          <td class="tdlabel">-----</td>
                          <td class = "radiotd">---</td>
-                         <td class = "radiotd">---</td>
+                        <!-- <td class = "radiotd">---</td>-->
                          <td class = "radiotd">---</td>
                          </tr>';
 
@@ -768,7 +767,7 @@ echo '<!-- '.$iiifstatic.'-->';
                     <!--<td class="typelabel"></td>-->
                     <td class="tdlabel">' . strtoupper($value_text) . '</td>
                     <td class="radiotd"><input type="radio" name="moderated[' . $k . ']" value = "1|' . $crowd_id . '|' . $uun . '"/></td>
-                    <td class="radiotd"><input type="radio" name="moderated[' . $k . ']" value = "O|' . $crowd_id . '|' . $uun . '"/></td>
+                    <!--<td class="radiotd"><input type="radio" name="moderated[' . $k . ']" value = "O|' . $crowd_id . '|' . $uun . '"/></td>-->
                     <td class="radiotd"><input type="radio" name="moderated[' . $k . ']" value = "-1|' . $crowd_id . '|' . $uun . '"/></td>
                     </tr>';
                             $k++;
