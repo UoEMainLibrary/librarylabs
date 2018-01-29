@@ -1,12 +1,10 @@
 <?php
 //session_start();
 //var_dump($_SESSION);
-include '../games/config/vars.php';
-
-
+include '../../games/config/vars.php';
 // connect to db
 $error = '';
-$link = mysqli_connect($dbserver, $username, $password, $database);
+$link = new mysqli($dbserver, $username, $password, $database);
 //@mysqli_select_db($database) ;#or die( "Unable to select database".$database);
 
 ?>
@@ -41,8 +39,8 @@ $link = mysqli_connect($dbserver, $username, $password, $database);
         }
         * {
             font-family: Arial;
-            background-color: #333333;
-            border-color: #333333;
+            background-color: #ffffff;
+            border-color: #ffffff;
         }
         h2 {
             margin-left: 20px;
@@ -61,6 +59,8 @@ $link = mysqli_connect($dbserver, $username, $password, $database);
             letter-spacing: normal;
 
         }
+        .uvlogo
+        { margin-left:25px; display: inline-block; width: 50px; height: 50px;  background: url(../../images/uv.png) no-repeat 0px 0px;}
         a:hover {
             text-decoration: none;
         }
@@ -72,17 +72,21 @@ $link = mysqli_connect($dbserver, $username, $password, $database);
             margin-bottom: 50px;
         }
         body {
-            background-color: #333333;
+            background-color: #ffffff;
         }
         div.container-fluid div.all {
             font-family: Arial;
         }
         div.central {
-            background-color: #333333;
+            background-color: #ffffff;
         }
         h1, h2, textarea, input, h3, span{
-            background-color:#33cccc;
+            background-color:#ffffff;
         }
+        textarea, input
+        {border-width: 1px;
+         border-color: #333329;
+         margin-left : 25px;}
 
         td{
             padding:3px;
@@ -151,52 +155,16 @@ $link = mysqli_connect($dbserver, $username, $password, $database);
 <body>
 <?php include_once("./../analyticstracking.php")?>
 
-<?php
-    $image_block = '';
-    if ($_POST['imageblock'] !== '')
-    {
-        $image_block = $_POST['imageblock'];
-    }
-?>
 
     <div class="all container-fluid">
-    <h1>Manifest Builder Prototype</h1>
-    <h2>Put some image names into the box, one per row</h2>
-    <div class = "box">
-         <form name="form" method="post" action="manifestbuild.php">
-              <textarea name="imageblock" rows="8" cols = "10"></textarea>
-                <br>
-              <input type="submit" name="button" value="Submit"/>
-         </form>
+    <h1>IIIF Manifest Builder</h1>
+    <div class="box">
+        How would you like to generate your manifest?
+        <br><br>
+        <a href="shelfbuild.php">Choose shelfmark from dropdown list</a>
+        <br><br>
+        <a href="manualbuild.php">Choose your own images browsing LUNA, or copy from a worksheet</a>
     </div>
 
-<?php
-
-    }
-    if ($image_block !== '')
-{
-?>
-
-        <div class="all container-fluid">
-    <h1>Manifest Builder Prototype</h1>
-    <h2>Here comes your manifest</h2>
-
-    <?php
-        $image_array = explode ("\n", $image_block);
-
-        foreach ($image_array as $image)
-        {
-            echo "<h2>".$image."</h2>";
-        }
-        echo '<h2>POST AFORE PURGE'.$_POST['imageblock'].'</h2>';
-        unset($_POST["imageblock"]);
-        echo '<h2>POST AFTER PURGE'.$_POST['imageblock'].'</h2>';
-    }
-
-?>
-
-
-</div>
 </body>
-
 </html>

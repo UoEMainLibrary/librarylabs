@@ -1,7 +1,7 @@
 <?php
     session_start();
     //var_dump($_SESSION);
-    include '../games/config/vars.php';
+    include '../../games/config/vars.php';
 
 
     // connect to db
