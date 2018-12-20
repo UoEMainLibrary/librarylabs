@@ -46,6 +46,11 @@ $link = new mysqli($dbserver, $username, $password, $database);
             margin-left: 20px;
             margin-right: 20px;
         }
+        h4 {
+            margin-left: 20px;
+
+            margin-right: 20px;
+        }
         .menutext {
             color: white;
         }
@@ -157,13 +162,18 @@ $link = new mysqli($dbserver, $username, $password, $database);
 
 
     <div class="all container-fluid">
-    <h1>IIIF Manifest Builder</h1>
+    <h1>IIIF Manifest Builder BETA</h1>
 
         <h2>Put some image names into the box, one per row- generally Work Record ID + "c" on <a
                 href="https:/images.is.ed.ac.uk/luna/servlet" target="_blank">LUNA</a>. For Art, use Repro Link ID.
             Won't currently work for MIMEd.</h2>
         <div class="box">
             <form name="form" method="post" action="deliver.php">
+                <h4>Manifest Name</h4>
+                <input name ="man_name"/>
+                <br>
+                <br>
+                <h4>Image List</h4>
                 <textarea name="imageblock" rows="8" cols="25"></textarea>
                 <br>
                 <input type="submit" name="button" value="Submit"/>

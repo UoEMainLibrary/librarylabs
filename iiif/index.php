@@ -22,7 +22,7 @@
 
     	div.row.header-row {
     		padding-top: 30%;
-    		background-image: url('./images/background0.jpg');
+    		background-image: url('../css/images/iiif-logo.jpg');
     		position: relative;
     		overflow: hidden;
     		background-size: cover;
@@ -121,11 +121,11 @@
             background-image: url('https://images.is.ed.ac.uk/luna/servlet/iiif/UoEgal~5~5~90950~107211/full/full/0/default.jpg');
             /*background-color: #389cf4;*/
         }
-        #iiif {
+        #manifest {
             background-image: url('./images/background4.jpg');
             /*background-color: #389cf4;*/
         }
-        #polyanno {
+        #speccoll {
         	/*background-image: url('./polyanno_background.jpg');*/
         	background-image: url('./images/about_background.jpg');
             /*background-color: #4ace4c;*/
@@ -232,78 +232,14 @@
 
             }
         }
+        .header-banner       { width: 1000px; height: 126px; background: url(../css/images/librarylabsheaderiiif.png) no-repeat 0 0; display: block; margin: auto}
     </style>
 </head>
 <body>
-<!-- <script type="text/javascript">
-	window.sr = ScrollReveal();
-	sr.reveal('.col-lg-4');
-	// Changing the defaults
-window.sr = ScrollReveal({ reset: true });
 
-// Customizing a reveal set
-sr.reveal('.col-lg-4', { 
-	// 'bottom', 'left', 'top', 'right'
-origin: 'bottom',
-
-// Can be any valid CSS distance, e.g. '5rem', '10%', '20vw', etc.
-distance: '20px',
-
-// Time in milliseconds.
-duration: 500,
-delay: 0,
-
-// Starting angles in degrees, will transition from these values to 0 in all axes.
-rotate: { x: 0, y: 0, z: 0 },
-
-// Starting opacity value, before transitioning to the computed opacity.
-opacity: 0,
-
-// Starting scale value, will transition from this value to 1
-scale: 0.9,
-
-// Accepts any valid CSS easing, e.g. 'ease', 'ease-in-out', 'linear', etc.
-easing: 'cubic-bezier(0.6, 0.2, 0.1, 1)',
-
-// `<html>` is the default reveal container. You can pass either:
-// DOM Node, e.g. document.querySelector('.fooContainer')
-// Selector, e.g. '.fooContainer'
-container: window.document.documentElement,
-
-// true/false to control reveal animations on mobile.
-mobile: true,
-
-// true:  reveals occur every time elements become visible
-// false: reveals occur once as elements become visible
-reset: false,
-
-// 'always' — delay for all reveal animations
-// 'once'   — delay only the first time reveals occur
-// 'onload' - delay only for animations triggered by first load
-useDelay: 'always',
-
-// Change when an element is considered in the viewport. The default value
-// of 0.20 means 20% of an element must be visible for its reveal to occur.
-viewFactor: 0.2,
-
-// Pixel values that alter the container boundaries.
-// e.g. Set `{ top: 48 }`, if you have a 48px tall fixed toolbar.
-// --
-// Visual Aid: https://scrollrevealjs.org/assets/viewoffset.png
-viewOffset: { top: 0, right: 0, bottom: 0, left: 0 },
-
-// Callbacks that fire for each triggered element reveal, and reset.
-beforeReveal: function (domEl) {},
-beforeReset: function (domEl) {},
-
-// Callbacks that fire for each completed element reveal, and reset.
-afterReveal: function (domEl) {},
-afterReset: function (domEl) {} 
-});
-	// sr.reveal('.bar');
-
-</script> -->
 <?php include_once("./analyticstracking.php") ?>
+
+<div class="header-banner"></div>
 <div class="container">
     <header>
         <div class="container-fluid">
@@ -375,7 +311,7 @@ afterReset: function (domEl) {}
 
 
     <div class="row">
-        <div class="col-lg-4" id="scroll" onclick="window.location='https://librarylabs.ed.ac.uk/iiif/uv?manifest=https://librarylabs.ed.ac.uk/iiif/manifest/mahabharataStitchedScroll.json';">
+        <div class="col-lg-4" id="scroll" onclick="window.location='https://images.is.ed.ac.uk/uv?manifest=https://images.is.ed.ac.uk/manifest/mahabharataLargeStitch41Scroll.json';">
             <div class="link-box box-left home-box">
                 <a href="https://librarylabs.ed.ac.uk/iiif/uv?manifest=https://librarylabs.ed.ac.uk/iiif/manifest/mahabharataStitchedScroll.json" style="display: block;"  target="_blank">
                     <!-- <img title="Library Labs Blog" src="./css/images/BlogTile.png"> -->
@@ -387,7 +323,7 @@ afterReset: function (domEl) {}
                 </div>
             </div>
         </div>
-        <div class="col-lg-4" id="calendar" onclick="window.location='https://librarylabs.ed.ac.uk/iiif/uv?manifest=https://librarylabs.ed.ac.uk/iiif/manifest/calendars/CalendarCollection.json';">
+        <div class="col-lg-4" id="calendar" onclick="window.location='https://librarylabs.ed.ac.uk/iiif/calendars';">
             <div class="link-box box-middle home-box">
                 <a href="https://librarylabs.ed.ac.uk/iiif/uv?manifest=https://librarylabs.ed.ac.uk/iiif/manifest/calendars/CalendarCollection.json" target="_blank">
                     <!-- <img title="Metadata Games" src="./css/images/MetadataGamesTile.png"> -->
@@ -399,7 +335,7 @@ afterReset: function (domEl) {}
                 </div>               
             </div>
         </div>
-        <div class="col-lg-4" id="argyle" onclick="window.location='https://librarylabs.ed.ac.uk/iiif/argyle-rooms?manifest=https://librarylabs.ed.ac.uk/iiif/manifest/RoomCollection.json';">
+        <div class="col-lg-4" id="argyle" onclick="window.location='https://librarylabs.ed.ac.uk/iiif/argyle-rooms';">
         <div class="link-box box-right home-box">
                 <a href="https://librarylabs.ed.ac.uk/iiif/argyle-rooms?manifest=https://librarylabs.ed.ac.uk/iiif/manifest/RoomCollection.json" target="_blank">
                     <!-- <img title="About Library Labs" src="./css/images/AboutTile.png"> -->
@@ -411,7 +347,7 @@ afterReset: function (domEl) {}
                 </div>                
                 </div>
         </div>
-        <div class="col-lg-4" id="iiif" onclick="window.location='speccollprototype/manifestbuild.php';" target="_blank">
+        <div class="col-lg-4" id="manifest" onclick="window.location='speccollprototype/manifestbuild.php';" target="_blank">
         <div class="link-box box-right home-box">
                 <a href="./speccollprototype/manifestbuild.php">
                     <!-- <img title="About Library Labs" src="./css/images/AboutTile.png"> -->
@@ -423,7 +359,7 @@ afterReset: function (domEl) {}
                 </div>
                 </div>
         </div>
-        <div class="col-lg-4" id="polyanno" onclick="window.location='speccollprototype/index.php';" target="_blank">
+        <div class="col-lg-4" id="speccoll" onclick="window.location='speccollprototype/index.php';" target="_blank">
         <div class="link-box box-right home-box">
                 <a href="./speccollprototype/index.php">
                     <!-- <img title="About Library Labs" src="./css/images/AboutTile.png"> -->

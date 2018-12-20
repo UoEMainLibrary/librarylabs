@@ -157,7 +157,7 @@ $link = new mysqli($dbserver, $username, $password, $database);
 
 
     <div class="all container-fluid">
-    <h1>IIIF Manifest Builder</h1>
+    <h1>IIIF Manifest Builder BETA</h1>
     <div class="box">
         How would you like to generate your manifest?
         <br><br>

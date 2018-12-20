@@ -46,8 +46,18 @@ $link = new mysqli($dbserver, $username, $password, $database);
             margin-left: 20px;
             margin-right: 20px;
         }
+        h3 {
+            margin-left: 20px;
+            margin-right: 20px;
+        }
         .menutext {
             color: white;
+        }
+        p{
+            margin-left: 20px;
+        }
+        a{
+            margin-left: 20px;
         }
         h1 {
             font-size: 100px;
@@ -166,10 +176,21 @@ $link = new mysqli($dbserver, $username, $password, $database);
     {
         $shelfmark_for_check = $_POST['shelfmark_for_check'];
     }
+
+    if ($_POST['man_name'] !== '')
+    {
+        $man_name = $_POST['man_name'];
+    }
+    else
+    {
+        $man_name = 'User generated manifest';
+    }
+
+
 ?>
 
     <div class="all container-fluid">
-    <h1>IIIF Manifest Builder</h1>
+    <h1>IIIF Manifest Builder BETA</h1>
 
 
 <?php
@@ -186,7 +207,6 @@ $link = new mysqli($dbserver, $username, $password, $database);
         $imageresult = mysqli_query($link, $imagesql);
         $options="";
         $i = 0;
-
         while ($row = $imageresult->fetch_assoc()) {
             $image_array[$i] = $row['image_id'];
             $i++;
@@ -197,25 +217,27 @@ $link = new mysqli($dbserver, $username, $password, $database);
     if (isset($image_array))
     {
 
-
         foreach ($image_array as $image)
         {
             $get_ind_man_result = '';
             $row = '';
+            $outpath ='';
             $get_man_sql = "select jpeg_path from orders.IMAGE where image_id = '" . $image. "' order by rand() limit 1;";
 
             if ($get_man_result = $link->query($get_man_sql))
             {
+
                 while ( $row = $get_man_result->fetch_assoc())
                 {
                     $outpath = $row['jpeg_path'];
                 }
                 $get_man_result->free;
             }
-
-            $manifest = str_replace('detail', 'iiif/m', $outpath).'/manifest';
-            $manifestlist[] = $manifest;
-            $imagecount++;
+            if ($outpath != '') {
+                $manifest = str_replace('detail', 'iiif/m', $outpath) . '/manifest';
+                $manifestlist[] = $manifest;
+                $imagecount++;
+            }
 
         }
 
@@ -225,58 +247,114 @@ $link = new mysqli($dbserver, $username, $password, $database);
         else{
             $suffix = '';
         }
-        echo '<h2>Here comes your manifest ('.$detail. ') - '. $imagecount. ' digitised image'.$suffix.'  </h2>';
+        echo '<h2>Here comes your manifest ('.$detail. ') - '. $imagecount. ' digitised image'.$suffix.'  </h2>
+        <h3>This manifest is not in a persistent location- it is currently only intended for experimentation/teaching.</h3>';
+
+
 
         $j = 0;
         $manifestarray = array();
+        $hasalma = false;
         while ($j < $imagecount)
         {
+            $jobj = '';
             $json = file_get_contents($manifestlist[$j]);
             $jobj = json_decode($json, true);
             $error = json_last_error();
-
-            if ($j == 0)
+            if ($jobj !== '')
             {
-                $attribution = $jobj['attribution'];
-                $context = $jobj['@context'];
-                $related = str_replace( 'iiif/m', 'detail',$manifestlist[$j]);
-                $related = str_replace('/manifest', '', $related);
-                $rand_no = bin2hex(openssl_random_pseudo_bytes(12));
-            }
+                if ($j == 0) {
+                    $attribution = $jobj['attribution'];
+                    $context = $jobj['@context'];
+                    $related = str_replace('iiif/m', 'detail', $manifestlist[$j]);
+                    $related = str_replace('/manifest', '', $related);
+                    $rand_no = bin2hex(openssl_random_pseudo_bytes(12));
+                    foreach ($jobj['sequences'][0]['canvases'][0]['metadata'] as $metadatapair) {
+                        $label = $metadatapair['label'];
+                        $value = $metadatapair['value'];
 
-            $manifestarray[] = $jobj['sequences'][0]['canvases'][0];
+                        if (strpos($value, "discovered") !== false) {
+                            $UOE = strpos($value, "44UOE_");
+                            $hasalma = true;
+                            $almaurl = "https://discovered.ed.ac.uk/primo-explore/sourceRecord?vid=44UOE_VU2&docId=" . substr($value, $UOE, 27);
+
+                        }
+
+                    }
+                }
+
+                $manifestarray[] = $jobj['sequences'][0]['canvases'][0];
+
+            }
             $j++;
         }
-            $manifest_file =array
-                 ('label' => 'User generated manifest',
+
+
+        $manifest_file =array
+                 ('label' => $man_name,
                 'attribution'=> $attribution,
                 'logo' =>  "https://www.eemec.med.ed.ac.uk/img/logo-white.png" ,
                 '@id'=> "https://librarylabs.ed.ac.uk/iiif/speccollprototype/manifests/user/" .$rand_no. ".json",
                 'related' => $related,
                 'sequences' => array(array("@type"=>"sc:Sequence", "viewingHint"=>"individual", "canvases"=>$manifestarray)),
                 "@type"=>"sc:Manifest",
+                'seeAlso'=>$almaurl,
                 "@context"=>$context
                 );
-            $json_out = json_encode($manifest_file);
-            $mandir = 'manifests/user/';
-            $out_file = $mandir.$rand_no.'.json';
-            $file_handle_out = fopen($out_file, "w")or die("<p>Sorry. I can't open the manifest file.</p>");
+        $json_out = json_encode($manifest_file);
+        $mandir = 'manifests/user/';
+        $out_file = $mandir.$rand_no.'.json';
+        $file_handle_out = fopen($out_file, "w")or die("<p>Sorry. I can't open the manifest file.</p>");
 
-            fwrite($file_handle_out, $json_out);
+        fwrite($file_handle_out, $json_out);
 
-            unset($_POST["imageblock"]);
-            $manifestpath = "https://librarylabs.ed.ac.uk/iiif/speccollprototype/".$mandir.$rand_no.".json";
+        unset($_POST["imageblock"]);
+        $manifestpath = "https://librarylabs.ed.ac.uk/iiif/speccollprototype/".$mandir.$rand_no.".json";
 
 ?>
             <div>
                 <input type="text" size = "100" value = "<?php echo $manifestpath;?>"/>
                 <br><br>
-                <span class ="json-link-item"><a href="https://librarylabs.ed.ac.uk/iiif/uv/?manifest=<?php echo $manifestpath;?>" target="_blank" class="uvlogo" title="View in full UV"></a>Click for full-size Universal Viewer. Below is emedded and a bit small.</span>
+                <span class ="json-link-item"><a href="https://librarylabs.ed.ac.uk/iiif/uv/?manifest=<?php echo $manifestpath;?>" target="_blank" class="uvlogo" title="View in UV"></a>The viewer below is Mirador. Click here to see it in UV.</span>
                 <br><br>
                 <a href="manifestbuild.php">Create another manifest</a>
+                <?php
+                if ($hasalma == true)
+                {
+                    echo '<p>This item has Alma metadata. See below the viewer!</p>';
+                }
+                ?>
                 <br><br>
-                <iframe src="https://librarylabs.ed.ac.uk/iiif/uv/?manifest=<?php echo $manifestpath;?>" width="100%" height = "800" ></iframe>
+                <table width = "1300">
+                    <tr>
+                        <?php
+                        if ($hasalma == true)
+                        {
+                            $viewlink = '
+                             <tr>
+                                <td>
+                                    <iframe src="https://librarylabs.ed.ac.uk/iiif/mirador/?manifest='.$manifestpath.'" width = "1300" height = "800" allowfullscren = "true"></iframe>
+                                </td>
+                             </tr>
+                             <tr>
+                                <td>
+                                    <iframe src="'.$almaurl.'"width = "1300" height = "300" ></iframe>
+                                </td>
+                             </tr>';
+                        }
+                        else
+                        {
+                            $viewlink = '
+                                <td>
+                                    <iframe src="https://librarylabs.ed.ac.uk/iiif/mirador/?manifest='.$manifestpath.'" width = "1300" height = "800" allowfullscren = "true"></iframe>
+                                </td>';
 
+                        }
+
+                        echo $viewlink;
+                        ?>
+                    </tr>
+                </table>
             </div>
 
             <?php

@@ -151,7 +151,7 @@
 <body>
 <?php include_once("./../analyticstracking.php") ?>
 <div class="all container-fluid">
-    <h1>Special Collections IIIF Prototype</h1>
+    <h1>Special Collections IIIF Prototype (BETA)</h1>
     <?php
 
         $shelfsql = "select distinct(shelfmark) from orders.IMAGE where not shelfmark like '%Corson%' and not shelfmark like '%Coll%' and not shelfmark like 'EU%' and jpeg_path like 'http%' order by rand();";
