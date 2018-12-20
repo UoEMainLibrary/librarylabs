@@ -135,7 +135,7 @@ if (isset ($_POST['save'])) {
             margin-left: 8%;
             margin-right: 8%;
             width: auto;
-            height: 1000px;
+            height: 800px;
             display: block;
         }
         #toolbarDiv {

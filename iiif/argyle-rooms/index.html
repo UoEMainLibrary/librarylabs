@@ -6,8 +6,26 @@
     <link rel="stylesheet" href="lib/foundation/css/foundation.css" />
     <link rel="stylesheet" href="lib/fontawesome/css/font-awesome.css" />
     <link rel="stylesheet" type="text/css" href="examples.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
     <!--<script type="text/javascript" id="embedUV" src="/src/lib/embed.js"></script>-->
     <!--<script type="text/javascript" id="embedUV" src="uv/lib/embed.js"></script>-->
+    <style>
+        @media (min-width: 1500px) {
+            .container {
+                width: 1500px;
+            }
+        }
+        .header-banner       { width: 1000px; height: 126px; background: url(../../css/images/librarylabsheaderiiif.png) no-repeat 0 0; display: block; margin: auto}
+        .fabienne-banner { width: 1000px; height: 124px; background: url(../../css/images/fabienne.png) no-repeat 0 0; display: block; margin: auto}
+        .uv      { width: 1000px; height:668px; background-color: #000; display: block; margin: auto}
+        footer {display: block; margin-left: auto; margin-right: auto;}
+        .text      { padding-top: 10px; width: 750px; display: block; margin-left: auto; margin-right: auto;font-family: "Marion","Lucida Console", "Arial"; font-size: 0.75em; text-align: justify; }
+        .headtext      { width: 750px; display: block; margin-left: auto; margin-right: auto;font-family: "Marion", "Lucida Console", "Arial"; }
+        body {background-color: #e3e3e3;}
+        .iiifspec {display: none;}
+        .configEditor {display: none;}
+       /* .container {background-color: #000; display:inline-block;}*/
+    </style>
 </head>
 <body>
 
@@ -19,11 +37,36 @@
      psd dimensions
      width:1138px; height:760px
      -->
+    <div class = "content">
+    <div class="header-banner"></div>
+    <div class="fabienne-banner"></div>
 
     <main>
-        <div class="uv" data-no-load="true" style="width:924px; height:668px; background-color: #000"></div>
+        <div class="uv" data-no-load="true"></div>
     </main>
+        <div class="text">
+            <p>The University of Edinburgh has amassed one of most important collections anywhere in the world. Beginning with the bequest of 276 volumes to the library in 1580, our collection contains objects as old as the solar system through to contemporary works of art. Millions of objects are spread over 45 different sites; 280 named collections cared for by around 40 curators, archivists and conservators. Finding ways to articulate the vastness of this collection is what inspired the Swiss artist Fabienne Hess.
+            </p>
+            <p>
+                In her 2015 exhibition at the University’s Talbot Rice Gallery, Hess brought together over 25,000 collection images and reproduced them on a vast silk fabric. This gave the collection an immediate and tangible scale whilst highlighting the diversity of individual objects. Hess went on to develop the project with a publication in 2017, titled Zebras, Blanks and Blobs. This introduced 13 ‘image families’ derived from the same digital images, this time accentuating visual connections between otherwise disparate groups of objects. The families include; Red Dots, Fragiles, Triangles, Stripes and Pointers. Hess has selected a group of images from these families for this installation, specially commissioned for Argyle House.
+            </p>
+            <p>
+                Hess’ classifications are first and foremost visual; accentuated by the quality of the images produced by our Digital Imaging Unit. The visual comparisons also encourage a deeper engagement with the overall collection, what it represents and how it is used. Objects that have never been seen in parallel are thrust together, giving a truly unique overview.
+            </p>
+            <p>
+                <a href="http://www.fabiennehess.com" target="_blank">www.fabiennehess.com</a>
+            </p>
 
+
+            <h3 class = "headtext">IIIF at The University of Edinburgh</h3>
+            <p>The viewable content has been made available using IIIF manifests and the freely-available Universal Viewer (UV). This framework allows us to very easily present images to the user through a detailed set of programmatic instructions, allowing easy sharing of high-resolution images, served, in this case from our LUNA images repository (<a href="https://images.is.ed.ac.uk" target="_blank">images.is.ed.ac.uk</a>).<p>
+            <p>More information is available at <a href="http://iiif.io" target="_blank">iiif.io</a>. Please visit <a href="https://collections.ed.ac.uk/stcecilias" target="_blank">collections.ed.ac.uk/stcecilias</a> to see an example of a IIIF-driven collections site built by the Library Digital Development team.</p>
+            <p> © University of Edinburgh, 2018.</p>
+            </p>
+
+        </div>
+</div>
+    <hr>
     <footer>
 
         <!-- Note: in order for config changes to appear in the editor, you need to run a build -->
@@ -53,25 +96,9 @@
 
         <!--<hr/>-->
 
-        <h3>Fabienne Hess - Zebras, Blanks and Blobs, Windows (2017)</h3>
+        <!--<h3>Fabienne Hess - Zebras, Blanks and Blobs, Windows (2017)</h3>-->
 
-<i><p>The University of Edinburgh has amassed one of most important collections anywhere in the world. Beginning with the bequest of 276 volumes to the library in 1580, our collection contains objects as old as the solar system through to contemporary works of art. Millions of objects are spread over 45 different sites; 280 named collections cared for by around 40 curators, archivists and conservators. Finding ways to articulate the vastness of this collection is what inspired the Swiss artist Fabienne Hess.
-</p>
-<p>
-In her 2015 exhibition at the University’s Talbot Rice Gallery, Hess brought together over 25,000 collection images and reproduced them on a vast silk fabric. This gave the collection an immediate and tangible scale whilst highlighting the diversity of individual objects. Hess went on to develop the project with a publication in 2017, titled Zebras, Blanks and Blobs. This introduced 13 ‘image families’ derived from the same digital images, this time accentuating visual connections between otherwise disparate groups of objects. The families include; Red Dots, Fragiles, Triangles, Stripes and Pointers. Hess has selected a group of images from these families for this installation, specially commissioned for Argyle House.
-</p>
-<p>
-Hess’ classifications are first and foremost visual; accentuated by the quality of the images produced by our Digital Imaging Unit. The visual comparisons also encourage a deeper engagement with the overall collection, what it represents and how it is used. Objects that have never been seen in parallel are thrust together, giving a truly unique overview.  
-</p></i>
-<p>
-<a href="http://www.fabiennehess.com" target="_blank">www.fabiennehess.com</a>
-</p>
-
-<h3>IIIF at The University of Edinburgh</h3>
-<p>The viewable content has been made available using IIIF manifests and the freely-available Universal Viewer (UV). This framework allows us to very easily present images to the user through a detailed set of programmatic instructions, allowing easy sharing of high-resolution images, served, in this case from our LUNA images repository (<a href="https://images.is.ed.ac.uk" target="_blank">images.is.ed.ac.uk</a>).<p>
-<p>More information is available at <a href="http://iiif.io" target="_blank">iiif.io</a>. Please visit <a href="https://collections.ed.ac.uk/stcecilias" target="_blank">collections.ed.ac.uk/stcecilias</a> to see an example of a IIIF-driven collections site built by the Library Digital Development team.</p>
-
-</p>
+        <div class ="iiifspec">
 
         <h3>Manifest</h3>
 
@@ -86,7 +113,7 @@ Hess’ classifications are first and foremost visual; accentuated by the qualit
         <a id="dragndrop">
             <img src="iiif.png" title="Drag and drop this icon into an IIIF viewer">
         </a>
-
+        </div>
         <div style="display:none">
             <hr/>
 
@@ -105,7 +132,7 @@ Hess’ classifications are first and foremost visual; accentuated by the qualit
             <a id="setLocalesBtn" class="button">Set</a>
         </div>
 
-        <div id="configEditor" style="display: none">
+        <div class="configEditor">
             <hr/>
 
             <h3>Config&nbsp;<span class="config-name"></span></h3>
@@ -123,7 +150,36 @@ Hess’ classifications are first and foremost visual; accentuated by the qualit
                 <div id="editor"></div>
             </div>
         </div>
+        <div class="container">
+            <div class="uoe-logo">
+                <a target="_blank" href="http://www.ed.ac.uk/">
+                    <img title="The University of Edinburgh" src="../../css/images/UoELogo.png">
+                </a>
+            </div>
+            <div class="footer-links">
+                <ul>
+                    <li>
+                        <a href="http://www.ed.ac.uk.ezproxy.is.ed.ac.uk/about/website/website&#45;terms&#45;conditions">Terms &amp; conditions </a>
+                    </li>
 
+                    <li>
+                        <a href="http://www.ed.ac.uk.ezproxy.is.ed.ac.uk/about/website/privacy">Privacy &amp; cookies </a></li>
+
+                    <li>
+                        <a href="http://www.ed.ac.uk.ezproxy.is.ed.ac.uk/about/website/accessibility">Website accessibility </a>
+                    </li>
+
+                    <li>
+                        <a href="http://www.ed.ac.uk.ezproxy.is.ed.ac.uk/about/website/freedom&#45;information">Freedom of Information Publication Scheme </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="luc-logo">
+                <a target="_blank" href="http://libraryblogs.is.ed.ac.uk/">
+                    <img title="Library and University Collections Blog" src="../../css/images/L&UCLogo.png">
+                </a>
+            </div>
+        </div>
     </footer>
 
     <script type="text/javascript" src="browserdetect.js"></script>
@@ -136,6 +192,8 @@ Hess’ classifications are first and foremost visual; accentuated by the qualit
     <!--<script type="text/javascript" src="testids.js"></script>-->
     <!--<script type="text/javascript" src="events.js"></script>-->
     <script type="text/javascript" src="examples.js"></script>
+
+
 
 </body>
 </html>

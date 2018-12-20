@@ -10,7 +10,7 @@
       "label": "University of Edinburgh",
       "manifests": [
         {
-          "@id": "https://librarylabs.ed.ac.uk/manifest/RoomCollection.json",
+          "@id": "https://librarylabs.ed.ac.uk/iiif/manifest/RoomCollection.json",
           "@type": "sc:Manifest",
           "label": "Argyle House Rooms"
         }

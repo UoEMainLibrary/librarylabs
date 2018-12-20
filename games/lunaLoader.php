@@ -22,7 +22,7 @@
 <body>
     <div = "header">
     <br>
-    <img src="images/lddutilities.jpg">
+    <img src="/home/lib/lacddt/images/lddutilities.jpg">
     <h1>LUNA OAI Loader</h1>
 
     <?php
@@ -30,13 +30,13 @@
         //Scott Renton, September 2017
         //Harvest LUNA OAI and insert new rows into the metadata games database.
 
-        include 'config/vars.php';
+        include '/home/lib/lacddt/librarylabs/games/config/vars.php';
         ini_set('max_execution_time', 5000);
         $error = '';
 
         //This URL is the inspirehep search- can run this in a browser to check
         $baseurl = 'https://images.is.ed.ac.uk/luna/servlet/oai?verb=ListRecords&metadataPrefix=oai_dc';
-        $directory = '../files/';
+        $directory = '/home/lib/lacddt/librarylabs/games/files/';
         $logfile = $directory."lunaoai.log";
         $file_handle_out = fopen($logfile, "a+")or die("<p>Sorry. I can't open the log file.</p>");
         $link = mysqli_connect($dbserver, $username, $password, $database);
@@ -188,8 +188,8 @@
             $i++;
         }
 
-    $outfile = 'files/shelfreport.csv';
-    $file_handle_out = fopen('files/shelfreport.csv', "w") or die ("can't open loaded papers file");
+    $outfile = '/home/lib/lacddt/librarylabs/games/files/shelfreport.csv';
+    $file_handle_out = fopen('/home/lib/lacddt/librarylabs/games/files/shelfreport.csv', "w") or die ("can't open loaded papers file");
     $shelf_list_count_sql = "select distinct shelfmark, count(shelfmark) as imagecount from orders.IMAGE group by shelfmark order by shelfmark ; ";
     $shelf_list_count_result = mysqli_query($link, $shelf_list_count_sql);
     $shelf_list_count_count = mysqli_num_rows($shelf_list_count_result);
@@ -208,41 +208,42 @@
             $manifest_url = str_replace('detail/', 'iiif/m/', $image_url).'/manifest';
         }
         echo $manifest_url;
-        $json = file_get_contents($manifest_url);
-        $jobj = json_decode($json, true);
-        $error = json_last_error();
-        $jsonMD = $jobj['sequences'][0]['canvases'][0]['metadata'];
-        $rights = '';
-        $photographer = '';
-        $photoline = '';
-        foreach ($jsonMD as $jsonMDPair)
+        $json = @file_get_contents($manifest_url);
+        if ($json === false)
         {
-
-            if ($jsonMDPair['label'] == 'Title')
-            {
-                $title = str_replace("<span>", "", $jsonMDPair['value']);
-                $title = str_replace("</span>", "", $title);
-            }
-            if ($jsonMDPair['label'] == 'Date')
-            {
-                $date = str_replace("<span>", "", $jsonMDPair['value']);
-                $date = str_replace("</span>", "", $date);
-            }
-            if ($jsonMDPair['label'] == 'Creator')
-            {
-                $creator = str_replace("<span>", "", $jsonMDPair['value']);
-                $creator = str_replace("</span>", "", $creator);
-            }
-            if ($jsonMDPair['label'] == 'Catalogue Number')
-            {
-                $catalogue_no = str_replace("<span>", "", $jsonMDPair['value']);
-                $catalogue_no = str_replace("</span>", "", $catalogue_no);
-            }
-
+            fwrite($file_handle_out, "No manifest any more- should be deleted: ".$manifest_url."\n");
         }
+        else {
+            $jobj = json_decode($json, true);
+            $error = json_last_error();
+            $jsonMD = $jobj['sequences'][0]['canvases'][0]['metadata'];
+            $rights = '';
+            $photographer = '';
+            $photoline = '';
+            $catalogue_no = '';
+            foreach ($jsonMD as $jsonMDPair) {
 
-        fwrite($file_handle_out, '"'.$shelf_list[$j].'",'.$shelf_list_image_count[$j].',"'.$title.'",'.$date.',"'.$creator.'",'.$catalogue_no.','.substr($manifest_url, 47,8)."\n");
-        $j++;
+                if ($jsonMDPair['label'] == 'Title') {
+                    $title = str_replace("<span>", "", $jsonMDPair['value']);
+                    $title = str_replace("</span>", "", $title);
+                }
+                if ($jsonMDPair['label'] == 'Date') {
+                    $date = str_replace("<span>", "", $jsonMDPair['value']);
+                    $date = str_replace("</span>", "", $date);
+                }
+                if ($jsonMDPair['label'] == 'Creator') {
+                    $creator = str_replace("<span>", "", $jsonMDPair['value']);
+                    $creator = str_replace("</span>", "", $creator);
+                }
+                if ($jsonMDPair['label'] == 'Catalogue Number') {
+                    $catalogue_no = str_replace("<span>", "", $jsonMDPair['value']);
+                    $catalogue_no = str_replace("</span>", "", $catalogue_no);
+                }
+
+            }
+            fwrite($file_handle_out, '"' . $shelf_list[$j] . '",' . $shelf_list_image_count[$j] . ',"' . $title . '",' . $date . ',"' . $creator . '",' . $catalogue_no . ',' . substr($manifest_url, 47, 8) . "\n");
+            $j++;
+        }
     }
     fclose($file_handle_out);
     echo 'I HAVE FINISHED';
