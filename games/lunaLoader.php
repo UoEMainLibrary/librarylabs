@@ -30,166 +30,253 @@
         //Scott Renton, September 2017
         //Harvest LUNA OAI and insert new rows into the metadata games database.
 
-        include '/home/lib/lacddt/librarylabs/games/config/vars.php';
+        include 'config/vars.php';
         ini_set('max_execution_time', 5000);
         $error = '';
 
         //This URL is the inspirehep search- can run this in a browser to check
         $baseurl = 'https://images.is.ed.ac.uk/luna/servlet/oai?verb=ListRecords&metadataPrefix=oai_dc';
-        $directory = '/home/lib/lacddt/librarylabs/games/files/';
+        $directory = 'files/';
         $logfile = $directory."lunaoai.log";
         $file_handle_out = fopen($logfile, "a+")or die("<p>Sorry. I can't open the log file.</p>");
         $link = mysqli_connect($dbserver, $username, $password, $database);
         @mysqli_select_db($database) ;
+        $dropimagesql = "truncate table orders.IMAGE";
+        $dropimageresult = mysqli_query($link,$dropimagesql);
+
+        $dropimagedorsql = "truncate table orders.IMAGE_DOR";
+        $dropimagedorresult = mysqli_query($link, $dropimagedorsql);
 
         $collselectsql = "select id from orders.COLLECTION;";
         $collselectresult = mysqli_query($link,$collselectsql) ;#or die("A MySQL error has occurred.<br />Your Query: " . $upointssql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
-        while ($row = $collselectresult->fetch_assoc())
-        {
-            $collection = $row['id'];
-            echo $collection."<br>";
-            $resToken = '';
-            $tokenExists = 'true';
-            $seturl = $baseurl."&set=".$collection;
-            $urlarray = [];
-            $reproarray = [];
-            $shelfarray = [];
-            $j = 0;
+        while ($row = $collselectresult->fetch_assoc()) {
+                $collection = $row['id'];
+                echo $collection . "<br>";
+                $resToken = '';
+                $tokenExists = 'true';
+                $seturl = $baseurl . "&set=" . $collection;
+                $urlarray = [];
+                $reproarray = [];
+                $shelfarray = [];
+                $dorarray = [];
+                $linkarray = [];
+                $sequencearray = [];
+                $j = 0;
 
-            while ($tokenExists !== 'false')
-            {
-                if (isset($resToken) and $resToken !== "")
-                {
-                    $url = $seturl . "&resumptionToken=" . $resToken;
-                }
-                else
-                {
-                    $url = $seturl;
-                }
-                echo 'URL'.$url;
-                $curl = curl_init();
-                $fp = fopen($directory . "curl.xml", "w");
-                curl_setopt($curl, CURLOPT_URL, $url);
-                curl_setopt($curl, CURLOPT_FILE, $fp);
-                curl_setopt($curl, CURLOPT_HEADER, 0);
-                curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-                $response = curl_exec($curl);
-                //var_dump($response);
-                $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-                if ($httpCode == 404)
-                {
-                    touch($directory . "cache/404_err.txt");
-                }
-                else
-                {
-                    fwrite($fp, $response);
-                }
-
-                curl_close($curl);
-                fclose($fp);
-
-                chmod($directory."curl.xml", 0777);
-
-                //Load the captured curl response into XML
-                $xml_file = $directory . "curl.xml";
-                $xml = simplexml_load_file($xml_file);
-
-                if ($xml == FALSE)
-                {
-                    echo "Failed loading XML\n";
-
-                    foreach (libxml_get_errors() as $error)
-                    {
-                        echo "\t", $error->message;
+                while ($tokenExists !== 'false') {
+                    if (isset($resToken) and $resToken !== "") {
+                        $url = $seturl . "&resumptionToken=" . $resToken;
+                    } else {
+                        $url = $seturl;
                     }
-                }
+                    echo 'URL' . $url;
+                    $curl = curl_init();
+                    $fp = fopen($directory . "curl.xml", "w");
+                    curl_setopt($curl, CURLOPT_URL, $url);
+                    curl_setopt($curl, CURLOPT_FILE, $fp);
+                    curl_setopt($curl, CURLOPT_HEADER, 0);
+                    curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+                    $response = curl_exec($curl);
+                    //var_dump($response);
+                    $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-                $error = '';
+                    if ($httpCode == 404) {
+                        touch($directory . "cache/404_err.txt");
+                    } else {
+                        fwrite($fp, $response);
+                    }
 
-                echo $j . "<br>";
-                $n = 0;
+                    curl_close($curl);
+                    fclose($fp);
 
-                foreach ($xml->children() as $object)
-                {
-                    foreach ($object->resumptionToken as $resToken)
-                    {
-                        if (empty ($resToken) or $resToken =='' or $resToken == null)
-                        {
-                            $tokenExists = 'false';
-                        }
-                        else
-                        {
-                            echo "<br>TOKEN" . $resToken . "<br>";
+                    chmod($directory . "curl.xml", 0777);
+
+                    //Load the captured curl response into XML
+                    $xml_file = $directory . "curl.xml";
+                    $xml = simplexml_load_file($xml_file);
+
+                    if ($xml == FALSE) {
+                        echo "Failed loading XML\n";
+
+                        foreach (libxml_get_errors() as $error) {
+                            echo "\t", $error->message;
                         }
                     }
 
-                    foreach ($object->record as $rNode)
-                    {
-                        foreach ($rNode->metadata->children('oai_dc', 1)->dc->children('dc', 1) as $dc)
-                        {
-                            $lunapoint = strpos($dc, "luna/servlet");
-                            $mediapoint = strpos($dc, "MediaManager");
+                    $error = '';
 
-                            if ($lunapoint > 0)
+                    echo $j . "<br>";
+                    $n = 0;
+
+                    foreach ($xml->children() as $object) {
+                        foreach ($object->resumptionToken as $resToken) {
+                            if (empty ($resToken) or $resToken == '' or $resToken == null) {
+                                $tokenExists = 'false';
+                            } else {
+                                echo "<br>TOKEN" . $resToken . "<br>";
+                            }
+                        }
+
+                        foreach ($object->record as $rNode) {
+                            foreach ($rNode->metadata->children('oai_dc', 1)->dc->children('dc', 1) as $dc=>$value)
                             {
-                                $urlarray[$j] = $dc;
-                            } else
-                                if ($mediapoint > 0)
-                                {
-                                    $slashpoint = strrpos($dc, "/");
-                                    $dc = substr($dc, $slashpoint + 1, 20);
-                                    $reproarray[$j] = $dc;
-                                }
-                                else
-                                {
-                                    $shelfarray[$j] = $dc;
-                                }
+
+                                    if ($dc == 'identifier')
+                                    {
+                                        $lunapoint = strpos($value, "luna/servlet");
+                                        $mediapoint = strpos($value, "MediaManager");
+
+                                        if ($lunapoint > 0)
+                                        {
+                                            //echo 'LUNA URL'.$value."<br>";
+                                            $urlarray[$j] = $value;
+                                        }
+                                        elseif ($mediapoint > 0)
+                                        {
+                                            $slashpoint = strrpos($value, "/");
+                                            $value = substr($value, $slashpoint + 1, 20);
+                                            //echo 'JPEG NAME'.$value."<br>";
+                                            $reproarray[$j] = $value;
+                                        }
+                                        elseif (strpos($value, "ADO") !== FALSE)
+                                        {
+                                            $dorarray[$j] = $value;
+                                            //echo 'DOR' . $value . "<br>";
+                                        }
+                                        else
+                                        {
+                                            //echo 'SHELF' . $value . "<br>";
+                                            $shelfarray[$j] = $value;
+                                        }
+
+                                    }
+                                    elseif ($dc == 'format')
+                                    {
+                                        $sequencearray[$j] = $value;
+                                       //echo 'SEQ'.$value."<br>";
+                                    }
+                                    elseif ($dc = 'source')
+                                    {
+                                        $linkarray[$j] = $value;
+                                        //echo 'LINK'.$value."<br>";
+                                    }
+                            }
+                            $j++;
                         }
-                        $j++;
+
                     }
                 }
-            }
+
+                echo 'J='.$j;
+                for ($i = 0; $i < $j; $i++)
+                {
+                    $shelfmark = '';
+                    $sequence = 0;
+                    $dor_id = '';
+                    $url_item = '';
+                    $link_item = '';
+
+                    $image_id = str_replace('.jpg', '', $reproarray[$i]);
 
 
-            for ($i =0;$i<$j; $i++)
-            {
-                fwrite($file_handle_out, $reproarray[$i]."\n");
-                $image_id = str_replace('.jpg','', $reproarray[$i]);
-                $checksql = "select jpeg_path from orders.IMAGE where image_id= '".$image_id."';";
-                $checkresult = mysqli_query($link,$checksql) ;#or die("A MySQL error has occurred.<br />Your Query: " . $upointssql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
-                $rows = mysqli_num_rows($checkresult);
-                if ($rows == 0)
-                {
-                    $insertsql = "insert into orders.IMAGE (image_id, shelfmark, date_created, date_modified, jpeg_path, collection) VALUES ('".$image_id."','".$shelfarray[$i]."',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '".$urlarray[$i]."', '".$collection."');";
-                    $insertresult = mysqli_query($link, $insertsql);
-                    fwrite($file_handle_out, 'inserted '. $image_id . "','" . $shelfarray[$i] . "',''" . $urlarray[$i]."\n");
-                }
-                else
-                {
-                    while ($row = $checkresult->fetch_assoc())
+                    if (isset($sequencearray[$i]))
                     {
-                        $jpeg_path = $row['jpeg_path'];
-                        if (strpos($jpeg_path, ".jpg") > 0)
-                        {
-                            $updatesql = "update orders.IMAGE set jpeg_path = '" . $urlarray[$i] . "', shelfmark = '" . $shelfarray[$i] . "', collection = '" . $collection . "' where image_id = '" . $image_id . "';";
-                            $updateresult = mysqli_query($link, $updatesql);
-                            fwrite($file_handle_out, 'updated '. $image_id . "','" . $shelfarray[$i] . "',''" . $urlarray[$i]."\n");
+                        $sequence = $sequencearray[$i];
+                    }
+                    else
+                    {
+                        $sequence = 99999;
+                    }
 
+                    if (isset($urlarray[$i]))
+                    {
+                        $url_item = $urlarray[$i];
+                    }
+                    else
+                    {
+                        $url_item = 'N/A';
+                    }
+
+                    if (isset($linkarray[$i]))
+                    {
+                        $link_item = str_replace('http', 'https', $linkarray[$i]);
+                    }
+                    else
+                    {
+                        $link_item = 'N/A';
+                    }
+
+                    if (isset($dorarray[$i]))
+                    {
+                        $dor_id = $dorarray[$i];
+                        echo 'DOR'.$dor_id;
+                        $shelfmark = 'Archive';
+                    }
+                    else{
+                        if (isset($shelfarray[$i]))
+                        {
+                            $shelfmark = $shelfarray[$i];
                         }
                         else
                         {
-                            fwrite($file_handle_out, 'No update required for ' . $image_id . "\n");
+                            $shelfmark = 'N/A';
                         }
+                    }
+
+                    if (isset($urlarray[$i]))
+                    {
+                        $insertsql = "insert into orders.IMAGE (image_id, shelfmark, date_created, date_modified, jpeg_path, collection, sequence) VALUES ('" . $image_id . "','" . $shelfmark . "',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '" . $url_item . "', '" . $collection . "',".$sequence.");";
+                        $insertresult = mysqli_query($link, $insertsql);
+                        fwrite($file_handle_out, 'inserted ' . $image_id . "','" . $shelfmark . "',''" . $url_item. "',''" .$sequence. "\n");
+                    }
+                    else
+                    {
+                        fwrite($file_handle_out, 'skipped ' . $image_id ."\n");
+                    }
+
+                    if (isset($dorarray[$i])) {
+                        $insert_dor_sql = "insert into orders.IMAGE_DOR(image_id, dor_id, catalogue_entry) VALUES ('" . $image_id . "','" . $dor_id . "','" . $link_item . "');";
+                        $insert_dor_result = mysqli_query($link, $insert_dor_sql);
+                        fwrite($file_handle_out, 'inserted ' . $image_id . "','" . $dor_id . "','" . $link_item . "\n");
                     }
                 }
 
-            }
-            $i++;
-        }
+                /*
+                for ($i = 0; $i < $j; $i++) {
+                    fwrite($file_handle_out, $reproarray[$i] . "\n");
+                    $image_id = str_replace('.jpg', '', $reproarray[$i]);
+                    $checksql = "select jpeg_path from orders.IMAGE where image_id= '" . $image_id . "';";
+                    $checkresult = mysqli_query($link, $checksql);#or die("A MySQL error has occurred.<br />Your Query: " . $upointssql . "<br /> Error: (" . mysqli_errno() . ") " . mysqli_error());
+                    $rows = mysqli_num_rows($checkresult);
+                    if ($rows == 0) {
+                        $insertsql = "insert into orders.IMAGE (image_id, shelfmark, date_created, date_modified, jpeg_path, collection,) VALUES ('" . $image_id . "','" . $shelfarray[$i] . "',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '" . $urlarray[$i] . "', '" . $collection . "');";
+                        $insertresult = mysqli_query($link, $insertsql);
+                        fwrite($file_handle_out, 'inserted ' . $image_id . "','" . $shelfarray[$i] . "',''" . $urlarray[$i] . "\n");
+                    } else {
+                        while ($row = $checkresult->fetch_assoc()) {
+                            $jpeg_path = $row['jpeg_path'];
+                            if (isset($urlarray[$i]) and isset($shelfarray[$i])) {
+                                if ((strpos($jpeg_path, ".jpg") > 0) || ($jpeg_path !== $urlarray[$i])) {
+                                    $updatesql = "update orders.IMAGE set jpeg_path = '" . $urlarray[$i] . "', shelfmark = '" . $shelfarray[$i] . "', collection = '" . $collection . "' where image_id = '" . $image_id . "';";
+                                    $updateresult = mysqli_query($link, $updatesql);
+                                    fwrite($file_handle_out, 'updated ' . $image_id . "','" . $shelfarray[$i] . "',''" . $urlarray[$i] . "\n");
 
-    $outfile = '/home/lib/lacddt/librarylabs/games/files/shelfreport.csv';
-    $file_handle_out = fopen('/home/lib/lacddt/librarylabs/games/files/shelfreport.csv', "w") or die ("can't open loaded papers file");
+                                } else {
+                                    fwrite($file_handle_out, 'No update required for ' . $image_id . "\n");
+                                }
+                            } else {
+                                fwrite($file_handle_out, 'No update required for ' . $image_id . "\n");
+                            }
+                        }
+                    }
+
+                }*/
+                $i++;
+
+        }
+    /*
+    $outfile = 'files/shelfreport.csv';
+    $file_handle_out = fopen('files/shelfreport.csv', "w") or die ("can't open loaded papers file");
     $shelf_list_count_sql = "select distinct shelfmark, count(shelfmark) as imagecount from orders.IMAGE group by shelfmark order by shelfmark ; ";
     $shelf_list_count_result = mysqli_query($link, $shelf_list_count_sql);
     $shelf_list_count_count = mysqli_num_rows($shelf_list_count_result);
@@ -244,7 +331,9 @@
             fwrite($file_handle_out, '"' . $shelf_list[$j] . '",' . $shelf_list_image_count[$j] . ',"' . $title . '",' . $date . ',"' . $creator . '",' . $catalogue_no . ',' . substr($manifest_url, 47, 8) . "\n");
             $j++;
         }
+
     }
+    */
     fclose($file_handle_out);
     echo 'I HAVE FINISHED';
     ?>
