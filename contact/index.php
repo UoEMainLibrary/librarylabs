@@ -62,7 +62,9 @@
         <div class="col-lg-12">
             <div class="container">
                 <h3>Contact Library Labs</h3>
-
+                    
+                       <p> <a href="https://librarylabs.ed.ac.uk/accessibility.html" style="width: 90px;">Website accessibility </a></p>
+                    
                 <?php
                 // Script for the form has been downloaded from http://chrisplaneta.com/freebies/php_contact_form_script_with_recaptcha/
 
@@ -248,7 +250,7 @@
                         <a href="http://www.ed.ac.uk.ezproxy.is.ed.ac.uk/about/website/privacy" style="width: 90px;">Privacy &amp; cookies </a></li>
 
                     <li>
-                        <a href="http://www.ed.ac.uk.ezproxy.is.ed.ac.uk/about/website/accessibility" style="width: 90px;">Website accessibility </a>
+                        <a href="https://librarylabs.ed.ac.uk/accessibility.html" style="width: 90px;">Website accessibility </a>
                     </li>
 
                     <li>

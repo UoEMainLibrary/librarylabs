@@ -111,7 +111,7 @@
                         <a href="http://www.ed.ac.uk/about/website/privacy">Privacy &amp; cookies </a></li>
 
                     <li>
-                        <a href="http://www.ed.ac.uk/about/website/accessibility">Website accessibility </a>
+                        <a href="https://librarylabs.ed.ac.uk/accessibility.html">Website accessibility </a>
                     </li>
 
                     <li>
