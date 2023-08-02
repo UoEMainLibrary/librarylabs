@@ -1,0 +1,179 @@
+'Title: Match Finder Macro Sheet
+'Author: Ryan Shaw July 2023
+'Related files: Match Finder Macro Sheet.xlsm
+'Function: Spots matches across two lists- very useful for looking for missing files etc.
+
+Sub FindMatchingValue()
+
+Dim myArray() As Variant
+Dim myArray2() As Variant
+Dim myArray3() As Variant
+Dim myArray4() As Variant
+Dim cell As Range
+Dim i As Long
+Dim x As Long
+Dim y As Long
+Dim z As Long
+Dim a As Long
+Dim b As Long
+Dim LRow As Integer
+Dim OutLRow As Integer
+Dim cellvalue As String
+Dim Search As Range
+Dim bool As Boolean
+
+bool = False
+
+'Clears output table contents
+Sheets("Match Results").Range("a2", "e200").Clear
+
+'Count of rows used in A and D, uses the greater as the last row
+If Sheets("Datasheet").Columns(1).End(xlDown).Rows.Count > Sheets("Datasheet").Columns(2).End(xlDown).Rows.Count Then
+    LRow = Cells(Rows.Count, "A").End(xlUp).Row
+    Else
+    LRow = Cells(Rows.Count, "B").End(xlUp).Row
+End If
+
+'Display Progress Bar
+ufProgress.LabelProgress.Width = 0
+ufProgress.Show
+
+'Loop through cells in col2 looking for the value of each cell in col1 and stores matches row and value for each column in separate arrays.
+For i = 1 To LRow
+    pctdone = i / LRow
+    With ufProgress
+        .LabelCaption.Caption = "Processing Row " & i & " of " & LRow
+        .LabelProgress.Width = pctdone * (.FrameProgress.Width)
+    End With
+    ufProgress.Repaint
+    Set Search = Sheets("Datasheet").Range(Cells(2, 2), Cells(LRow, 2))
+    For Each cell In Search
+        If Cells(i, 1).Value = cell.Value Then
+            bool = True
+            ReDim Preserve myArray(x)
+            myArray(x) = Cells(i, 1).Row
+            ReDim Preserve myArray2(y)
+            myArray2(y) = Cells(i, 1).Value
+            ReDim Preserve myArray3(z)
+            myArray3(z) = cell.Row
+            ReDim Preserve myArray4(a)
+            myArray4(a) = cell.Value
+            x = x + 1
+            y = y + 1
+            z = z + 1
+            a = a + 1
+        End If
+    Next cell
+    If i = LRow Then Unload ufProgress
+Next i
+
+'Messsage if no matches are found.
+If bool = False Then
+    MsgBox "No matches found!"
+    Exit Sub
+End If
+
+'Display Progress Bar
+ufProgress.LabelProgress.Width = 0
+ufProgress.Show
+
+b = 0
+pctdone = b / UBound(myArray)
+With ufProgress
+    .LabelCaption.Caption = "Printing " & b & "% complete."
+    .LabelProgress.Width = pctdone * (.FrameProgress.Width)
+End With
+ufProgress.Repaint
+
+'Prints the array values to columns in results sheet
+For i = LBound(myArray) To UBound(myArray)
+    Sheets("Match Results").Range("a2").Offset(i).Value = myArray(i)
+Next i
+b = 25
+For i = LBound(myArray2) To UBound(myArray2)
+    Sheets("Match Results").Range("b2").Offset(i).Value = myArray2(i)
+Next i
+b = 50
+For i = LBound(myArray3) To UBound(myArray3)
+    Sheets("Match Results").Range("c2").Offset(i).Value = myArray3(i)
+Next i
+b = 75
+For i = LBound(myArray4) To UBound(myArray4)
+    Sheets("Match Results").Range("d2").Offset(i).Value = myArray4(i)
+Next i
+b = 100
+If b = 100 Then Unload ufProgress
+
+'Adds a total match count to the side of the output table
+OutLRow = Sheets("Match Results").Cells(Rows.Count, "D").End(xlUp).Row
+Sheets("Match Results").Cells(OutLRow, "E").Value = "Total Matches"
+Sheets("Match Results").Cells(OutLRow + 1, "E").Value = OutLRow
+
+MsgBox "Match Check Complete. " & OutLRow & " Matches Found." & vbCrLf & "Check 'Match Results' Sheet."
+
+End Sub
+
+'Title: Match Finder Macro Sheet
+'Author: Ryan Shaw July 2023
+'Related files: Match Finder Macro Sheet.xlsm
+'Function: Generate directory listing based on filepath
+
+Sub FilenameFinder()
+
+Dim oFSO As Object
+Dim oFolder As Object
+Dim oFile As Object
+Dim Directory As String
+Dim LastRow As Long
+Dim bool As Boolean
+Dim x As Long
+Dim i As Long
+Dim myArray() As Variant
+
+'clears existing column data
+LastRow = Cells(Rows.Count, "A").End(xlUp).Row
+If Not LastRow <= 1 Then
+    Sheets("Datasheet").Range(Cells(2, 1), Cells(LastRow, 1)).Clear
+End If
+
+'Inputbox to type in directory to search
+Directory = InputBox("Please Enter a System Directory", "Filename Lister")
+
+'Declarations
+bool = False
+Set oFSO = CreateObject("Scripting.FileSystemObject")
+Set oFolder = oFSO.GetFolder(Directory)
+
+'Loads filenames into an array
+For Each oFile In oFolder.Files
+    If Not oFile.Name = "Thumbs.db" Then
+        bool = True
+        ReDim Preserve myArray(x)
+        myArray(x) = oFile.Name
+        x = x + 1
+    End If
+Next oFile
+
+'MsgBox if no files found
+If bool = False Then
+    MsgBox "No files found!"
+    Exit Sub
+End If
+
+'show progress bar
+ufProgress.LabelProgress.Width = 0
+ufProgress.Show
+
+'print filenames
+For i = LBound(myArray) To UBound(myArray)
+    pctdone = i / UBound(myArray)
+    With ufProgress
+        .LabelCaption.Caption = "Processing Row " & i & " of " & UBound(myArray)
+        .LabelProgress.Width = pctdone * (.FrameProgress.Width)
+    End With
+    ufProgress.Repaint
+    Sheets("DataSheet").Range("a2").Offset(i).Value = myArray(i)
+    If i = UBound(myArray) Then Unload ufProgress
+Next i
+
+End Sub
