@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 420" role="img" aria-labelledby="title desc">
+  <title id="title">Stylised World Cup trophy</title>
+  <desc id="desc">A more realistic golden football trophy with highlights, contours and a dark plinth.</desc>
+  <defs>
+    <linearGradient id="bgGlow" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#fff7c8" stop-opacity=".35"/>
+      <stop offset="100%" stop-color="#fff7c8" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="goldMain" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#fff6c8"/>
+      <stop offset="0.2" stop-color="#f7d96f"/>
+      <stop offset="0.45" stop-color="#dca62b"/>
+      <stop offset="0.72" stop-color="#a76e11"/>
+      <stop offset="1" stop-color="#6d4307"/>
+    </linearGradient>
+    <linearGradient id="goldDark" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#dca72b"/>
+      <stop offset="100%" stop-color="#7b4d08"/>
+    </linearGradient>
+    <linearGradient id="goldRim" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#9c620e"/>
+      <stop offset="0.5" stop-color="#f9dc72"/>
+      <stop offset="1" stop-color="#8c590c"/>
+    </linearGradient>
+    <linearGradient id="baseGrad" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#3e260d"/>
+      <stop offset="100%" stop-color="#170c03"/>
+    </linearGradient>
+    <radialGradient id="ballGlow" cx="40%" cy="28%" r="68%">
+      <stop offset="0%" stop-color="#fffbe2"/>
+      <stop offset="0.38" stop-color="#f8df7d"/>
+      <stop offset="0.78" stop-color="#c68a1d"/>
+      <stop offset="1" stop-color="#895508"/>
+    </radialGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%">
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#000000" flood-opacity=".38"/>
+    </filter>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+  </defs>
+
+  <rect width="320" height="420" rx="28" fill="none"/>
+  <ellipse cx="160" cy="94" rx="90" ry="92" fill="url(#bgGlow)" filter="url(#soft)"/>
+
+  <g filter="url(#shadow)">
+    <ellipse cx="160" cy="393" rx="76" ry="14" fill="#000" opacity=".28"/>
+
+    <g>
+      <circle cx="160" cy="82" r="50" fill="url(#ballGlow)"/>
+      <path d="M122 96c10-26 36-43 63-40 15 2 28 8 37 18-19-5-34-4-50 3-16 7-31 19-50 37Z" fill="#fff9db" opacity=".78"/>
+      <path d="M194 44c16 7 27 22 31 38-7-6-16-10-27-11 3-9 2-18-4-27Z" fill="#8a5708" opacity=".35"/>
+      <path d="M130 76c8-10 22-16 34-15 7 1 13 4 17 8-10-1-18 0-27 5-8 4-15 9-24 17Z" fill="#fffef4" opacity=".85"/>
+    </g>
+
+    <path d="M105 102c-17 7-30 23-33 42-4 22 6 43 24 57 10 8 17 14 20 25 2 8 0 18-6 28-6 10-14 22-18 37-6 24 2 53 31 69l7 37h20l-5-39c-22-10-37-27-42-49-5-20-1-40 12-60 13-21 18-39 13-55-4-15-14-27-23-38Z" fill="url(#goldDark)"/>
+    <path d="M215 102c17 7 30 23 33 42 4 22-6 43-24 57-10 8-17 14-20 25-2 8 0 18 6 28 6 10 14 22 18 37 6 24-2 53-31 69l-7 37h-20l5-39c22-10 37-27 42-49 5-20 1-40-12-60-13-21-18-39-13-55 4-15 14-27 23-38Z" fill="url(#goldDark)"/>
+
+    <path d="M126 115c7 21 22 36 34 47 12 11 18 20 18 33 0 11-4 21-9 33-10 24-17 52-2 83l-14 7c-18-35-10-67 0-91 4-11 8-20 8-29 0-7-4-13-13-21-15-14-31-31-39-58Z" fill="#f5cf61"/>
+    <path d="M194 115c-7 21-22 36-34 47-12 11-18 20-18 33 0 11 4 21 9 33 10 24 17 52 2 83l14 7c18-35 10-67 0-91-4-11-8-20-8-29 0-7 4-13 13-21 15-14 31-31 39-58Z" fill="#8d590b" opacity=".55"/>
+
+    <path d="M112 144c8 19 24 34 43 40 18 5 39 2 54-9 14-10 24-27 27-46-7 12-18 19-27 22-13 5-24 1-35-5-13-7-26-12-42-11-8 1-14 4-20 9Z" fill="url(#goldMain)"/>
+    <path d="M131 136c10 11 23 20 37 23 16 3 31 0 44-9-8 16-23 29-42 32-22 4-43-5-54-23 5-9 9-16 15-23Z" fill="#c88617" opacity=".55"/>
+
+    <path d="M150 174c6 12 5 23 0 37-4 10-8 22-8 36 0 26 12 47 31 64l-7 10c-22-17-38-43-38-74 0-17 5-31 9-42 4-12 5-19 1-27Z" fill="#fff1a2" opacity=".72"/>
+
+    <path d="M140 330c13 7 27 8 40 3l-3 18h-34Z" fill="#f0c54c"/>
+    <rect x="115" y="364" width="90" height="18" rx="9" fill="url(#goldRim)"/>
+    <rect x="100" y="382" width="120" height="22" rx="10" fill="url(#baseGrad)"/>
+    <rect x="94" y="401" width="132" height="13" rx="6.5" fill="#0e0803"/>
+
+    <path d="M155 35c7-5 17-7 28-4-8 2-14 6-19 12-4 5-7 12-8 19-4-10-4-20-1-27Z" fill="#fff9dd" opacity=".7"/>
+    <path d="M114 147c17 10 38 14 58 10 14-3 28-10 39-21-7 18-20 33-39 40-25 10-54 4-74-16 4-5 8-9 16-13Z" fill="#fff1b5" opacity=".32"/>
+  </g>
+</svg>

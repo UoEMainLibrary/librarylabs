@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>World Cup Draw</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero-layout">
+        <div class="hero-copy">
+          <p class="eyebrow">2026 Sweepstake</p>
+          <h1>World Cup Draw Board</h1>
+          <p class="intro">
+            Build the sweepstake one reveal at a time: 24 people, 48 qualified countries,
+            two rounds, no repeats.
+          </p>
+          <div class="controls">
+            <button id="draw-button" class="primary-button" type="button">Start New Draw</button>
+            <button id="next-button" class="primary-button is-ghost" type="button" disabled>Reveal Next Team</button>
+            <button id="copy-button" class="secondary-button" type="button">Copy Results</button>
+          </div>
+          <div class="stats" aria-label="draw summary">
+            <div class="stat-chip">
+              <span class="stat-label">People</span>
+              <strong>24</strong>
+            </div>
+            <div class="stat-chip">
+              <span class="stat-label">Teams</span>
+              <strong>48</strong>
+            </div>
+            <div class="stat-chip">
+              <span class="stat-label">Rounds</span>
+              <strong>2</strong>
+            </div>
+          </div>
+          <p id="status" class="status" aria-live="polite">Ready for kickoff.</p>
+        </div>
+        <aside class="trophy-panel" aria-label="World Cup illustration">
+          <img src="assets/2026_FIFA_World_Cup_emblem.svg.webp" alt="Stylised World Cup trophy illustration">
+        </aside>
+      </div>
+    </header>
+
+    <main>
+      <section class="draw-board">
+        <div class="board-header">
+          <div>
+            <p class="section-kicker">Live Board</p>
+            <h2>Assignments</h2>
+          </div>
+          <p class="board-note">Round 1 fills the first slot. Round 2 fills the second.</p>
+        </div>
+        <div id="people-grid" class="people-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <template id="person-card-template">
+    <article class="person-card">
+      <h3 class="person-name"></h3>
+        <div class="team-slots">
+          <div class="team-slot" data-slot="0">
+          <span class="slot-label">Pots 1-2</span>
+          <div class="team-pill is-empty">
+            <span class="team-flag">?</span>
+            <span class="team-name">Waiting for draw</span>
+          </div>
+        </div>
+        <div class="team-slot" data-slot="1">
+          <span class="slot-label">Pots 3-4</span>
+          <div class="team-pill is-empty">
+            <span class="team-flag">?</span>
+            <span class="team-name">Waiting for draw</span>
+          </div>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
