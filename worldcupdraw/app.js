@@ -96,6 +96,7 @@ const nextButton = document.getElementById("next-button");
 const copyButton = document.getElementById("copy-button");
 const statusNode = document.getElementById("status");
 const cardTemplate = document.getElementById("person-card-template");
+const themeAudio = document.getElementById("theme-audio");
 
 let cardNodes = [];
 
@@ -107,6 +108,21 @@ function createFlagSvg(background, shapes) {
     </svg>
   `;
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+}
+
+function startThemeAudio() {
+  if (!themeAudio) {
+    return;
+  }
+
+  themeAudio.play().catch(() => {
+    const resumeAudio = () => {
+      themeAudio.play().catch(() => {});
+    };
+
+    window.addEventListener("pointerdown", resumeAudio, { once: true });
+    window.addEventListener("keydown", resumeAudio, { once: true });
+  });
 }
 
 function createBoard() {
@@ -337,6 +353,7 @@ async function copyResults() {
 function init() {
   createBoard();
   hydrateFromStorage();
+  startThemeAudio();
 }
 
 drawButton.addEventListener("click", startNewDraw);
