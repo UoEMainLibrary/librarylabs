@@ -87,8 +87,8 @@ const POTS_3_AND_4 = [
   { name: "Iraq", flag: "🇮🇶" },
 ];
 
-const STORAGE_KEY = "worldcupdraw.assignments.v1";
-const DRAW_STATE_KEY = "worldcupdraw.state.v1";
+const STORAGE_KEY = "worldcupdraw.assignments.v2";
+const DRAW_STATE_KEY = "worldcupdraw.state.v2";
 
 const peopleGrid = document.getElementById("people-grid");
 const drawButton = document.getElementById("draw-button");
@@ -223,7 +223,7 @@ function buildSeededAssignments() {
     teams: [],
   })).map((entry, index) => ({
     ...entry,
-    pendingTeams: [upperPotTeams[index], lowerPotTeams[index]],
+    pendingTeams: [lowerPotTeams[index], upperPotTeams[index]],
   }));
 }
 
@@ -252,11 +252,11 @@ function revealNextTeam() {
   saveDrawState(state);
 
   const roundLabel = roundIndex + 1;
-  const potLabel = roundIndex === 0 ? "Pots 1-2" : "Pots 3-4";
+  const potLabel = roundIndex === 0 ? "Pots 3-4" : "Pots 1-2";
   statusNode.textContent = `${potLabel}: ${entry.person} draws ${team.name}.`;
 
   if (state.step === PEOPLE.length) {
-    statusNode.textContent = "Pots 1-2 complete. Press again to start the Pots 3-4 draw.";
+    statusNode.textContent = "Pots 3-4 complete. Press again to start the Pots 1-2 draw.";
   }
 
   if (state.step >= PEOPLE.length * 2) {
@@ -271,7 +271,7 @@ function startNewDraw() {
   saveDrawState({ assignments, step: 0 });
   renderAssignments(assignments);
   nextButton.disabled = false;
-  statusNode.textContent = "Fresh draw loaded. Press Reveal Next Team for the first Pots 1-2 country.";
+  statusNode.textContent = "Fresh draw loaded. Press Reveal Next Team for the first Pots 3-4 country.";
 }
 
 function normaliseAssignments(assignments) {
